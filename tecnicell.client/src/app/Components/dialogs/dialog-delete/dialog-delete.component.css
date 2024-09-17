@@ -1,0 +1,33 @@
+.background{
+    @apply fixed top-0 left-0 flex flex-col justify-center items-center w-[100%] h-[100%]
+     bg-gray-500 bg-opacity-50 z-40 ;
+     animation: appear .2s 1 ease-out;
+}
+.dialog{
+    @apply relative flex flex-col min-w-[400px] min-h-[200px] bg-gray-50
+     rounded-lg justify-between overflow-hidden;
+}
+.message{
+    @apply  py-[50px] px-4 shadow-md overflow-hidden flex-grow;
+}
+.options{
+    @apply flex flex-row justify-end gap-4 py-2 px-4 bg-gray-100 z-20;
+}
+.icon{
+    @apply absolute opacity-10 w-[400px] h-[250px] -top-16 -right-24 text-red-500;
+}
+.disappeared{
+    @apply hidden;
+}
+.appeared{
+    @apply flex;
+}
+
+@keyframes appear{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

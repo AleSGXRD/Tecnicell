@@ -1,0 +1,31 @@
+
+<ul class="list-none flex flex-row items-end">
+    @for(direc of direction; track direc){
+        @if(direc.includes("Main")){
+            <li class=" flex flex-row justify-center items-end">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mx-2" width="32px" height="32px" viewBox="0 0 24 24"><path fill="currentColor" d="M22 9L12 1L2 9v2h2v10h5v-4a3 3 0 1 1 6 0v4h5V11h2z"/></svg>
+                <h3 class="font-semibold whitespace-nowrap text-2xl tracking-wider">
+                    {{direc}}
+                </h3>
+                <h3 class="font-semibold whitespace-nowrap text-2xl tracking-wider">
+                    >
+                </h3>
+            </li>
+        }
+        @else if(direc != direction[direction.length - 1]) {
+            <li class=" flex flex-row justify-center items-end">
+                <h5 class="font-light whitespace-nowrap text-xl tracking-wider">
+                    {{direc}}
+                </h5>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="m19 12l12 12l-12 12"/></svg>
+            </li>
+        }
+        @else {
+            <li class=" flex flex-row justify-center items-end">
+                <h5 class="font-normal whitespace-nowrap text-xl tracking-wider">
+                    {{direc}}
+                </h5>
+            </li>
+        }
+    }
+</ul>

@@ -1,0 +1,43 @@
+.background{
+    @apply fixed top-0 left-0 justify-center items-center w-[100%] h-[100%]
+     bg-gray-500 bg-opacity-50 z-10;
+     animation: appear 0.2s 1 ease-out;
+}
+.form{
+    @apply fixed w-[400px] h-full flex flex-col items-end bg-white right-0 p-4;
+    animation: appearFromRight 0.2s 1 ease-out;
+}
+.inputs{
+    @apply flex flex-col justify-end items-end w-full gap-2;
+}
+.error{
+    @apply text-red-500;
+    input{
+        @apply outline-red-500 bg-red-200;
+    }
+}
+
+
+.disappeared{
+    @apply hidden;
+}
+.appeared{
+    @apply flex;
+}
+
+@keyframes appear{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes appearFromRight{
+    0%{
+        right: -400px;
+    }
+    100%{
+        right: 0px;
+    }
+}

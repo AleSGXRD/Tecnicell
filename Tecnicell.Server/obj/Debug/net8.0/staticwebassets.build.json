@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "73PMChPswqBRtlza7fN2Ui29Fjt6Op8MbrBkz9Umsmk=",
+  "Source": "Tecnicell.Server",
+  "BasePath": "_content/Tecnicell.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\tecnicell.client\\tecnicell.client.esproj",
+      "Version": 2,
+      "Source": "tecnicell.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

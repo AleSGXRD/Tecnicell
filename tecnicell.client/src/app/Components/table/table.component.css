@@ -1,0 +1,31 @@
+table{
+    @apply rounded-md;
+}
+
+th{
+    @apply uppercase font-medium tracking-widest py-2 hover:bg-gray-100;
+}
+td{
+    @apply font-light p-2 bg-gray-200 bg-opacity-25 hover:bg-opacity-50 transition-all;
+}
+th, td{
+    @apply w-80;
+}
+tr{
+    @apply shadow-sm;
+}
+a{
+    @apply rounded-lg bg-blue-500 bg-opacity-25 text-blue-500 shadow-sm  p-1 px-2 hover:text-gray-50 hover:bg-opacity-100 transition-all; 
+}
+.w-normal{
+    @apply w-60;
+}
+.w-small{
+    @apply w-40;
+}
+.w-big{
+    @apply w-80;
+}
+.actions{
+    @apply flex flex-row justify-around;
+}

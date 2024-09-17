@@ -1,0 +1,21 @@
+<div [className]="(formService.active == true? 'appeared' : 'disappeared') + ' background'">
+    <div class="form">
+        <app-button [color]="'gray'" [rounded]="roundedFull"  (click)="DesappearForm()">
+            ×
+        </app-button>
+        <form (submit)="SendData()" [formGroup]="form" class="inputs">
+            @for (input of inputs; track $index) {
+                <div [classList]="(this.form.get(input.formControlName).errors != null && this.error == true ?'error ': ' ' )+ ' flex flex-col w-full'" >
+                    <label>{{input.name}}</label>
+                    <input [type]="input.type" [name]="input.formControlName"
+                     [id]="input.formControlName" [formControlName]="input.formControlName"
+                     [placeholder]="input.placeholder"
+                     >
+                </div>
+            }
+            <app-button [type]="'submit'" [color]="'blue'" class="w-[100%]" (click)="SendData()">
+                Enviar
+            </app-button>
+        </form>
+    </div>
+</div>

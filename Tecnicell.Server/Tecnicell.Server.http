@@ -1,0 +1,6 @@
+@Tecnicell.Server_HostAddress = http://localhost:5296
+
+GET {{Tecnicell.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
