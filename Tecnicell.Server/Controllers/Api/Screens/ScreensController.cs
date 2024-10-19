@@ -6,14 +6,19 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tecnicell.Server.Context;
+using Tecnicell.Server.Mapper.Classes.AccessoryMappers;
+using Tecnicell.Server.Mapper.Classes;
 using Tecnicell.Server.Mapper.Classes.ScreenMappers;
 using Tecnicell.Server.Models.Entity;
+using Tecnicell.Server.Models.Responses;
 using Tecnicell.Server.Models.ViewModel.Screen;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tecnicell.Server.Controllers.Api.Screens
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
     public class ScreensController : ControllerBase
     {
         private readonly TecnicellContext _context;
@@ -27,32 +32,49 @@ namespace Tecnicell.Server.Controllers.Api.Screens
 
         // GET: api/Screens
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ScreenViewModel>>> GetScreens()
+        public async Task<ActionResult<IEnumerable<ScreenView>>> GetScreens()
         {
-            return await _context.Screens
-                        .Include(model => model.BrandNavigation)
-                        .Include(model => model.ScreenHistories)
-                        .Select(model => _mapper.ToViewModel(model))
-                        .ToListAsync();
+            return await _context.ScreenViews.ToListAsync();
         }
 
         // GET: api/Screens/5
         [HttpGet("{code}")]
-        public async Task<ActionResult<ScreenViewModel>> GetScreen(string code)
+        public async Task<ActionResult<ScreenResponse>> GetScreen(string code)
         {
-            var screen = await _context.Screens
-                        .Include(model => model.BrandNavigation)
-                        .Include(model => model.ScreenHistories)
-                        .Where(model => model.ScreenCode == code)
-                        .Select(model => _mapper.ToViewModel(model))
-                        .FirstOrDefaultAsync();
-
-            if (screen == null)
+            var element = await _context.Screens
+                                .Include(model => model.ImageCodeNavigation)
+                                .Where(model => model.ScreenCode == code)
+                                .FirstOrDefaultAsync();
+            if (element == null)
             {
                 return NotFound();
             }
+            var View = await _context.ScreenViews
+                                    .Where(model => code == model.Code)
+                                    .FirstOrDefaultAsync();
 
-            return screen;
+            ScreenHistoryMapper historyMapper = new ScreenHistoryMapper();
+            var Histories = await _context.ScreenHistories
+                .Include(model => model.ActionHistoryNavigation)
+                .Include(model => model.SaleCodeNavigation)
+                .Include(model => model.ToBranchNavigation)
+                .Include(model => model.UserCodeNavigation) 
+                .Where(model => model.ScreenCode == code)
+                .OrderByDescending(model => model.Date)
+                .Select(model => historyMapper.ToViewModel(model))
+                .ToListAsync();
+
+            ImageMapper imageMapper = new ImageMapper();
+            var Image = element.ImageCodeNavigation != null ? imageMapper.ToViewModel(element.ImageCodeNavigation) : null;
+
+            ScreenResponse response = new ScreenResponse
+            {
+                Histories = Histories,
+                View = View,
+                Image = Image ?? null
+            };
+
+            return response;
         }
 
         // PUT: api/Screens/5

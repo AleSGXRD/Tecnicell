@@ -1,0 +1,14 @@
+.disabled{
+    display: none !important;
+}
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+input.example-right-align{
+    @apply text-xl; 
+    text-align: right;
+}
+input.example-right-align {
+  -moz-appearance: textfield;
+}

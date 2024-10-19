@@ -21,7 +21,9 @@ namespace Tecnicell.Server.Models.ViewModel.Screen
 
         public int? Warranty { get; set; }
 
-        public virtual PhoneBrandViewModel? BrandNavigation { get; set; }
+        public virtual BrandViewModel? BrandNavigation { get; set; }
+
+        public virtual ImageViewModel? ImageCodeNavigation { get; set; }
 
         public virtual ICollection<ScreenHistoryViewModel> ScreenHistories { get; set; } = new List<ScreenHistoryViewModel>();
     }

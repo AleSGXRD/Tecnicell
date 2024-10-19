@@ -7,6 +7,8 @@ public partial class AccessoryHistory
 {
     public string AccessoryCode { get; set; } = null!;
 
+    public string UserCode { get; set; } = null!;
+
     public DateTime Date { get; set; }
 
     public string? ActionHistory { get; set; }
@@ -26,4 +28,6 @@ public partial class AccessoryHistory
     public virtual Sale? SaleCodeNavigation { get; set; }
 
     public virtual Branch? ToBranchNavigation { get; set; }
+
+    public virtual UserInfo UserCodeNavigation { get; set; } = null!;
 }

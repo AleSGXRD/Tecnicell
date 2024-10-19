@@ -4,7 +4,7 @@
      animation: appear 0.2s 1 ease-out;
 }
 .form{
-    @apply fixed w-[400px] h-full flex flex-col items-end bg-white right-0 p-4;
+    @apply fixed max-w-[400px] w-full h-full flex bottom-0 top-0 flex-col items-end bg-white right-0 p-4 overflow-y-scroll;
     animation: appearFromRight 0.2s 1 ease-out;
 }
 .inputs{
@@ -20,6 +20,7 @@
 
 .disappeared{
     @apply hidden;
+    animation: disappear 0.2s 1 ease-out;
 }
 .appeared{
     @apply flex;
@@ -31,6 +32,16 @@
     }
     100%{
         opacity: 1;
+    }
+}
+@keyframes disappear{
+    0%{
+        opacity: 1;
+        display: flex;
+    }
+    100%{
+        opacity: 0;
+        display: hidden;
     }
 }
 @keyframes appearFromRight{

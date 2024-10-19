@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace Tecnicell.Server.Controllers.Api.Accessories
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
     public class AccessoryHistoriesController : ControllerBase
     {
         private readonly TecnicellContext _context;
@@ -32,26 +34,31 @@ namespace Tecnicell.Server.Controllers.Api.Accessories
             return await _context.AccessoryHistories
                 .Include(history => history.SaleCodeNavigation)
                 .Include(history => history.ToBranchNavigation)
+                .Include(history => history.UserCodeNavigation)
+                .OrderByDescending(history => history.Date)
                 .Select(history => _mapper.ToViewModel(history))
                 .ToListAsync();
         }
 
         // GET: api/AccessoryHistories/5
-        [HttpGet("{code,date}")]
-        public async Task<ActionResult<AccessoryHistoryViewModel>> GetAccessoryHistory(string code, DateTime date)
+        
+
+        [HttpGet("{code}")]
+        public async Task<ActionResult<IEnumerable<AccessoryHistoryViewModel>>> GetAccessoryHistories(string code)
         {
             var accessoryHistory = await _context.AccessoryHistories
                 .Include(history => history.SaleCodeNavigation)
                 .Include(history => history.ToBranchNavigation)
-                .Where(history => history.AccessoryCode == code && history.Date == date)
-                .FirstOrDefaultAsync();
+                .Include(history => history.UserCodeNavigation)
+                .Where(history => history.AccessoryCode == code)
+                .ToListAsync();
 
             if (accessoryHistory == null)
             {
                 return NotFound();
             }
 
-            return _mapper.ToViewModel(accessoryHistory);
+            return accessoryHistory.Select(h => _mapper.ToViewModel(h)).ToList();
         }
 
         // PUT: api/AccessoryHistories/5
@@ -59,6 +66,7 @@ namespace Tecnicell.Server.Controllers.Api.Accessories
         [HttpPut("{code,date}")]
         public async Task<IActionResult> PutAccessoryHistory(string code, DateTime date, AccessoryHistoryViewModel accessoryHistory)
         {
+            Console.WriteLine(code, date);
             if (accessoryHistory.AccessoryCode != code || accessoryHistory.Date != date)
             {
                 return BadRequest();
@@ -109,7 +117,7 @@ namespace Tecnicell.Server.Controllers.Api.Accessories
                 }
             }
 
-            return CreatedAtAction("GetAccessoryHistory", new { code = accessoryHistory.AccessoryCode }, accessoryHistory);
+            return accessoryHistory;
         }
 
         // DELETE: api/AccessoryHistories/5

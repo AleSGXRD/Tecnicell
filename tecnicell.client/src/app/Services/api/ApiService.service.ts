@@ -6,23 +6,22 @@ import { firstValueFrom, Observable } from "rxjs";
 @Injectable({
     providedIn: 'root'
   })
-export class ApiService<T>{
+export class ApiService<VIEW, RESPONSE>{
 
     constructor(public http: HttpClient) {}
 
-    select() : Observable<T[]>{
-        return this.http.get<T[]>('');
+    select() : Observable<VIEW[]>{
+        return this.http.get<VIEW[]>('');
     }
-    get(id:any) : Observable<T>{
-        return this.http.get<T>(''+id);
+    get(id:any) : Observable<RESPONSE>{
+        return this.http.get<RESPONSE>(''+id);
     }
     add(data : any){
-        return this.http.get('');
+        
     }
     edit(data : any, id : any){
-        return this.http.get('');
     }
-    delete(id : any){
+    delete(data : any){
         return this.http.get('');
     }
 

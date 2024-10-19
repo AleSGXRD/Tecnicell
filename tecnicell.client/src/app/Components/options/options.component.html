@@ -1,6 +1,6 @@
-<div class="flex flex-row justify-between pr-8">
-    <div class="w-[350px]">
-        <form>   
+<div class="flex flex-row justify-between px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap gap-4 w-full">
+        <!--<form>   
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div class="relative">
                 <button type="submit" class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -10,25 +10,68 @@
                 </button>
                 <input type="search" id="search" class="block w-full py-2 px-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-3xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-0 " placeholder="Search" required />
             </div>
-        </form>
+        </form>-->
+
+        @for (filter of filtersOptions; track $index) {
+            @if(filter.type == "date"){
+                <mat-form-field>
+                    <mat-label>Rango de días a filtrar</mat-label>
+                    <mat-date-range-input [required]="false"  [rangePicker]="picker" >
+                      <input matStartDate [(ngModel)]="filter.value.start" placeholder="Día inicial" >
+                      <input matEndDate [(ngModel)]="filter.value.end" (dateChange)="change()" placeholder="Día final" >
+                    </mat-date-range-input>
+                    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker ></mat-date-range-picker>
+                </mat-form-field>
+            }
+            @if(filter.type == "select"){
+                <mat-form-field  >
+                    <mat-label  >{{filter.name}}</mat-label>
+                    <mat-select [(ngModel)]="filter.value" multiple>
+                        <mat-select-trigger >
+                        @if(filter.value?.length > 0){
+                            {{filter.value?.[0].name || ''}}
+                        }
+                        @if ((filter.value?.length || 0) > 1) {
+                            <span class="example-additional-selection">
+                            (+{{(filter.value?.length || 0) - 1}} {{filter.value?.length === 2 ? 'otro' : 'otros'}})
+                            </span>
+                        }
+                        </mat-select-trigger>
+                        @for (option of filter.options; track option) {
+                            <mat-option [value]="option"  (click)="change()">{{option.name}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            }
+            @if(filter.type == "text"){
+                <mat-form-field>
+                    <mat-label>{{filter.name}}</mat-label>
+                    <input matInput [(ngModel)]="filter.value" (change)="change()">
+                </mat-form-field>
+            }
+        }
     </div>
-    <div class="flex flex-row justify-center items-center gap-4">
-        <app-button [color]="'green'" [rounded]="buttonRounded" (click)="ActiveForm()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M12 5l0 14" />
-                <path d="M5 12l14 0" />
-              </svg>
-        </app-button>
-        <app-button [color]="'red'" [rounded]="buttonRounded" (click)="deleteMethod()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M4 7l16 0" />
-                <path d="M10 11l0 6" />
-                <path d="M14 11l0 6" />
-                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-            </svg>
-        </app-button>
-    </div>
+    @if(formAdd != undefined){
+        <div class=" hidden xl:flex flex-row justify-center items-center gap-4 ">
+            <app-button [color]="'green'" [rounded]="buttonRounded" (click)="ActiveForm()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 5l0 14" />
+                    <path d="M5 12l14 0" />
+                  </svg>
+            </app-button>
+            @if(histories != undefined){
+                <app-button [color]="'blue'" [rounded]="buttonRounded" (click)="Navigate()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                        <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+                        <path d="M10 12l4 0" />
+                      </svg>
+                </app-button>
+            }
+        </div>
+    }
 </div>

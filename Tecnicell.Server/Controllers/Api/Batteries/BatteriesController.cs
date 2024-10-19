@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tecnicell.Server.Context;
+using Tecnicell.Server.Mapper.Classes;
 using Tecnicell.Server.Mapper.Classes.BatteryMappers;
+using Tecnicell.Server.Mapper.Classes.Phone;
 using Tecnicell.Server.Models.Entity;
+using Tecnicell.Server.Models.Responses;
 using Tecnicell.Server.Models.ViewModel.Battery;
 
 namespace Tecnicell.Server.Controllers.Api.Batteries
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
     public class BatteriesController : ControllerBase
     {
         private readonly TecnicellContext _context;
@@ -27,32 +32,49 @@ namespace Tecnicell.Server.Controllers.Api.Batteries
 
         // GET: api/Batteries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BatteryViewModel>>> GetBatteries()
+        public async Task<ActionResult<IEnumerable<BatteryView>>> GetBatteries()
         {
-            return await _context.Batteries
-                .Include(model => model.BatteryHistories)
-                .Include(model => model.BrandNavigation)
-                .Select(model => _mapper.ToViewModel(model))
-                .ToListAsync();
+            return await _context.BatteryViews.ToListAsync();
         }
 
         // GET: api/Batteries/5
         [HttpGet("{code}")]
-        public async Task<ActionResult<BatteryViewModel>> GetBattery(string code)
+        public async Task<ActionResult<BatteryResponse>> GetBattery(string code)
         {
-            var battery = await _context.Batteries
-                .Include(model => model.BatteryHistories)
-                .Include(model => model.BrandNavigation)
-                .Where(model => model.BatteryCode == code)
-                .Select(model => _mapper.ToViewModel(model))
-                .FirstOrDefaultAsync();
-
-            if (battery == null)
+            var element = await _context.Batteries
+                                .Include(model => model.ImageCodeNavigation)
+                                .Where(model => model.BatteryCode == code)
+                                .FirstOrDefaultAsync();
+            if (element == null)
             {
                 return NotFound();
             }
+            var View = await _context.BatteryViews
+                                    .Where(model => code == model.Code)
+                                    .FirstOrDefaultAsync();
 
-            return battery;
+            BatteryHistoryMapper historyMapper = new BatteryHistoryMapper();
+            var Histories = await _context.BatteryHistories
+                .Include(model => model.ActionHistoryNavigation)
+                .Include(model => model.SaleCodeNavigation)
+                .Include(model => model.ToBranchNavigation)
+                .Include(model => model.UserCodeNavigation)
+                .Where(model => model.BatteryCode == code)
+                .OrderByDescending(model => model.Date)
+                .Select(model => historyMapper.ToViewModel(model))
+                .ToListAsync();
+
+            ImageMapper imageMapper = new ImageMapper();
+            var Image = element.ImageCodeNavigation != null ? imageMapper.ToViewModel(element.ImageCodeNavigation) : null;
+
+            BatteryResponse response = new BatteryResponse
+            {
+                Histories = Histories,
+                View = View,
+                Image = Image ?? null
+            };
+
+            return response;
         }
 
         // PUT: api/Batteries/5
@@ -65,7 +87,9 @@ namespace Tecnicell.Server.Controllers.Api.Batteries
                 return BadRequest();
             }
 
-            _context.Entry(battery).State = EntityState.Modified;
+            Battery model = _mapper.ToModel(battery);
+
+            _context.Entry(model).State = EntityState.Modified;
 
             try
             {

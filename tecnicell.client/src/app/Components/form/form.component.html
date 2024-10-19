@@ -1,21 +1,21 @@
-<div [className]="(formService.active == true? 'appeared' : 'disappeared') + ' background'">
-    <div class="form">
-        <app-button [color]="'gray'" [rounded]="roundedFull"  (click)="DesappearForm()">
-            ×
-        </app-button>
-        <form (submit)="SendData()" [formGroup]="form" class="inputs">
-            @for (input of inputs; track $index) {
-                <div [classList]="(this.form.get(input.formControlName).errors != null && this.error == true ?'error ': ' ' )+ ' flex flex-col w-full'" >
-                    <label>{{input.name}}</label>
-                    <input [type]="input.type" [name]="input.formControlName"
-                     [id]="input.formControlName" [formControlName]="input.formControlName"
-                     [placeholder]="input.placeholder"
-                     >
-                </div>
+<div [className]="(formService.active == true? 'appeared' : 'disappeared') + ' background'" (click)="DesappearForm()">
+    
+</div>
+<div [className]="(formService.active == true? 'appeared' : 'disappeared') + ' form z-40'">
+    <app-button [color]="'gray'" [rounded]="roundedFull"  (click)="DesappearForm()">
+        ×
+    </app-button>
+    <form (submit)="SendData()" [formGroup]="form" class="inputs mt-4">
+        @for (input of inputs; track $index) {
+            @if(input.type == "collapse"){
+                <app-form-field-conditioner class="w-full" [formField]="input" [matcher]="matcher" [form]="form"></app-form-field-conditioner>
             }
-            <app-button [type]="'submit'" [color]="'blue'" class="w-[100%]" (click)="SendData()">
-                Enviar
-            </app-button>
-        </form>
-    </div>
+            @else {
+                <app-form-field class="w-full" [formField]="input" [matcher]="matcher" [form]="form"></app-form-field>
+            }
+        }
+        <app-button [type]="'submit'" [color]="'blue'" class="w-[100%]" (click)="SendData()">
+            Enviar
+        </app-button>
+    </form>
 </div>

@@ -1,0 +1,4 @@
+    <app-background [className]="(openedSideBar == true? 'appeared' : 'disappeared')+ ' z-40 absolute xl:disappeared'" (desappear)="openSideBar(false)">
+        <app-sidebar [ngClass]="'xl:hidden z-30 transition-transform -left-64 ' + (openedSideBar==true? 'flex left-0' : 'hidden ')"></app-sidebar>
+    </app-background>
+    <app-toolbar class="z-20 relative w-full transition-all top-0 " (openFormAdd)="ActiveForm()" (openSideBar)="openSideBar(true)"></app-toolbar>

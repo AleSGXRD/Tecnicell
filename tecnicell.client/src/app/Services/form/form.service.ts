@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { FormType } from '../../types/tools/Form/FormType';
+import { FormType } from '../../Interfaces/tools/Form/FormType';
 import { BehaviorSubject } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
-import { FormField } from '../../types/tools/Form/FormField';
+import { FormField } from '../../Interfaces/tools/Form/FormField';
 import { ApiService } from '../api/ApiService.service';
+import { reloadPage } from '../../Logic/ReloadPage';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ import { ApiService } from '../api/ApiService.service';
 export class FormService {
 
   public active : boolean = false;
-  public apiService! : ApiService<any>;
+  public apiService! : ApiService<any,any>;
 
   public form: BehaviorSubject<any>;
   public inputsField: BehaviorSubject<any>;
@@ -37,7 +39,8 @@ export class FormService {
   public SetInputsField(inputs : FormField[]){
     this.inputsField.next(inputs);
   }
-  public SetFormAndActive(formType: FormType, form:any){
+  public SetFormAndActive(formType: FormType, form:any, apiService: ApiService<any,any>){
+    this.apiService = apiService;
     this.formType = formType;
     this.form.next(form);
     this.SetActiveForm(true);
@@ -55,10 +58,10 @@ export class FormService {
   }
 
   public AddData(data : any){
-    this.apiService.add(data).subscribe(res => console.log(res), err => console.log(err));
+    this.apiService.add(data);
   }
   public UpdateData(data:any){
-    this.apiService.edit(data,this.idEditting).subscribe(res=> console.log(res), err => console.log(err));
+    this.apiService.edit(data,this.idEditting);
   }
 }
 

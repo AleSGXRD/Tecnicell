@@ -1,0 +1,44 @@
+.background{
+    @apply fixed top-0 left-0 justify-center items-center w-[100%] h-[100%]
+     bg-gray-500 bg-opacity-50 z-10;
+     animation: appear 0.2s 1 ease-out;
+}
+.form{
+    @apply fixed xl:relative h-full left-0 p-4 overflow-y-auto;
+    animation: appearFromRight 0.2s 1 ease-out;
+}
+.disappeared{
+    @apply hidden;
+    animation: disappear 0.2s 1 ease-out;
+}
+.appeared{
+    @apply flex;
+}
+
+@keyframes appear{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes disappear{
+    0%{
+        opacity: 1;
+        display: flex;
+    }
+    100%{
+        opacity: 0;
+        display: hidden;
+    }
+}
+@keyframes appearFromRight{
+    0%{
+        left: -400px;
+    }
+    100%{
+        left: 0px;
+    }
+}

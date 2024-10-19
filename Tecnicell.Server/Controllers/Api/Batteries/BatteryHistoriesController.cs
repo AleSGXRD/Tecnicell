@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace Tecnicell.Server.Controllers.Api.Batteries
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
     public class BatteryHistoriesController : ControllerBase
     {
         private readonly TecnicellContext _context;
@@ -32,27 +34,29 @@ namespace Tecnicell.Server.Controllers.Api.Batteries
             return await _context.BatteryHistories
                 .Include(model => model.SaleCodeNavigation)
                 .Include(model => model.ToBranchNavigation)
+                .Include(model => model.UserCodeNavigation)
+                .OrderByDescending(model => model.Date)
                 .Select(model => _mapper.ToViewModel(model))
                 .ToListAsync();
         }
 
         // GET: api/BatteryHistories/5
-        [HttpGet("{code, date}")]
-        public async Task<ActionResult<BatteryHistoryViewModel>> GetBatteryHistory(string code, DateTime date)
+        [HttpGet("{code}")]
+        public async Task<ActionResult<IEnumerable<BatteryHistoryViewModel>>> GetBatteryHistory(string code)
         {
             var batteryHistory = await _context.BatteryHistories
-                .Include(model => model.SaleCodeNavigation)
-                .Include(model => model.ToBranchNavigation)
-                .Where(model => model.BatteryCode == code && model.Date == date)
-                .Select(model => _mapper.ToViewModel(model))
-                .FirstOrDefaultAsync();
+                .Include(history => history.SaleCodeNavigation)
+                .Include(history => history.ToBranchNavigation)
+                .Include(history => history.UserCodeNavigation)
+                .Where(history => history.BatteryCode == code)
+                .ToListAsync();
 
             if (batteryHistory == null)
             {
                 return NotFound();
             }
 
-            return batteryHistory;
+            return batteryHistory.Select(h => _mapper.ToViewModel(h)).ToList();
         }
 
         // PUT: api/BatteryHistories/5

@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { themes } from '../../public/theme';
+import { NotificationSystemService } from './Services/notification-system.service';
+import { Notification } from './Components/notification-bubble/notification-bubble.component';
 
 interface WeatherForecast {
   date: string;
@@ -13,25 +16,14 @@ interface WeatherForecast {
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
-
-  constructor(private http: HttpClient) {}
-
-  ngOnInit() {
-    this.getForecasts();
-  }
-
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
+export class AppComponent  {
 
   title = 'tecnicell.client';
+  themes = themes;
+
+  notification! : Notification;
+  
+  constructor(private notificationService : NotificationSystemService){
+    notificationService.notification.subscribe(res => this.notification = res);
+  }
 }

@@ -10,10 +10,10 @@
 
         public decimal? SalePrice { get; set; }
 
-        public int? Quantity { get; set; }
-
         public virtual ICollection<AccessoryHistoryViewModel> AccessoryHistories { get; set; } = new List<AccessoryHistoryViewModel>();
 
         public virtual AccessoryTypeViewModel? AccessoryTypeNavigation { get; set; }
+
+        public virtual ImageViewModel? ImageCodeNavigation { get; set; }
     }
 }

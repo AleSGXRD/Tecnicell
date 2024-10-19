@@ -36,7 +36,6 @@ C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\System.
 C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\System.Composition.Hosting.dll
 C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\System.Composition.Runtime.dll
 C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\System.Composition.TypedParts.dll
-C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\System.Text.Json.dll
 C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
 C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
@@ -258,3 +257,15 @@ C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\runtime
 C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\obj\Debug\net8.0\Tecnicell.Server.sourcelink.json
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\AleXRD\source\repos\Tecnicell\Tecnicell.Server\bin\Debug\net8.0\System.Formats.Asn1.dll

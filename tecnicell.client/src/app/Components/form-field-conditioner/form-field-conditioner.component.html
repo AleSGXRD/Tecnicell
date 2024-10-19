@@ -1,0 +1,20 @@
+
+<section class="example-section" [formGroup]="form">
+    <mat-expansion-panel [disabled]="checked == false" [expanded]="checked == true" >
+        <mat-expansion-panel-header>
+          <mat-panel-title><strong>{{formField.name}}</strong></mat-panel-title>
+          <mat-slide-toggle [(ngModel)]="checked"
+              class="example-margin"
+              [checked]="checked"
+              [formControlName]="formField.formControlName" >
+          </mat-slide-toggle>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+    
+        @for (field of formField.fields; track $index) {
+            <app-form-field class="w-full" [formField]="field" [matcher]="matcher" [form]="form"></app-form-field>
+        }
+      </mat-expansion-panel>
+      <mat-error></mat-error>
+</section>

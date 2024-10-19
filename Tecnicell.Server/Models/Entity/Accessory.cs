@@ -13,9 +13,11 @@ public partial class Accessory
 
     public decimal? SalePrice { get; set; }
 
-    public int? Quantity { get; set; }
+    public string? ImageCode { get; set; }
 
     public virtual ICollection<AccessoryHistory> AccessoryHistories { get; set; } = new List<AccessoryHistory>();
 
     public virtual AccessoryType? AccessoryTypeNavigation { get; set; }
+
+    public virtual Image? ImageCodeNavigation { get; set; }
 }

@@ -39,7 +39,7 @@ namespace Tecnicell.Server.Controllers.Api
         public async Task<ActionResult<ImageViewModel>> GetImage(string code)
         {
             var image = await _context.Images
-                .Where(model => model.Imagecode == code)
+                .Where(model => model.ImageCode == code)
                 .Select(model => _mapper.ToViewModel(model))
                 .FirstOrDefaultAsync();
 
@@ -142,7 +142,7 @@ namespace Tecnicell.Server.Controllers.Api
         }
         private bool ImageExists(string code)
         {
-            return _context.Images.Any(e => e.Imagecode == code);
+            return _context.Images.Any(e => e.ImageCode == code);
         }
     }
 }

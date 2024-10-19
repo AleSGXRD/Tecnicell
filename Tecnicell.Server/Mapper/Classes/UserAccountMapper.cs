@@ -8,14 +8,13 @@ namespace Tecnicell.Server.Mapper.Classes
         public UserAccount ToModel(UserAccountViewModel viewmodel)
         {
             RoleMapper roleMapper = new RoleMapper();
+            ImageMapper imageMapper = new ImageMapper();
             UserAccount model = new UserAccount
             {
                 UserCode = viewmodel.UserCode,
-                Role = viewmodel.Role,
                 Name = viewmodel.Name,
                 Password = viewmodel.Password,
             };
-            if (viewmodel.RoleNavigation != null) model.RoleNavigation = roleMapper.ToModel(viewmodel.RoleNavigation!);
 
             return model;
         }
@@ -23,15 +22,13 @@ namespace Tecnicell.Server.Mapper.Classes
         public UserAccountViewModel ToViewModel(UserAccount model)
         {
             RoleMapper roleMapper = new RoleMapper();
+            ImageMapper imageMapper = new ImageMapper();
             UserAccountViewModel viewmodel = new UserAccountViewModel
             {
                 UserCode = model.UserCode,
-                Role = model.Role,
                 Name = model.Name,
                 Password = model.Password,
             };
-            if (model.RoleNavigation != null) viewmodel.RoleNavigation = roleMapper.ToViewModel(model.RoleNavigation!);
-
             return viewmodel;
         }
     }

@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tecnicell.Server.Context;
+using Tecnicell.Server.Mapper.Classes;
 using Tecnicell.Server.Mapper.Classes.AccessoryMappers;
 using Tecnicell.Server.Models.Entity;
+using Tecnicell.Server.Models.Responses;
 using Tecnicell.Server.Models.ViewModel.Accessory;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,6 +14,7 @@ namespace Tecnicell.Server.Controllers.Api.Accessories
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
     public class AccessoriesController : ControllerBase
     {
         private readonly TecnicellContext _context;
@@ -24,30 +28,49 @@ namespace Tecnicell.Server.Controllers.Api.Accessories
 
         // GET: api/<AccessoriesController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AccessoryViewModel>>> Get()
+        public async Task<ActionResult<IEnumerable<AccessoryView>>> Get()
         {
-            return await _context.Accessories
-                .Include(ac => ac.AccessoryHistories)
-                .Include(ac => ac.AccessoryTypeNavigation)
-                .Select(ac => _mapper.ToViewModel(ac))
-                .ToListAsync();
+            return await _context.AccessoryViews.ToListAsync();
         }
 
         // GET api/<AccessoriesController>/5
         [HttpGet("{code}")]
-        public async Task<ActionResult<AccessoryViewModel>> Get(string code)
+        public async Task<ActionResult<AccessoryResponse>> Get(string code)
         {
-            var accessory = await _context.Accessories
-                .Where(ac => ac.AccessoryCode == code)
-                .Include(ac => ac.AccessoryHistories)
-                .Include(ac => ac.AccessoryTypeNavigation)
-                .Select(ac => _mapper.ToViewModel(ac))
-                .FirstOrDefaultAsync();
-
-            if (accessory == null)
+            var element = await _context.Accessories
+                                .Include(model => model.ImageCodeNavigation)
+                                .Where(model => model.AccessoryCode == code)
+                                .FirstOrDefaultAsync();
+            if (element == null)
+            {
                 return NotFound();
+            }
+            var View = await _context.AccessoryViews
+                                    .Where(model => code == model.Code)
+                                    .FirstOrDefaultAsync();
 
-            return accessory;
+            AccessoryHistoryMapper historyMapper = new AccessoryHistoryMapper();
+            var Histories = await _context.AccessoryHistories
+                .Include(model => model.ActionHistoryNavigation)
+                .Include(model => model.SaleCodeNavigation)
+                .Include(model => model.ToBranchNavigation)
+                .Include(model => model.UserCodeNavigation)
+                .Where(model => model.AccessoryCode == code)
+                .OrderByDescending(model => model.Date)
+                .Select(model => historyMapper.ToViewModel(model))
+                .ToListAsync();
+
+            ImageMapper imageMapper = new ImageMapper();
+            var Image = element.ImageCodeNavigation != null ? imageMapper.ToViewModel(element.ImageCodeNavigation) : null;
+
+            AccessoryResponse response = new AccessoryResponse
+            {
+                Histories = Histories,
+                View = View,
+                Image = Image ?? null
+            };
+
+            return response;
         }
 
         // POST api/<AccessoriesController>
@@ -110,9 +133,9 @@ namespace Tecnicell.Server.Controllers.Api.Accessories
 
         // DELETE api/<AccessoriesController>/5
         [HttpDelete("{code}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string code)
         {
-            var cliente = await _context.Accessories.FindAsync(id);
+            var cliente = await _context.Accessories.FindAsync(code);
             if (cliente == null)
             {
                 return NotFound();
@@ -136,7 +159,6 @@ namespace Tecnicell.Server.Controllers.Api.Accessories
             }
             return code;
         }
-
         private bool AccessoryExists(string code)
         {
             return _context.Accessories.Any(ac => ac.AccessoryCode == code);

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonComponent } from "../buttons/button/button.component";
 
 @Component({
@@ -10,5 +10,11 @@ export class UserInfoComponent {
   @Input()
   name:string = "Usuario Prueba";
   @Input()
+  type:string = "";
+  @Input()
   identifier:string = "49123451234";
+
+  @Output() editData = new EventEmitter<any>();
+  @Output() deleteData = new EventEmitter<any>();
+  
 }

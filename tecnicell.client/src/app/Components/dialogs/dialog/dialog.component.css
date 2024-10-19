@@ -1,6 +1,6 @@
 .background{
     @apply fixed top-0 left-0 flex flex-col justify-center items-center w-[100%] h-[100%]
-     bg-gray-500 bg-opacity-50 z-40 ;
+     bg-gray-500 bg-opacity-50 z-50 ;
      animation: appear 1s 1 ease-out;
 }
 .dialog{

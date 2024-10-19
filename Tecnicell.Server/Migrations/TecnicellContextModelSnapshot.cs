@@ -32,13 +32,13 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("accessory_type");
 
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
-
-                    b.Property<int?>("Quantity")
-                        .HasColumnType("integer")
-                        .HasColumnName("quantity");
 
                     b.Property<decimal?>("SalePrice")
                         .HasColumnType("numeric")
@@ -48,6 +48,8 @@ namespace Tecnicell.Server.Migrations
                         .HasName("accessory_pkey");
 
                     b.HasIndex("AccessoryType");
+
+                    b.HasIndex("ImageCode");
 
                     b.ToTable("accessory", (string)null);
                 });
@@ -110,6 +112,41 @@ namespace Tecnicell.Server.Migrations
                     b.ToTable("accessory_type", (string)null);
                 });
 
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.AccessoryView", b =>
+                {
+                    b.Property<string>("Available")
+                        .HasColumnType("text")
+                        .HasColumnName("available");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("character varying")
+                        .HasColumnName("code");
+
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
+                    b.Property<long?>("Quantity")
+                        .HasColumnType("bigint")
+                        .HasColumnName("quantity");
+
+                    b.Property<decimal?>("SalePrice")
+                        .HasColumnType("numeric")
+                        .HasColumnName("sale_price");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("character varying")
+                        .HasColumnName("type");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("accessory_view", (string)null);
+                });
+
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.ActionHistory", b =>
                 {
                     b.Property<string>("Name")
@@ -132,13 +169,13 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("brand");
 
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
-
-                    b.Property<int?>("Quantity")
-                        .HasColumnType("integer")
-                        .HasColumnName("quantity");
 
                     b.Property<decimal?>("SalePrice")
                         .HasColumnType("numeric")
@@ -152,6 +189,8 @@ namespace Tecnicell.Server.Migrations
                         .HasName("battery_pkey");
 
                     b.HasIndex("Brand");
+
+                    b.HasIndex("ImageCode");
 
                     b.ToTable("battery", (string)null);
                 });
@@ -212,6 +251,41 @@ namespace Tecnicell.Server.Migrations
                     b.HasIndex("ToBranch");
 
                     b.ToTable("battery_history", (string)null);
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.BatteryView", b =>
+                {
+                    b.Property<string>("Available")
+                        .HasColumnType("text")
+                        .HasColumnName("available");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("character varying")
+                        .HasColumnName("code");
+
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
+                    b.Property<long?>("Quantity")
+                        .HasColumnType("bigint")
+                        .HasColumnName("quantity");
+
+                    b.Property<decimal?>("SalePrice")
+                        .HasColumnType("numeric")
+                        .HasColumnName("sale_price");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("character varying")
+                        .HasColumnName("type");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("battery_view", (string)null);
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Branch", b =>
@@ -276,6 +350,10 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("brand");
 
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
                     b.Property<decimal?>("SalePrice")
                         .HasColumnType("numeric")
                         .HasColumnName("sale_price");
@@ -284,6 +362,8 @@ namespace Tecnicell.Server.Migrations
                         .HasName("phone_pkey");
 
                     b.HasIndex("Brand");
+
+                    b.HasIndex("ImageCode");
 
                     b.ToTable("phone", (string)null);
                 });
@@ -364,6 +444,10 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("customer_number");
 
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
                     b.Property<decimal?>("Price")
                         .HasColumnType("numeric")
                         .HasColumnName("price");
@@ -372,6 +456,8 @@ namespace Tecnicell.Server.Migrations
                         .HasName("phone_repair_pkey");
 
                     b.HasIndex("Brand");
+
+                    b.HasIndex("ImageCode");
 
                     b.ToTable("phone_repair", (string)null);
                 });
@@ -412,6 +498,92 @@ namespace Tecnicell.Server.Migrations
                     b.HasIndex("ToBranch");
 
                     b.ToTable("phone_repair_history", (string)null);
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneRepairView", b =>
+                {
+                    b.Property<string>("ActionDescription")
+                        .HasColumnType("text")
+                        .HasColumnName("action_description");
+
+                    b.Property<string>("CurrentState")
+                        .HasColumnType("text")
+                        .HasColumnName("current_state");
+
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("character varying")
+                        .HasColumnName("customer_id");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("character varying")
+                        .HasColumnName("customer_name");
+
+                    b.Property<string>("CustomerNumber")
+                        .HasColumnType("character varying")
+                        .HasColumnName("customer_number");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("character varying")
+                        .HasColumnName("description");
+
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
+                    b.Property<string>("Imei")
+                        .HasColumnType("character varying")
+                        .HasColumnName("imei");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
+                    b.Property<decimal?>("Price")
+                        .HasColumnType("numeric")
+                        .HasColumnName("price");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("phone_repair_view", (string)null);
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneView", b =>
+                {
+                    b.Property<string>("ActionDescription")
+                        .HasColumnType("text")
+                        .HasColumnName("action_description");
+
+                    b.Property<decimal?>("Cost")
+                        .HasColumnType("numeric")
+                        .HasColumnName("cost");
+
+                    b.Property<string>("CurrentState")
+                        .HasColumnType("text")
+                        .HasColumnName("current_state");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("character varying")
+                        .HasColumnName("description");
+
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
+                    b.Property<string>("Imei")
+                        .HasColumnType("character varying")
+                        .HasColumnName("imei");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
+                    b.Property<decimal?>("SalePrice")
+                        .HasColumnType("numeric")
+                        .HasColumnName("sale_price");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("phone_view", (string)null);
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Role", b =>
@@ -470,13 +642,13 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("height");
 
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
-
-                    b.Property<int?>("Quantity")
-                        .HasColumnType("integer")
-                        .HasColumnName("quantity");
 
                     b.Property<decimal?>("SalePrice")
                         .HasColumnType("numeric")
@@ -494,6 +666,8 @@ namespace Tecnicell.Server.Migrations
                         .HasName("screen_pkey");
 
                     b.HasIndex("Brand");
+
+                    b.HasIndex("ImageCode");
 
                     b.ToTable("screen", (string)null);
                 });
@@ -540,11 +714,50 @@ namespace Tecnicell.Server.Migrations
                     b.ToTable("screen_history", (string)null);
                 });
 
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.ScreenView", b =>
+                {
+                    b.Property<string>("Available")
+                        .HasColumnType("text")
+                        .HasColumnName("available");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("character varying")
+                        .HasColumnName("code");
+
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
+                    b.Property<long?>("Quantity")
+                        .HasColumnType("bigint")
+                        .HasColumnName("quantity");
+
+                    b.Property<decimal?>("SalePrice")
+                        .HasColumnType("numeric")
+                        .HasColumnName("sale_price");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("character varying")
+                        .HasColumnName("type");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("screen_view", (string)null);
+                });
+
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.UserAccount", b =>
                 {
                     b.Property<string>("UserCode")
                         .HasColumnType("character varying")
                         .HasColumnName("user_code");
+
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
 
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
@@ -561,6 +774,8 @@ namespace Tecnicell.Server.Migrations
                     b.HasKey("UserCode")
                         .HasName("user_account_pkey");
 
+                    b.HasIndex("ImageCode");
+
                     b.HasIndex("Role");
 
                     b.ToTable("user_account", (string)null);
@@ -573,7 +788,14 @@ namespace Tecnicell.Server.Migrations
                         .HasForeignKey("AccessoryType")
                         .HasConstraintName("accessory_accessory_type_fkey");
 
+                    b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
+                        .WithMany("Accessories")
+                        .HasForeignKey("ImageCode")
+                        .HasConstraintName("accessory_image_fkey");
+
                     b.Navigation("AccessoryTypeNavigation");
+
+                    b.Navigation("ImageCodeNavigation");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.AccessoryHistory", b =>
@@ -615,7 +837,14 @@ namespace Tecnicell.Server.Migrations
                         .HasForeignKey("Brand")
                         .HasConstraintName("battery_brand_fkey");
 
+                    b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
+                        .WithMany("Batteries")
+                        .HasForeignKey("ImageCode")
+                        .HasConstraintName("battery_image_code_fkey");
+
                     b.Navigation("BrandNavigation");
+
+                    b.Navigation("ImageCodeNavigation");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.BatteryHistory", b =>
@@ -657,7 +886,14 @@ namespace Tecnicell.Server.Migrations
                         .HasForeignKey("Brand")
                         .HasConstraintName("phone_brand_fkey");
 
+                    b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
+                        .WithMany("Phones")
+                        .HasForeignKey("ImageCode")
+                        .HasConstraintName("phone_image_fkey");
+
                     b.Navigation("BrandNavigation");
+
+                    b.Navigation("ImageCodeNavigation");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneHistory", b =>
@@ -699,7 +935,14 @@ namespace Tecnicell.Server.Migrations
                         .HasForeignKey("Brand")
                         .HasConstraintName("phone_repair_brand_fkey");
 
+                    b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
+                        .WithMany("PhoneRepairs")
+                        .HasForeignKey("ImageCode")
+                        .HasConstraintName("phone_repair_image_fkey");
+
                     b.Navigation("BrandNavigation");
+
+                    b.Navigation("ImageCodeNavigation");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneRepairHistory", b =>
@@ -751,7 +994,14 @@ namespace Tecnicell.Server.Migrations
                         .HasForeignKey("Brand")
                         .HasConstraintName("screen_brand_fkey");
 
+                    b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
+                        .WithMany("Screens")
+                        .HasForeignKey("ImageCode")
+                        .HasConstraintName("screen_image_fkey");
+
                     b.Navigation("BrandNavigation");
+
+                    b.Navigation("ImageCodeNavigation");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.ScreenHistory", b =>
@@ -788,10 +1038,17 @@ namespace Tecnicell.Server.Migrations
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.UserAccount", b =>
                 {
+                    b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
+                        .WithMany("UserAccounts")
+                        .HasForeignKey("ImageCode")
+                        .HasConstraintName("user_account_image_fkey");
+
                     b.HasOne("Tecnicell.Server.Models.Entity.Role", "RoleNavigation")
                         .WithMany("UserAccounts")
                         .HasForeignKey("Role")
                         .HasConstraintName("user_account_role_fkey");
+
+                    b.Navigation("ImageCodeNavigation");
 
                     b.Navigation("RoleNavigation");
                 });
@@ -845,6 +1102,21 @@ namespace Tecnicell.Server.Migrations
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Currency", b =>
                 {
                     b.Navigation("Sales");
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.Image", b =>
+                {
+                    b.Navigation("Accessories");
+
+                    b.Navigation("Batteries");
+
+                    b.Navigation("PhoneRepairs");
+
+                    b.Navigation("Phones");
+
+                    b.Navigation("Screens");
+
+                    b.Navigation("UserAccounts");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Phone", b =>

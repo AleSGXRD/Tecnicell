@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tecnicell.Server.Context;
 using Tecnicell.Server.Mapper.Classes;
@@ -61,7 +56,7 @@ namespace Tecnicell.Server.Controllers.Api
             if (code != sale.SaleCode)
             {
                 return BadRequest();
-            }
+            }   
 
             Sale model = _mapper.ToModel(sale);
 
@@ -91,7 +86,7 @@ namespace Tecnicell.Server.Controllers.Api
         [HttpPost]
         public async Task<ActionResult<SaleViewModel>> PostSale(SaleViewModel sale)
         {
-            sale.CurrencyCode = GenerateCode();
+            sale.SaleCode = GenerateCode();
 
             Sale model = _mapper.ToModel(sale);
             _context.Sales.Add(model);

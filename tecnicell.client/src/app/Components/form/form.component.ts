@@ -1,11 +1,19 @@
 import { Component, input, Input } from '@angular/core';
-import { FormService } from '../../services/form/form.service';
+import { FormService } from '../../Services/form/form.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, Validators, ReactiveFormsModule} from '@angular/forms';
-import { FormField } from '../../types/tools/Form/FormField';
+import { FormBuilder, FormsModule, Validators, ReactiveFormsModule, FormControl, FormGroupDirective, NgForm} from '@angular/forms';
+import { FormField } from '../../Interfaces/tools/Form/FormField';
 import { ButtonComponent, Rounded } from "../buttons/button/button.component";
-import { DialogService } from '../../services/dialog/dialog.service';
+import { DialogService } from '../../Services/dialog/dialog.service';
 
+import { ErrorStateMatcher } from '@angular/material/core';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-form',
@@ -27,10 +35,12 @@ export class FormComponent {
       type : "text",
       formControlName:"email",
       name: "Email",
-      placeholder : "..."
+      placeholder : "...",
+      fieldRequired : false,
     }
   ];
 
+  matcher = new MyErrorStateMatcher();
   public error : boolean = false; 
 
   ngOnInit(): void {
@@ -50,16 +60,20 @@ export class FormComponent {
     this.error=false;
     this.formService.active = false;
   }
-  SendData(){
+  SendData(){  
+    this.error = false;
+
     this.inputs.forEach(element=> {
-      if(this.form.get(element.formControlName).errors != null)
-       this.error = true
+        if(this.form.get(element.formControlName).errors != null)
+          this.error = true 
       }
     );
-    if(this.error == true)
+
+    if(this.error)
       return ;
     this.dialogService.SetMethod(()=>{
       this.formService.ProcessData(this.form.value);
+      console.log(this.form.value)
       this.DesappearForm();
     });
   }

@@ -8,10 +8,14 @@ namespace Tecnicell.Server.Models.ViewModel.Phone
 
         public string? Brand { get; set; }
 
+        public string? Name { get; set; }
+
         public decimal? SalePrice { get; set; }
 
-        public virtual PhoneBrandViewModel? BrandNavigation { get; set; }
+        public virtual BrandViewModel? BrandNavigation { get; set; }
 
         public virtual ICollection<PhoneHistoryViewModel> PhoneHistories { get; set; } = new List<PhoneHistoryViewModel>();
+
+        public virtual ImageViewModel? ImageCodeNavigation { get; set; }
     }
 }

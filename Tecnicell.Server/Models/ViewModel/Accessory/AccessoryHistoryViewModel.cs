@@ -6,6 +6,8 @@ namespace Tecnicell.Server.Models.ViewModel.Accessory
     {
         public string AccessoryCode { get; set; } = null!;
 
+        public string UserCode { get; set; } = null!;
+
         public DateTime Date { get; set; }
 
         public string? ActionHistory { get; set; }
@@ -21,5 +23,7 @@ namespace Tecnicell.Server.Models.ViewModel.Accessory
         public virtual SaleViewModel? SaleCodeNavigation { get; set; }
 
         public virtual BranchViewModel? ToBranchNavigation { get; set; }
+
+        public virtual UserInfoViewModel? UserCodeNavigation { get; set; } = null!;
     }
 }

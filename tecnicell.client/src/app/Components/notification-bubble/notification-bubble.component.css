@@ -1,0 +1,54 @@
+.bubble{
+    @apply absolute py-2 px-4 bottom-0 max-w-[70%] border-2 flex
+    rounded-3xl overflow-hidden bg-opacity-75 transition-all 
+    my-12 cursor-pointer z-30 ;
+}
+
+.line{
+    @apply absolute  bottom-0 left-0 w-full;
+    height: 3px;
+    animation: expand-line 3s 1 linear;
+}
+.hide{
+    @apply opacity-0 -z-50;
+    animation: disappear 4s 1 ease-out;
+}
+.success{
+    @apply  bg-green-100  border-green-400 border-2 text-green-700
+}
+.success > .line{
+    @apply bg-green-300
+}
+.error{
+    @apply  bg-red-100 border-red-400 border-2 text-red-700
+    
+}
+.error > .line{
+    @apply bg-red-300
+}
+@keyframes expand-line{
+    from{
+        @apply w-0;
+    }
+}
+@keyframes disappear {
+    0%{
+        opacity: 0;
+        display: flex;
+        @apply z-30;
+    }
+    10%{
+        opacity: 0.75;
+        display: flex;
+        @apply z-30;
+    }
+    75%{
+        opacity: 0.75;
+        display: flex;
+        @apply z-30;
+    }
+    100%{
+        opacity: 0;
+        display: hidden;
+    }
+}

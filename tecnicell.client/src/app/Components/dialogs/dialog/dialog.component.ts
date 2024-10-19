@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ButtonComponent } from "../../buttons/button/button.component";
-import { DialogService } from '../../../services/dialog/dialog.service';
+import { DialogService } from '../../../Services/dialog/dialog.service';
 
 @Component({
   selector: 'app-dialog',

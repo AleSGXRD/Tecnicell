@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace Tecnicell.Server.Controllers.Api.Screens
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
     public class ScreenHistoriesController : ControllerBase
     {
         private readonly TecnicellContext _context;
@@ -33,21 +35,24 @@ namespace Tecnicell.Server.Controllers.Api.Screens
                 .Include(model => model.ActionHistoryNavigation)
                 .Include(model => model.SaleCodeNavigation)
                 .Include(model => model.ToBranchNavigation)
+                .Include(model => model.UserCodeNavigation)
+                .OrderByDescending(model => model.Date)
                 .Select(model => _mapper.ToViewModel(model))
                 .ToListAsync();
         }
 
         // GET: api/ScreenHistories/5
-        [HttpGet("{code, date}")]
-        public async Task<ActionResult<ScreenHistoryViewModel>> GetScreenHistory(string code, DateTime date)
+        [HttpGet("{code}")]
+        public async Task<ActionResult<IEnumerable<ScreenHistoryViewModel>>> GetScreenHistory(string code)
         {
             var screenHistory = await _context.ScreenHistories
                 .Include(model => model.ActionHistoryNavigation)
                 .Include(model => model.SaleCodeNavigation)
                 .Include(model => model.ToBranchNavigation)
-                .Where(model => model.ScreenCode == code && model.Date == date)
+                .Include(model => model.UserCodeNavigation)
+                .Where(model => model.ScreenCode == code )
                 .Select(model => _mapper.ToViewModel(model))
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
             if (screenHistory == null)
             {

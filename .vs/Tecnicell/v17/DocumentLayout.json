@@ -1,7 +1,84 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\tecnicell.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\tecnicell.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\controllers\\api\\accessories\\accessoryhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\accessories\\accessoryhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\controllers\\api\\accessories\\accessoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\accessories\\accessoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\controllers\\api\\batteries\\batteriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\batteries\\batteriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\controllers\\api\\batteries\\batteryhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\batteries\\batteryhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\controllers\\api\\phones\\phonescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\phones\\phonescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\controllers\\api\\phones\\phonerepairscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\phones\\phonerepairscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\controllers\\api\\phones\\phonerepairhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\phones\\phonerepairhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\controllers\\api\\screens\\screenscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\screens\\screenscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\controllers\\api\\screens\\screenhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\screens\\screenhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\controllers\\api\\phones\\phonehistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\phones\\phonehistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\mapper\\classes\\phonemappers\\phonemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\mapper\\classes\\phonemappers\\phonemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\mapper\\classes\\phonemappers\\phonerepairmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\mapper\\classes\\phonemappers\\phonerepairmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\models\\viewmodel\\phone\\phonerepairviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\models\\viewmodel\\phone\\phonerepairviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\models\\viewmodel\\phone\\phonehistoryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\models\\viewmodel\\phone\\phonehistoryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\models\\viewmodel\\phone\\phoneviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\models\\viewmodel\\phone\\phoneviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\alexrd\\source\\repos\\tecnicell\\tecnicell.server\\models\\entity\\phone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\models\\entity\\phone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
@@ -9,7 +86,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 696,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,6 +107,253 @@
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Program.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Program.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Program.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Program.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAABkAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-13T00:40:23.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Tecnicell.Server",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Tecnicell.Server.csproj",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj",
+              "RelativeToolTip": "Tecnicell.Server\\Tecnicell.Server.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-10-13T00:39:49.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\appsettings.json",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\appsettings.json",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\appsettings.json",
+              "RelativeToolTip": "Tecnicell.Server\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-13T00:37:15.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ScreensController.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Screens\\ScreensController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Screens\\ScreensController.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Screens\\ScreensController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Screens\\ScreensController.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAowD4AAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T18:30:57.953Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ScreenHistoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Screens\\ScreenHistoriesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Screens\\ScreenHistoriesController.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Screens\\ScreenHistoriesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Screens\\ScreenHistoriesController.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAxwCYAAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T18:30:54.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PhonesController.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Phones\\PhonesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Phones\\PhonesController.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Phones\\PhonesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Phones\\PhonesController.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAowD4AAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T18:30:48.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PhoneRepairsController.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairsController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairsController.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairsController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairsController.cs",
+              "ViewState": "AQIAACsAAAAAAAAAAAAwwDwAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T18:30:43.464Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PhoneRepairHistoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairHistoriesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairHistoriesController.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairHistoriesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairHistoriesController.cs",
+              "ViewState": "AQIAABwAAAAAAAAAAAAgwCYAAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T18:30:35.557Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "PhoneHistoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneHistoriesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneHistoriesController.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneHistoriesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneHistoriesController.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAIBJwCUAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T18:30:23.861Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BatteriesController.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteriesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteriesController.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteriesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteriesController.cs",
+              "ViewState": "AQIAADIAAAAAAAAAAAAwwD4AAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T18:30:07.217Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BatteryHistoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteryHistoriesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteryHistoriesController.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteryHistoriesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteryHistoriesController.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAxwCUAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T18:29:57.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "PhoneMapper.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Mapper\\Classes\\PhoneMappers\\PhoneMapper.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Mapper\\Classes\\PhoneMappers\\PhoneMapper.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Mapper\\Classes\\PhoneMappers\\PhoneMapper.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Mapper\\Classes\\PhoneMappers\\PhoneMapper.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAQwCgAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T17:54:24.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "PhoneRepairMapper.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Mapper\\Classes\\PhoneMappers\\PhoneRepairMapper.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Mapper\\Classes\\PhoneMappers\\PhoneRepairMapper.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Mapper\\Classes\\PhoneMappers\\PhoneRepairMapper.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Mapper\\Classes\\PhoneMappers\\PhoneRepairMapper.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAgwCUAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T17:54:09.726Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "PhoneRepairViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneRepairViewModel.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneRepairViewModel.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneRepairViewModel.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneRepairViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T17:53:49.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "PhoneHistoryViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneHistoryViewModel.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneHistoryViewModel.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneHistoryViewModel.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneHistoryViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T17:53:47.473Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Phone.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Models\\Entity\\Phone.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Models\\Entity\\Phone.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Models\\Entity\\Phone.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Models\\Entity\\Phone.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T17:53:27.119Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "PhoneViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneViewModel.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneViewModel.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneViewModel.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Models\\ViewModel\\Phone\\PhoneViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T17:53:14.754Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AccessoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoriesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoriesController.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoriesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoriesController.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAwwDkAAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T14:55:38.77Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AccessoryHistoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoryHistoriesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoryHistoriesController.cs",
+              "ToolTip": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoryHistoriesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoryHistoriesController.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAAowCkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T14:54:30.163Z",
+              "EditorCaption": ""
             }
           ]
         },

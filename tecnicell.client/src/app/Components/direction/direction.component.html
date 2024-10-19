@@ -1,30 +1,32 @@
 
-<ul class="list-none flex flex-row items-end">
+<ul class="list-none flex flex-wrap w-fit items-center justify-center gap-1 dark:text-gray-100">
     @for(direc of direction; track direc){
         @if(direc.includes("Main")){
-            <li class=" flex flex-row justify-center items-end">
+            <li class="gap-1 flex flex-row justify-center items-center text-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="mx-2" width="32px" height="32px" viewBox="0 0 24 24"><path fill="currentColor" d="M22 9L12 1L2 9v2h2v10h5v-4a3 3 0 1 1 6 0v4h5V11h2z"/></svg>
-                <h3 class="font-semibold whitespace-nowrap text-2xl tracking-wider">
+                <i class="font-semibold not-italic text-2xl tracking-wider ">
                     {{direc}}
-                </h3>
-                <h3 class="font-semibold whitespace-nowrap text-2xl tracking-wider">
+                </i>
+                <i class="font-medium not-italic whitespace-nowrap text-2xl tracking-wider ">
                     >
-                </h3>
+                </i>
             </li>
         }
         @else if(direc != direction[direction.length - 1]) {
-            <li class=" flex flex-row justify-center items-end">
-                <h5 class="font-light whitespace-nowrap text-xl tracking-wider">
+            <li class="gap-1 flex flex-row justify-center items-center text-center">
+                <i class="font-light whitespace-nowrap text-xl tracking-wider  ">
                     {{direc}}
-                </h5>
-                <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="m19 12l12 12l-12 12"/></svg>
+                </i>
+                <i class="font-light not-italic whitespace-nowrap text-2xl tracking-wider ">
+                    >
+                </i>
             </li>
         }
         @else {
-            <li class=" flex flex-row justify-center items-end">
-                <h5 class="font-normal whitespace-nowrap text-xl tracking-wider">
+            <li class=" flex flex-row justify-center items-center">
+                <i class="font-light not-italic whitespace-nowrap text-xl tracking-wider">
                     {{direc}}
-                </h5>
+                </i>
             </li>
         }
     }

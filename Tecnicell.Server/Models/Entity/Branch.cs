@@ -18,4 +18,6 @@ public partial class Branch
     public virtual ICollection<PhoneRepairHistory> PhoneRepairHistories { get; set; } = new List<PhoneRepairHistory>();
 
     public virtual ICollection<ScreenHistory> ScreenHistories { get; set; } = new List<ScreenHistory>();
+
+    public virtual ICollection<UserInfo> UserInfos { get; set; } = new List<UserInfo>();
 }

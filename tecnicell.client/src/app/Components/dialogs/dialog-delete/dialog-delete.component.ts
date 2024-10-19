@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { ButtonComponent } from '../../buttons/button/button.component';
-import { DialogService } from '../../../services/dialog/dialog.service';
-import { ApiService } from '../../../services/api/ApiService.service';
+import { DialogService } from '../../../Services/dialog/dialog.service';
+import { ApiService } from '../../../Services/api/ApiService.service';
 
 @Component({
   selector: 'app-dialog-delete',

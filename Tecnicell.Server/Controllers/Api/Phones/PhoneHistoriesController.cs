@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace Tecnicell.Server.Controllers.Api.Phones
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
     public class PhoneHistoriesController : ControllerBase
     {
         private readonly TecnicellContext _context;
@@ -33,21 +35,24 @@ namespace Tecnicell.Server.Controllers.Api.Phones
                 .Include(model => model.ActionHistoryNavigation)
                 .Include(model => model.SaleCodeNavigation)
                 .Include(model => model.ToBranchNavigation)
+                .Include(model => model.UserCodeNavigation)
+                .OrderByDescending(model => model.Date)
                 .Select(model => _mapper.ToViewModel(model))
                 .ToListAsync();
         }
 
         // GET: api/PhoneHistories/5
-        [HttpGet("{imei, date}")]
-        public async Task<ActionResult<PhoneHistoryViewModel>> GetPhoneHistory(string imei, DateTime date)
+        [HttpGet("{imei}")]
+        public async Task<ActionResult<IEnumerable<PhoneHistoryViewModel>>> GetPhoneHistory(string imei)
         {
             var phoneHistory = await _context.PhoneHistories
                 .Include(model => model.ActionHistoryNavigation)
                 .Include(model => model.SaleCodeNavigation)
                 .Include(model => model.ToBranchNavigation)
-                .Where(model => model.Imei == imei && model.Date == date)
+                .Include(model => model.UserCodeNavigation)
+                .Where(model => model.Imei == imei)
                 .Select(model => _mapper.ToViewModel(model))
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
             if (phoneHistory == null)
             {

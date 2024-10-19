@@ -6,7 +6,7 @@
         {
             string result = "";
             // Nuestro patrón de caracteres para formar el código
-            string pattern = "+-#!?0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+            string pattern = "0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
             // Creamos una instancia del generador de números aleatorios
             // cogemos como semilla los Ticks de reloj de esta forma nos 
             // aseguramos de no generar códigos con la misma semilla.

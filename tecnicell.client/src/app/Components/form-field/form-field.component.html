@@ -1,0 +1,157 @@
+@if(formField){
+    @if(formField.type == "text"){
+        <mat-form-field [classList]="' w-full text-left'" [formGroup]="form" >
+            <mat-label>{{formField.name}}</mat-label>
+            <input matInput [placeholder]="formField.placeholder" [errorStateMatcher]="matcher"
+                [formControlName]="formField.formControlName" [name]="formField.formControlName"
+                [id]="formField.formControlName" >
+            @for (err of formField.errors; track $index) {
+                @if (this.form.get(formField.formControlName).hasError(err.type) && !this.form.get(formField.formControlName).hasError('required')) {
+                    <mat-error>{{err.message}}</mat-error>
+                }
+            }
+            @if (formField.fieldRequired == true &&this.form.get(formField.formControlName).hasError('required')) {
+                <mat-error>Este campo es necesario rellenarlo</mat-error>
+            }
+        </mat-form-field>
+    }
+    @else if(formField.type == "password"){
+        <mat-form-field  [classList]="' w-full text-left'" [formGroup]="form">
+            <mat-label>{{formField.name}}</mat-label>
+            <input matInput [type]="hide() ? 'password' : 'text'"  [placeholder]="formField.placeholder" [errorStateMatcher]="matcher"
+            [formControlName]="formField.formControlName" [name]="formField.formControlName"
+            [id]="formField.formControlName" />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="clickEvent($event)"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide()"
+            >
+              <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            @for (err of formField.errors; track $index) {
+                @if (this.form.get(formField.formControlName).hasError(err.type) && !this.form.get(formField.formControlName).hasError('required')) {
+                    <mat-error>{{err.message}}</mat-error>
+                }
+            }
+            @if (formField.fieldRequired == true &&this.form.get(formField.formControlName).hasError('required')) {
+                <mat-error>Este campo es necesario rellenarlo</mat-error>
+            }
+        </mat-form-field>
+    }
+    @else if (formField.type == "textarea"){
+        <mat-form-field [classList]="' w-full text-left'" [formGroup]="form" >
+            <mat-label>{{formField.name}}</mat-label>
+            <textarea matInput [placeholder]="formField.placeholder" [errorStateMatcher]="matcher"
+            [formControlName]="formField.formControlName" [name]="formField.formControlName"
+            [id]="formField.formControlName"></textarea>
+            @for (err of formField.errors; track $index) {
+                @if (this.form.get(formField.formControlName).hasError(err.type) && !this.form.get(formField.formControlName).hasError('required')) {
+                    <mat-error>{{err.message}}</mat-error>
+                }
+            }
+            @if (formField.fieldRequired == true &&this.form.get(formField.formControlName).hasError('required')) {
+                <mat-error>Este campo es necesario rellenarlo</mat-error>
+            }
+        </mat-form-field>
+    }
+    @else if(formField.type == "price"){
+        <mat-form-field floatLabel="always" [classList]="' w-full text-left justify-end'" [formGroup]="form">
+          <mat-label>{{formField.name}}</mat-label>
+          <input matInput type="number" class="example-right-align"  
+            [placeholder]="formField.placeholder" [errorStateMatcher]="matcher"
+            [formControlName]="formField.formControlName" [name]="formField.formControlName"
+            [id]="formField.formControlName"/>
+          <span matTextPrefix>$&nbsp;</span>
+          <span matTextSuffix>.00</span>
+        </mat-form-field>
+    }
+    @else if(formField.type == "number"){
+        <mat-form-field floatLabel="always" [classList]="' w-full text-left justify-end'" [formGroup]="form">
+          <mat-label>{{formField.name}}</mat-label>
+          <input matInput type="number" class="example-right-align text-left"  
+            [placeholder]="formField.placeholder" [errorStateMatcher]="matcher"
+            [formControlName]="formField.formControlName" [name]="formField.formControlName"
+            [id]="formField.formControlName"/>
+        </mat-form-field>
+    }
+    @else if(formField.type == "date"){
+        <mat-form-field [classList]="' w-full text-left justify-end'" [formGroup]="form">
+            <mat-label>{{formField.name}}</mat-label>
+            <input matInput [matDatepicker]="picker" 
+            [placeholder]="formField.placeholder" [errorStateMatcher]="matcher"
+            [formControlName]="formField.formControlName" [name]="formField.formControlName"
+            [id]="formField.formControlName">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            @for (err of formField.errors; track $index) {
+                @if (this.form.get(formField.formControlName).hasError(err.type) && !this.form.get(formField.formControlName).hasError('required')) {
+                    <mat-error>{{err.message}}</mat-error>
+                }
+            }
+            @if (formField.fieldRequired == true &&this.form.get(formField.formControlName).hasError('required')) {
+                <mat-error>Este campo es necesario rellenarlo</mat-error>
+            }
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    }
+    @else if(formField.type == "telephone"){
+        <mat-form-field class="w-full"  [formGroup]="form">
+            <mat-label>{{formField.name}}</mat-label>
+            <span matTextPrefix>+53 &nbsp;</span>
+            <input type="tel" matInput placeholder="54558866" [errorStateMatcher]="matcher"
+            [formControlName]="formField.formControlName" [name]="formField.formControlName"
+            [id]="formField.formControlName">
+
+            @for (err of formField.errors; track $index) {
+                @if (this.form.get(formField.formControlName).hasError(err.type) && !this.form.get(formField.formControlName).hasError('required')) {
+                    <mat-error>{{err.message}}</mat-error>
+                }
+            }
+            @if (formField.fieldRequired == true &&this.form.get(formField.formControlName).hasError('required')) {
+                <mat-error>Este campo es necesario rellenarlo</mat-error>
+            }
+        </mat-form-field>
+    }
+    @else if (formField.type == "select") {
+        @if(formField.condition != undefined && formField.condition.value.includes(this.form.get(formField.condition.formControlName).value) == false ){
+            <mat-form-field class="w-full"  [formGroup]="form" >
+                <mat-label>{{formField.name}}</mat-label>
+                <mat-select disabled [value]="null" [errorStateMatcher]="matcher" 
+                [id]="formField.formControlName" >
+                    @for (option of formField.options; track option) {
+                    <mat-option [value]="option.value">{{option.name}}</mat-option>
+                    }
+                </mat-select>  
+                @for (err of formField.errors; track $index) {
+                    @if (this.form.get(formField.formControlName).hasError(err.type) && !this.form.get(formField.formControlName).hasError('required')) {
+                        <mat-error>{{err.message}}</mat-error>
+                    }
+                }
+                @if (formField.fieldRequired == true &&this.form.get(formField.formControlName).hasError('required')) {
+                    <mat-error>Este campo es necesario rellenarlo</mat-error>
+                } 
+            </mat-form-field>
+        }
+        @else {
+            <mat-form-field class="w-full"  [formGroup]="form" >
+                <mat-label>{{formField.name}}</mat-label>
+                <mat-select [formControlName]="formField.formControlName" [errorStateMatcher]="matcher" 
+                [id]="formField.formControlName">
+                    @for (option of formField.options; track option) {
+                    <mat-option [value]="option.value">{{option.name}}</mat-option>
+                    }
+                </mat-select>  
+                @for (err of formField.errors; track $index) {
+                    @if (this.form.get(formField.formControlName).hasError(err.type) && !this.form.get(formField.formControlName).hasError('required')) {
+                        <mat-error>{{err.message}}</mat-error>
+                    }
+                }
+                @if (formField.fieldRequired == true &&this.form.get(formField.formControlName).hasError('required')) {
+                    <mat-error>Este campo es necesario rellenarlo</mat-error>
+                } 
+            </mat-form-field>
+        }
+    }
+}

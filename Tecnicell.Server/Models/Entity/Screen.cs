@@ -11,17 +11,19 @@ public partial class Screen
 
     public string? Name { get; set; }
 
-    public int? Quantity { get; set; }
-
     public decimal? Width { get; set; }
 
     public decimal? Height { get; set; }
 
     public decimal? SalePrice { get; set; }
 
+    public string? ImageCode { get; set; }
+
     public int? Warranty { get; set; }
 
-    public virtual PhoneBrand? BrandNavigation { get; set; }
+    public virtual Brand? BrandNavigation { get; set; }
+
+    public virtual Image? ImageCodeNavigation { get; set; }
 
     public virtual ICollection<ScreenHistory> ScreenHistories { get; set; } = new List<ScreenHistory>();
 }

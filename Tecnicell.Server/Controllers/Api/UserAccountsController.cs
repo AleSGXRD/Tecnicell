@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Tecnicell.Server.Context;
 using Tecnicell.Server.Mapper.Classes;
 using Tecnicell.Server.Models.Entity;
 using Tecnicell.Server.Models.ViewModel;
+using Tecnicell.Server.Tools;
 
 namespace Tecnicell.Server.Controllers.Api
 {
@@ -30,7 +32,6 @@ namespace Tecnicell.Server.Controllers.Api
         public async Task<ActionResult<IEnumerable<UserAccountViewModel>>> GetUserAccounts()
         {
             return await _context.UserAccounts
-                .Include(model => model.RoleNavigation)
                 .Select(model => _mapper.ToViewModel(model))
                 .ToListAsync();
         }
@@ -41,7 +42,6 @@ namespace Tecnicell.Server.Controllers.Api
         {
             var userAccount = await _context.UserAccounts
                 .Where(model => model.UserCode == code)
-                .Include(model => model.RoleNavigation)
                 .Select(model => _mapper.ToViewModel(model))
                 .FirstOrDefaultAsync();
 
@@ -62,6 +62,11 @@ namespace Tecnicell.Server.Controllers.Api
             {
                 return BadRequest();
             }
+            if (userAccount == null) return NotFound();
+            var passwordEncripted = Encrypt.GetSHA256(userAccount.Password);
+
+            userAccount.Password = passwordEncripted;
+
             UserAccount model = _mapper.ToModel(userAccount);
             _context.Entry(model).State = EntityState.Modified;
 
@@ -89,7 +94,10 @@ namespace Tecnicell.Server.Controllers.Api
         [HttpPost]
         public async Task<ActionResult<UserAccountViewModel>> PostUserAccount(UserAccountViewModel userAccount)
         {
-            userAccount.UserCode = GenerateCode();
+            if (userAccount == null) return NotFound();
+            var passwordEncripted = Encrypt.GetSHA256(userAccount.Password);
+
+            userAccount.Password = passwordEncripted;
 
             UserAccount model = _mapper.ToModel(userAccount);
             _context.UserAccounts.Add(model);
@@ -126,19 +134,6 @@ namespace Tecnicell.Server.Controllers.Api
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private string GenerateCode()
-        {
-            string code = "";
-            while (true)
-            {
-                code = GeneratorCode.GenerateCode(4);
-
-                if (UserAccountExists(code) == false)
-                    break;
-            }
-            return code;
         }
 
         private bool UserAccountExists(string code)

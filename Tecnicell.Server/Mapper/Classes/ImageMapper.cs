@@ -10,7 +10,7 @@ namespace Tecnicell.Server.Mapper.Classes
             return new Image
             {
                 Name = viewmodel.Name,
-                Imagecode = viewmodel.Imagecode,
+                ImageCode = viewmodel.Imagecode,
                 File = viewmodel.File,
             };
         }
@@ -20,7 +20,7 @@ namespace Tecnicell.Server.Mapper.Classes
             return new ImageViewModel
             {
                 Name = model.Name,
-                Imagecode = model.Imagecode,
+                Imagecode = model.ImageCode,
                 File = model.File,
             };
         }

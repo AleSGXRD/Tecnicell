@@ -18,6 +18,8 @@ namespace Tecnicell.Server.Models.ViewModel.Battery
 
         public virtual ICollection<BatteryHistoryViewModel> BatteryHistories { get; set; } = new List<BatteryHistoryViewModel>();
 
-        public virtual BatteryBrandViewModel? BrandNavigation { get; set; }
+        public virtual BrandViewModel? BrandNavigation { get; set; }
+
+        public virtual ImageViewModel? ImageCodeNavigation { get; set; }
     }
 }

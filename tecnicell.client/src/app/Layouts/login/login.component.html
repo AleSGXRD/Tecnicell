@@ -1,0 +1,36 @@
+
+<div
+    class="fixed bottom-0 top-0 left-0 right-0 flex flex-col justify-center items-center">
+    <form [formGroup]="form" (submit)="submit()" 
+    class="flex flex-col items-center justify-around gap-8 px-8 py-8 border-b-4
+    shadow-md rounded-md bg-gray-100 border-gray-400 w-[400px] h-[500px]">
+        <strong class="text-2xl font-semibold">Tecni<i class="text-red-700 not-italic">cell</i></strong>
+        
+            <mat-form-field [classList]="' w-full text-left'" >
+                <mat-label>Nombre</mat-label>
+                <input matInput [placeholder]="'Nombre de usuario...'" [errorStateMatcher]="matcher"
+                    [formControlName]="'name'" [name]="'name'"
+                    [id]="'name'" >
+            </mat-form-field>
+            <mat-form-field  [classList]="' w-full text-left'" >
+                <mat-label>Contraseña</mat-label>
+                <input matInput [type]="hide() ? 'password' : 'text'"  [placeholder]="'Contraseña...'" [errorStateMatcher]="matcher"
+                [formControlName]="'password'" [name]="'password'"
+                [id]="'password'" />
+                <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="clickEvent($event)"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide()"
+                >
+                <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        
+        <app-button [type]="'submit'" [color]="'blue'" class="w-[100%]" >
+            Enviar
+        </app-button>
+    </form>
+</div>
