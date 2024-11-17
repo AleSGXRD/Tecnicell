@@ -15,20 +15,52 @@
                 }
             </tr>
         </thead>
-        <tbody>
-            @for (value of table.values; track $index) {
-                <tr>
-                    @for (property of table.tableFields; track $index) {
+        <tbody *reloadComponent="currentSheet">
+                <tr *ngFor="let value of table.values; let idx = index" [className]="idx < ((currentSheet + 1 )* maxElements) && idx >= (currentSheet * maxElements)? '': 'hidden'">
+                    @for (property of table.tableFields; track $index ) {
                         @if(property.show == true){
                             @if(property.type == 'Property'){
-                                <td [className]="'w-'+table.headerFields[$index].space">
+                                <td [className]="'w-'+table.headerFields[$index].space + ' ' + resolveStyles(property, idx)">
                                     @if(property.subPropertyName != undefined){
                                         @if(value[property.propertyName] != undefined){
-                                            {{value[property.propertyName][property.subPropertyName]}}
+                                            <i>{{value[property.propertyName][property.subPropertyName]}}</i>
                                         }
                                     }
                                     @else {
-                                        {{value[property.propertyName]}}
+                                        <i>{{value[property.propertyName]}}</i>
+                                    }
+                                </td>
+                            }
+                            @if(property.type == 'Revenue' ){
+                                <td [className]="'w-'+table.headerFields[$index].space + ' ' + resolveStyles(property, idx)">
+                                    @if(property.subPropertyName != undefined ){
+                                        @if (property.subPropertyName != undefined && value[property.propertyName]!=undefined && value[property.propertyName][property.subPropertyName] != undefined){
+                                            <i class="flex flex-row mx-auto gap-2">{{value[property.propertyName][property.subPropertyName]}}
+                                                @if(value['actionHistory'] == 'Salida'){
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m6-8l-6-6m-6 6l6-6"/></svg>
+                                                }
+                                                @else if(value['actionHistory'] == 'Entrada'){
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m6-6l-6 6m-6-6l6 6"/></svg>
+                                                }
+                                                @else {
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m6-8l-6-6m-6 6l6-6"/></svg>
+                                                }
+                                            </i>
+                                        }
+                                    }
+                                    @else {
+                                        <i class="flex flex-row mx-auto gap-2">
+                                            {{value[property.propertyName]}}
+                                            @if(value['actionHistory'] == 'Salida'){
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16px" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m6-8l-6-6m-6 6l6-6"/></svg>
+                                            }
+                                            @else if(value['actionHistory'] == 'Entrada'){
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16px" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m6-6l-6 6m-6-6l6 6"/></svg>
+                                            }
+                                            @else {
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16px" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m6-8l-6-6m-6 6l6-6"/></svg>
+                                            }
+                                        </i>
                                     }
                                 </td>
                             }
@@ -75,7 +107,7 @@
                     @if(actions != 'none'){
                         <td class="actions">
                             @if(actions == 'edit' || actions == 'both'){
-                                <app-button [color]="'blue'" (click)="editData($index)">
+                                <app-button [color]="'blue'" (click)="editData(idx)">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                         <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
@@ -85,7 +117,7 @@
                                 </app-button>
                             }
                             @if(actions == 'delete' || actions == 'both'){
-                                <app-button [color]="'red'" (click)="deleteData($index)" >
+                                <app-button [color]="'red'" (click)="deleteData(idx)" >
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                         <path d="M4 7l16 0" />
@@ -99,7 +131,21 @@
                         </td>
                     }
                 </tr>
-            }
+            
         </tbody>
     </table>
+    @if (sheets()>0) {
+        <div class="flex flex-row items-center justify-end text-center gap-8 px-8 py-2 bg-gray-50 bg-opacity-24">
+            
+            <div class="text-lg font-medium text-gray-800"><strong>{{currentSheet+1}}</strong>...{{sheets()+1}}</div>
+            <div class="flex flex-row gap-2">
+                <button class="button" (click)="passPrevSheet()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m6.523 12.5l3.735 3.735q.146.146.153.344q.006.198-.153.363q-.166.166-.357.168t-.357-.162l-4.382-4.383q-.243-.242-.243-.565t.243-.566l4.382-4.382q.147-.146.347-.153q.201-.007.367.159q.16.165.162.353q.003.189-.162.354L6.523 11.5h12.38q.214 0 .358.143t.143.357t-.143.357t-.357.143z"/></svg>
+                </button >
+                <button class="button"  (click)="passNextSheet()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17.073 12.5H5.5q-.213 0-.357-.143T5 12t.143-.357t.357-.143h11.573l-3.735-3.734q-.146-.147-.152-.345t.152-.363q.166-.166.357-.168t.357.162l4.383 4.383q.13.13.183.267t.053.298t-.053.298t-.183.268l-4.383 4.382q-.146.146-.347.153t-.367-.159q-.16-.165-.162-.354t.162-.354z"/></svg>
+                </button>
+            </div>
+        </div>
+    }
 </div>

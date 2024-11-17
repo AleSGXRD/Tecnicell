@@ -56,6 +56,7 @@ namespace Tecnicell.Server.Controllers.Api
         // PUT: api/Branches/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{code}")]
+        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK")]
         public async Task<IActionResult> PutBranch(string code, BranchViewModel branch)
         {
             if (code != branch.BranchCode)
@@ -89,6 +90,7 @@ namespace Tecnicell.Server.Controllers.Api
         // POST: api/Branches
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK")]
         public async Task<ActionResult<BranchViewModel>> PostBranch(BranchViewModel branch)
         {
             branch.BranchCode = GenerateCode();
@@ -116,6 +118,7 @@ namespace Tecnicell.Server.Controllers.Api
 
         // DELETE: api/Branches/5
         [HttpDelete("{code}")]
+        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK")]
         public async Task<IActionResult> DeleteBranch(string code)
         {
             var branch = await _context.Branches.FindAsync(code);

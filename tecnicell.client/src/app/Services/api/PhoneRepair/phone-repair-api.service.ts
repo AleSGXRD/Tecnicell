@@ -7,11 +7,11 @@ import { SaleApiService } from '../Extras/sale-api.service';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { PhoneRepairRequest } from '../../../Interfaces/business/ApiRequest/PhoneRepairRequest';
-import { reloadPage } from '../../../Logic/ReloadPage';
 import { PhoneRepair, PhoneRepairHistory } from '../../../Interfaces/business/Models/PhoneRepair';
 import { SaleViewModel } from '../../../Interfaces/business/Models/Sale';
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +27,15 @@ export class PhoneRepairApiService implements ApiService<PhoneRepairView,PhoneRe
   }
 
   select(): Observable<PhoneRepairView[]>{
-    return this.http.get<PhoneRepairView[]>(environment.url + '/api/PhoneRepairs');
+    return this.http.get<PhoneRepairView[]>(server() + '/api/PhoneRepairs');
   }
   get(id:any) : Observable<PhoneRepairResponse>{
-      return this.http.get<PhoneRepairResponse>(environment.url + '/api/PhoneRepairs/'+id);
+      return this.http.get<PhoneRepairResponse>(server() + '/api/PhoneRepairs/'+id);
   }
   add(data : any){
     const req :PhoneRepairRequest = this.mapperToRequest(data);
 
-    this.http.post<any>(environment.url + '/api/PhoneRepairs/', req.model).subscribe(
+    this.http.post<any>(server() + '/api/PhoneRepairs/', req.model).subscribe(
       res=>{
         data.phoneCode = res.phoneCode;
         data.date = new Date();
@@ -46,14 +46,14 @@ export class PhoneRepairApiService implements ApiService<PhoneRepairView,PhoneRe
   }
   edit(data : any, id : any){
     const model : any = this.mapperToEdit(data);
-    this.http.put<any>(environment.url + '/api/PhoneRepairs/' + data.imei, model)
+    this.http.put<any>(server() + '/api/PhoneRepairs/' + data.imei, model)
             .subscribe(
             res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
             err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1)
             );
   }
   delete(data : any){
-    return this.http.delete<any>(environment.url + '/api/PhoneRepairs/' + data.code);
+    return this.http.delete<any>(server() + '/api/PhoneRepairs/' + data.code);
   }
   mapperToRequest(data:any) :PhoneRepairRequest{
     const phone : PhoneRepair ={

@@ -2,3 +2,24 @@
         <app-sidebar [ngClass]="'xl:hidden z-30 transition-transform -left-64 ' + (openedSideBar==true? 'flex left-0' : 'hidden ')"></app-sidebar>
     </app-background>
     <app-toolbar class="z-20 relative w-full transition-all top-0 " (openFormAdd)="ActiveForm()" (openSideBar)="openSideBar(true)"></app-toolbar>
+
+    @if(form){
+        <button class="fixed z-30 xl:hidden bottom-12 right-12 border-green-500 text-green-500 border-2 py-4 px-4
+                    rounded-xl hover:text-gray-200 hover:bg-green-500 transition-all"
+                (click)="ActiveForm()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m-7-7h14"/></svg>
+        </button>
+        
+    }
+    @if(histories){
+        <button class="fixed z-30 xl:hidden bottom-32 right-12 border-blue-500 text-blue-500 border-2 py-2 px-2
+                    rounded-xl hover:text-gray-200 hover:bg-blue-500 transition-all"
+                (click)="Navigate()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+                <path d="M10 12l4 0" />
+                </svg>
+        </button>
+    }

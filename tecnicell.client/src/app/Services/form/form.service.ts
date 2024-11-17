@@ -4,7 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { FormField } from '../../Interfaces/tools/Form/FormField';
 import { ApiService } from '../api/ApiService.service';
-import { reloadPage } from '../../Logic/ReloadPage';
 
 
 @Injectable({

@@ -6,6 +6,7 @@ import { NotificationSystemService } from '../../notification-system.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { UserInfoApiService } from './user-info-api.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +18,17 @@ export class UserAccountApiService implements ApiService<UserAccount,UserAccount
     private userInfoApiService: UserInfoApiService) {}
 
   select(): Observable<UserAccount[]>{
-    return this.http.get<UserAccount[]>(environment.url + '/api/UserInfos');
+    return this.http.get<UserAccount[]>(server() + '/api/UserInfos');
   }
   get(id:any) : Observable<UserAccount>{
-      return this.http.get<UserAccount>(environment.url + '/api/UserInfos/'+id);
+      return this.http.get<UserAccount>(server() + '/api/UserInfos/'+id);
   }
   add(data : any){
     const account = this.mapperAdd(data);
     this.userInfoApiService.add(data).subscribe(
       res =>{
         account.userCode = res.userCode;
-        this.http.post(environment.url + '/api/UserAccounts/',account).subscribe(
+        this.http.post(server() + '/api/UserAccounts/',account).subscribe(
           res => this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
           err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1))
       },
@@ -38,7 +39,7 @@ export class UserAccountApiService implements ApiService<UserAccount,UserAccount
     const account : UserAccount = this.mapperEdit(data);
     this.userInfoApiService.edit(data).subscribe(
       res =>{
-        this.http.put<UserAccount>(environment.url + '/api/UserAccounts/' + account.userCode,account).subscribe(
+        this.http.put<UserAccount>(server() + '/api/UserAccounts/' + account.userCode,account).subscribe(
           res => this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
           err => this.notificationService.showNotifcationWithError("Ha ocurrido un error al intentar editar el elemento.", 1,err))
       },
@@ -46,7 +47,7 @@ export class UserAccountApiService implements ApiService<UserAccount,UserAccount
     )
   }
   delete(data : any){
-      return this.http.delete(environment.url + '/api/UserInfos/'+data.userCode);
+      return this.http.delete(server() + '/api/UserInfos/'+data.userCode);
   }
   mapperAdd(data:any){
     const account : UserAccount = {

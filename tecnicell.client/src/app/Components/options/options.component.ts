@@ -46,7 +46,6 @@ export class OptionsComponent {
     this.service.SetFormAndActive(FormType.ADD, this.formAdd, this.apiService);
   }
   Navigate(){
-    console.log(this.histories)
     this.router.navigate([this.histories]);
   }
 

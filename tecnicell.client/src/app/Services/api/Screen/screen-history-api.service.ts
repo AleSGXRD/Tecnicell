@@ -6,10 +6,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Sale } from '../../../Interfaces/business/Models/Sale';
-import { reloadPage } from '../../../Logic/ReloadPage';
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
 import { UsdApiService } from '../Usd/usd-api.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +27,10 @@ export class ScreenHistoryApiService implements ApiService<ScreenHistory, Screen
   }
 
   select(): Observable<ScreenHistory[]>{
-    return this.http.get<ScreenHistory[]>(environment.url + '/api/ScreenHistories');
+    return this.http.get<ScreenHistory[]>(server() + '/api/ScreenHistories');
   }
   get(id:any) : Observable<ScreenHistory[]>{
-      return this.http.get<ScreenHistory[]>(environment.url + '/api/ScreenHistories/'+id);
+      return this.http.get<ScreenHistory[]>(server() + '/api/ScreenHistories/'+id);
   }
   add(data : any){
     let req : any = this.mapperAdd(data);
@@ -54,7 +54,7 @@ export class ScreenHistoryApiService implements ApiService<ScreenHistory, Screen
           req.saleCode = res.saleCode;
           req.saleCodeNavigation = undefined;
   
-          this.http.post<ScreenHistory>(environment.url + '/api/ScreenHistories/', req).subscribe(
+          this.http.post<ScreenHistory>(server() + '/api/ScreenHistories/', req).subscribe(
             res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
             err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1)
           );
@@ -64,7 +64,7 @@ export class ScreenHistoryApiService implements ApiService<ScreenHistory, Screen
     else{
       req.saleCode = undefined;
       req.saleCodeNavigation = undefined;
-      this.http.post<ScreenHistory>(environment.url + '/api/ScreenHistories/', req).subscribe(
+      this.http.post<ScreenHistory>(server() + '/api/ScreenHistories/', req).subscribe(
         res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
         err =>this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1)
       );
@@ -77,7 +77,7 @@ export class ScreenHistoryApiService implements ApiService<ScreenHistory, Screen
       if(model.saleCode != null){
         this.saleApi.edit(model.saleCodeNavigation, model.saleCode)
         .subscribe(res => {
-          this.http.put<any>(environment.url + '/api/ScreenHistories/' 
+          this.http.put<any>(server() + '/api/ScreenHistories/' 
             +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -90,14 +90,14 @@ export class ScreenHistoryApiService implements ApiService<ScreenHistory, Screen
             res => {
               model.saleCode = res.saleCode;
               model.saleCodeNavigation = null;
-              this.http.put<any>(environment.url + '/api/ScreenHistories/' 
+              this.http.put<any>(server() + '/api/ScreenHistories/' 
                 +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
                   res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
                   err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
           })
         }
         else{
-          this.http.put<any>(environment.url + '/api/ScreenHistories/' 
+          this.http.put<any>(server() + '/api/ScreenHistories/' 
             +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -110,7 +110,7 @@ export class ScreenHistoryApiService implements ApiService<ScreenHistory, Screen
         sale = model.saleCodeNavigation;
         this.saleApi.edit(sale, model.saleCode)
           .subscribe(res => {
-            this.http.put<any>(environment.url + '/api/ScreenHistories/' 
+            this.http.put<any>(server() + '/api/ScreenHistories/' 
               +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
                 res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
                 err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1))
@@ -121,7 +121,7 @@ export class ScreenHistoryApiService implements ApiService<ScreenHistory, Screen
       else
       {
         sale = undefined;
-        this.http.put<any>(environment.url + '/api/ScreenHistories/' 
+        this.http.put<any>(server() + '/api/ScreenHistories/' 
           +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
             res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
             err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1))
@@ -131,7 +131,7 @@ export class ScreenHistoryApiService implements ApiService<ScreenHistory, Screen
   }
   delete(data : any){
     const ids = [data.screenCode, data.date];
-    return this.http.delete<any>(environment.url + '/api/ScreenHistories/'
+    return this.http.delete<any>(server() + '/api/ScreenHistories/'
                       +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1]);
   }
   mapperAdd(data:any){
@@ -145,6 +145,7 @@ export class ScreenHistoryApiService implements ApiService<ScreenHistory, Screen
       actionHistory : data.actionHistory,
       description: data.description,
       toBranch : data.toBranch,
+      supplierCode: data.supplierCode == 'none'? null: data.supplierCode,
       quantity:   data.quantity,
       saleCode : "default",
     };
@@ -177,6 +178,7 @@ export class ScreenHistoryApiService implements ApiService<ScreenHistory, Screen
       description: data.description,
       toBranch : data.toBranch,
       quantity:   data.quantity,
+      supplierCode: data.supplierCode == 'none'? null: data.supplierCode,
       saleCode : data.saleCode ?? undefined,
     }
     if(data .currencyCode == 'none'){

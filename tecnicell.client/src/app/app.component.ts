@@ -3,13 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { themes } from '../../public/theme';
 import { NotificationSystemService } from './Services/notification-system.service';
 import { Notification } from './Components/notification-bubble/notification-bubble.component';
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',

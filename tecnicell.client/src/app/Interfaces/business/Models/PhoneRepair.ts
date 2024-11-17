@@ -1,6 +1,7 @@
 import { Branch } from "./Branch";
 import { Brand } from "./Brand";
 import { Sale } from "./Sale";
+import { Supplier } from "./Supplier";
 import { UserInfo } from "./UserAccount";
 
 export interface PhoneRepair {

@@ -15,6 +15,23 @@
             }
         </mat-form-field>
     }
+    @else if(formField.type == "textlimited"){
+        <mat-form-field [classList]="' w-full text-left'" [formGroup]="form" [hintLabel]="'Max '+formField.limit+'  character'" >
+            <mat-label>{{formField.name}}</mat-label>
+            <input matInput [maxlength]="formField.limit?? 11" [placeholder]="formField.placeholder" [errorStateMatcher]="matcher"
+                [formControlName]="formField.formControlName" [name]="formField.formControlName"
+                [id]="formField.formControlName" (input)="onInput($event)" >
+            <mat-hint align="end">{{value().length}}/{{formField.limit}}</mat-hint>
+            @for (err of formField.errors; track $index) {
+                @if (this.form.get(formField.formControlName).hasError(err.type) && !this.form.get(formField.formControlName).hasError('required')) {
+                    <mat-error>{{err.message}}</mat-error>
+                }
+            }
+            @if (formField.fieldRequired == true &&this.form.get(formField.formControlName).hasError('required')) {
+                <mat-error>Este campo es necesario rellenarlo</mat-error>
+            }
+        </mat-form-field>
+    }
     @else if(formField.type == "password"){
         <mat-form-field  [classList]="' w-full text-left'" [formGroup]="form">
             <mat-label>{{formField.name}}</mat-label>
@@ -100,10 +117,11 @@
         <mat-form-field class="w-full"  [formGroup]="form">
             <mat-label>{{formField.name}}</mat-label>
             <span matTextPrefix>+53 &nbsp;</span>
-            <input type="tel" matInput placeholder="54558866" [errorStateMatcher]="matcher"
+            <input type="tel" matInput [maxlength]="formField.limit?? 8" placeholder="54558866" [errorStateMatcher]="matcher"
             [formControlName]="formField.formControlName" [name]="formField.formControlName"
-            [id]="formField.formControlName">
+            [id]="formField.formControlName" (input)="onInput($event)">
 
+            <mat-hint align="end">{{value().length}}/{{formField.limit?? 8}}</mat-hint>
             @for (err of formField.errors; track $index) {
                 @if (this.form.get(formField.formControlName).hasError(err.type) && !this.form.get(formField.formControlName).hasError('required')) {
                     <mat-error>{{err.message}}</mat-error>

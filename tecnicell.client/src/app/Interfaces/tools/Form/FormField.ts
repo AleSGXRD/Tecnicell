@@ -17,6 +17,7 @@ export interface FormField{
     errors? : FormFieldError[];
     options? : FormFieldOption[];
     fields? : FormField[];
+    limit? : number;
 }
 export interface FormFieldError{
     type : string,

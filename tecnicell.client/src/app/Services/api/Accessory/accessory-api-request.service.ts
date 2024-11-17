@@ -9,10 +9,10 @@ import { AccessoryRequest } from '../../../Interfaces/business/ApiRequest/Access
 import { Sale, SaleViewModel } from '../../../Interfaces/business/Models/Sale';
 import { AccessoryHistoryApiService } from './accessory-history-api.service';
 import { SaleApiService } from '../Extras/sale-api.service';
-import { reloadPage } from '../../../Logic/ReloadPage';
 import { Notification, NotificationType } from '../../../Components/notification-bubble/notification-bubble.component';
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
+import server from '../../../Logic/ServerAdress';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,15 +27,15 @@ export class AccessoryApiRequestService implements ApiService<AccessoryView, Acc
   }
 
   select(): Observable<AccessoryView[]>{
-    return this.http.get<AccessoryView[]>(environment.url + '/api/Accessories');
+    return this.http.get<AccessoryView[]>(server() + '/api/Accessories');
   }
   get(id:any) : Observable<AccessoryResponse>{
-      return this.http.get<AccessoryResponse>(environment.url + '/api/Accessories/'+id);
+      return this.http.get<AccessoryResponse>(server() + '/api/Accessories/'+id);
   }
   add(data : any){
     const req : AccessoryRequest = this.mapperToRequest(data);
 
-    this.http.post<any>(environment.url + '/api/Accessories/', req.model).subscribe(
+    this.http.post<any>(server() + '/api/Accessories/', req.model).subscribe(
       res=>{
         data.accessoryCode = res.accessoryCode;
         data.date = new Date();
@@ -47,7 +47,7 @@ export class AccessoryApiRequestService implements ApiService<AccessoryView, Acc
   }
   edit(data : any, id : any){
     const model : any = this.mapperToEdit(data);
-    this.http.put<any>(environment.url + '/api/Accessories/' + data.accessoryCode, model)
+    this.http.put<any>(server() + '/api/Accessories/' + data.accessoryCode, model)
             .subscribe(
               res => 
                 this.notificationService.showNotifcation("Se ha editado un elemento con exito!", 0),
@@ -55,7 +55,7 @@ export class AccessoryApiRequestService implements ApiService<AccessoryView, Acc
             );
   }
   delete(data : any){
-    return this.http.delete<any>(environment.url + '/api/Accessories/' + data.code);
+    return this.http.delete<any>(server() + '/api/Accessories/' + data.code);
   }
   mapperToRequest(data:any) : AccessoryRequest{
     const accessory : Accessory ={
@@ -81,6 +81,7 @@ export class AccessoryApiRequestService implements ApiService<AccessoryView, Acc
       userCode: this.authService.myUser.value.userCode!,
       actionHistory : data.actionHistory,
       description : data.description,
+      supplierCode: data.supplierCode == 'none'? null: data.supplierCode,
       quantity : data.quantity,
       toBranch : data.branchCode
     }

@@ -56,6 +56,7 @@ namespace Tecnicell.Server.Controllers.Api
         // PUT: api/UserAccounts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkcode=2123754
         [HttpPut("{code}")]
+        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK")]
         public async Task<IActionResult> PutUserAccount(string code, UserAccountViewModel userAccount)
         {
             if (code != userAccount.UserCode)
@@ -92,6 +93,7 @@ namespace Tecnicell.Server.Controllers.Api
         // POST: api/UserAccounts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkcode=2123754
         [HttpPost]
+        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK")]
         public async Task<ActionResult<UserAccountViewModel>> PostUserAccount(UserAccountViewModel userAccount)
         {
             if (userAccount == null) return NotFound();
@@ -122,6 +124,7 @@ namespace Tecnicell.Server.Controllers.Api
 
         // DELETE: api/UserAccounts/5
         [HttpDelete("{code}")]
+        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK")]
         public async Task<IActionResult> DeleteUserAccount(string code)
         {
             var userAccount = await _context.UserAccounts.FindAsync(code);

@@ -6,10 +6,10 @@ import { SaleApiService } from '../Extras/sale-api.service';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Sale } from '../../../Interfaces/business/Models/Sale';
-import { reloadPage } from '../../../Logic/ReloadPage';
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
 import { UsdApiService } from '../Usd/usd-api.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +27,10 @@ export class BatteryHistoryApiService  implements ApiService<BatteryHistory, Bat
   }
 
   select(): Observable<BatteryHistory[]>{
-    return this.http.get<BatteryHistory[]>(environment.url + '/api/BatteryHistories');
+    return this.http.get<BatteryHistory[]>(server() + '/api/BatteryHistories');
   }
   get(id:any) : Observable<BatteryHistory[]>{
-      return this.http.get<BatteryHistory[]>(environment.url + '/api/BatteryHistories/'+id);
+      return this.http.get<BatteryHistory[]>(server() + '/api/BatteryHistories/'+id);
   }
   add(data : any){
     let req : any = this.mapperAdd(data);
@@ -54,7 +54,7 @@ export class BatteryHistoryApiService  implements ApiService<BatteryHistory, Bat
           req.saleCode = res.saleCode;
           req.saleCodeNavigation = undefined;
   
-          this.http.post<BatteryHistory>(environment.url + '/api/BatteryHistories/', req).subscribe(
+          this.http.post<BatteryHistory>(server() + '/api/BatteryHistories/', req).subscribe(
             res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
             err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1)
           );
@@ -64,7 +64,7 @@ export class BatteryHistoryApiService  implements ApiService<BatteryHistory, Bat
     else{
       req.saleCode = undefined;
       req.saleCodeNavigation = undefined;
-      this.http.post<BatteryHistory>(environment.url + '/api/BatteryHistories/', req).subscribe(
+      this.http.post<BatteryHistory>(server() + '/api/BatteryHistories/', req).subscribe(
         res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
         err =>this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1)
       );
@@ -77,7 +77,7 @@ export class BatteryHistoryApiService  implements ApiService<BatteryHistory, Bat
       if(model.saleCode != null){
         this.saleApi.edit(model.saleCodeNavigation, model.saleCode)
         .subscribe(res => {
-          this.http.put<any>(environment.url + '/api/BatteryHistories/' 
+          this.http.put<any>(server() + '/api/BatteryHistories/' 
             +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1))
@@ -90,14 +90,14 @@ export class BatteryHistoryApiService  implements ApiService<BatteryHistory, Bat
             res => {
               model.saleCode = res.saleCode;
               model.saleCodeNavigation = null;
-              this.http.put<any>(environment.url + '/api/BatteryHistories/' 
+              this.http.put<any>(server() + '/api/BatteryHistories/' 
                 +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
                   res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
                   err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
           })
         }
         else{
-          this.http.put<any>(environment.url + '/api/BatteryHistories/' 
+          this.http.put<any>(server() + '/api/BatteryHistories/' 
             +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -110,7 +110,7 @@ export class BatteryHistoryApiService  implements ApiService<BatteryHistory, Bat
         sale = model.saleCodeNavigation;
         this.saleApi.edit(sale, model.saleCode)
           .subscribe(res => {
-            this.http.put<any>(environment.url + '/api/BatteryHistories/' 
+            this.http.put<any>(server() + '/api/BatteryHistories/' 
               +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
                 res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
                 err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1))
@@ -121,7 +121,7 @@ export class BatteryHistoryApiService  implements ApiService<BatteryHistory, Bat
       else
       {
         sale = undefined;
-        this.http.put<any>(environment.url + '/api/BatteryHistories/' 
+        this.http.put<any>(server() + '/api/BatteryHistories/' 
           +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
             res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
             err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1))
@@ -131,7 +131,7 @@ export class BatteryHistoryApiService  implements ApiService<BatteryHistory, Bat
   }
   delete(data : any){
     const ids = [data.batteryCode, data.date];
-    return this.http.delete<any>(environment.url + '/api/BatteryHistories/'
+    return this.http.delete<any>(server() + '/api/BatteryHistories/'
                       +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1]);
   }
   mapperAdd(data:any){
@@ -144,6 +144,7 @@ export class BatteryHistoryApiService  implements ApiService<BatteryHistory, Bat
       date : data.date,
       actionHistory : data.actionHistory,
       description: data.description,
+      supplierCode: data.supplierCode == 'none'? null: data.supplierCode,
       toBranch : data.toBranch,
       quantity:   data.quantity,
       saleCode : "default",
@@ -175,6 +176,7 @@ export class BatteryHistoryApiService  implements ApiService<BatteryHistory, Bat
       date : data.date,
       actionHistory : data.actionHistory,
       description: data.description,
+      supplierCode: data.supplierCode == 'none'? null: data.supplierCode,
       toBranch : data.toBranch,
       quantity:   data.quantity,
       saleCode : data.saleCode ?? undefined,

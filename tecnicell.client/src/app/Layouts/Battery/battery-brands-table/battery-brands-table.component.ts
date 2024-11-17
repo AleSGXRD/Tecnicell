@@ -21,7 +21,7 @@ export class BatteryBrandsTableComponent {
   load : boolean = false;
 
   //Direction Page
-  direction : string[]=['Main', "Marca de Baterías"];
+  direction : string[]=['Main', "Marcas"];
   //Table Properties
   table:TableProperties= {
     values : [],
@@ -69,7 +69,7 @@ export class BatteryBrandsTableComponent {
     {
       type : "textarea",
       formControlName:"description",
-      name: "Descripción de la batería",
+      name: "Descripción de la marca",
       placeholder : "Descripción ...",
       fieldRequired : false,
     },

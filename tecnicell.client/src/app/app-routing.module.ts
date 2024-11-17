@@ -24,12 +24,18 @@ import { ScreenHistoriesComponent } from './Layouts/Screen/screen-histories/scre
 import { PhoneHistoryApiService } from './Services/api/Phone/phone-history-api.service';
 import { PhoneHistoriesComponent } from './Layouts/Phone/phone-histories/phone-histories.component';
 import { PhoneRepairHistoriesComponent } from './Layouts/PhoneRepair/phone-repair-histories/phone-repair-histories.component';
+import { SearchsTableComponent } from './Layouts/Extras/searchs-table/searchs-table.component';
+import { PreformanceComponent } from './Layouts/Preformance/preformance/preformance.component';
+import { SuppliersTableComponent } from './Layouts/Extras/suppliers-table/suppliers-table.component';
+import { WorkTypesTableComponent } from './Layouts/Extras/work-types-table/work-types-table.component';
+import { DiaryWorksTableComponent } from './Layouts/DiaryWork/diary-works-table/diary-works-table.component';
+import { DbManagerComponent } from './Layouts/Db/db-manager/db-manager.component';
 
 const routes: Routes = [
   {
     path:'',
     pathMatch:'prefix',
-    redirectTo: 'accessories'
+    redirectTo: 'dashboard'
   },
 
   {
@@ -146,6 +152,36 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'preformance',
+    component: PreformanceComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'searchs',
+    component: SearchsTableComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'suppliers',
+    component: SuppliersTableComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'worktypes',
+    component: WorkTypesTableComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'diaryworks',
+    component: DiaryWorksTableComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'db',
+    component: DbManagerComponent,
     canActivate: [AuthGuard]
   }
 ];

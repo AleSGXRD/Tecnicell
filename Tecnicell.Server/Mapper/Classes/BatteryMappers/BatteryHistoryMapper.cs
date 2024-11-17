@@ -10,6 +10,7 @@ namespace Tecnicell.Server.Mapper.Classes.BatteryMappers
             SaleMapper saleMapper = new SaleMapper();
             BranchMapper branchMapper = new BranchMapper();
             UserInfoMapper userInfoMapper = new UserInfoMapper();
+            SupplierMapper supplierMapper = new SupplierMapper();
 
             BatteryHistory model = new BatteryHistory {
                 BatteryCode = viewmodel.BatteryCode,
@@ -19,11 +20,13 @@ namespace Tecnicell.Server.Mapper.Classes.BatteryMappers
                 Quantity = viewmodel.Quantity,
                 SaleCode = viewmodel.SaleCode,
                 ToBranch = viewmodel.ToBranch,
+                SupplierCode = viewmodel.SupplierCode,
                 ActionHistory = viewmodel.ActionHistory,
             };
             if (viewmodel.SaleCodeNavigation != null) model.SaleCodeNavigation = saleMapper.ToModel(viewmodel.SaleCodeNavigation);
             if (viewmodel.ToBranchNavigation != null) model.ToBranchNavigation = branchMapper.ToModel(viewmodel.ToBranchNavigation);
             if (viewmodel.UserCodeNavigation != null) model.UserCodeNavigation = userInfoMapper.ToModel(viewmodel.UserCodeNavigation);
+            if (viewmodel.SupplierCodeNavigation != null) model.SupplierNavigation = supplierMapper.ToModel(viewmodel.SupplierCodeNavigation);
 
             return model;
         }
@@ -33,6 +36,7 @@ namespace Tecnicell.Server.Mapper.Classes.BatteryMappers
             SaleMapper saleMapper = new SaleMapper();
             BranchMapper branchMapper = new BranchMapper();
             UserInfoMapper userInfoMapper = new UserInfoMapper();
+            SupplierMapper supplierMapper = new SupplierMapper();
 
             BatteryHistoryViewModel viewmodel = new BatteryHistoryViewModel
             {
@@ -43,11 +47,13 @@ namespace Tecnicell.Server.Mapper.Classes.BatteryMappers
                 Quantity = model.Quantity,
                 SaleCode = model.SaleCode,
                 ToBranch = model.ToBranch,
+                SupplierCode = model.SupplierCode,
                 ActionHistory = model.ActionHistory,
             };
             if (model.SaleCodeNavigation != null) viewmodel.SaleCodeNavigation = saleMapper.ToViewModel(model.SaleCodeNavigation);
             if (model.ToBranchNavigation != null) viewmodel.ToBranchNavigation = branchMapper.ToViewModel(model.ToBranchNavigation);
             if (model.UserCodeNavigation != null) viewmodel.UserCodeNavigation = userInfoMapper.ToViewModel(model.UserCodeNavigation);
+            if (model.SupplierNavigation != null) viewmodel.SupplierCodeNavigation = supplierMapper.ToViewModel(model.SupplierNavigation);
 
             return viewmodel;
         }

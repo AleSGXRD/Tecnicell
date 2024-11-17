@@ -7,10 +7,10 @@ import { PhoneHistory } from '../../../Interfaces/business/Models/Phone';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Sale } from '../../../Interfaces/business/Models/Sale';
-import { reloadPage } from '../../../Logic/ReloadPage';
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
 import { UsdApiService } from '../Usd/usd-api.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -28,10 +28,10 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
   }
 
   select(): Observable<PhoneRepairHistory[]>{
-    return this.http.get<PhoneRepairHistory[]>(environment.url + '/api/PhoneRepairHistories');
+    return this.http.get<PhoneRepairHistory[]>(server() + '/api/PhoneRepairHistories');
   }
   get(id:any) : Observable<PhoneRepairHistory[]>{
-      return this.http.get<PhoneRepairHistory[]>(environment.url + '/api/PhoneRepairHistories/'+id);
+      return this.http.get<PhoneRepairHistory[]>(server() + '/api/PhoneRepairHistories/'+id);
   }
   add(data : any){
     let req : any = this.mapperAdd(data);
@@ -41,7 +41,7 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
     }
     else{
       if(req.actionHistory == "Salida" && (data.currencyCode != undefined && data.currencyCode != 'none' || data.currencyCode == undefined)){
-        sale = this.usdService.getSale(1, data.salePrice, 0);
+        sale = this.usdService.getSaleInMN(1, data.salePrice, 0);
       }
       else
       {
@@ -55,7 +55,7 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
           req.saleCode = res.saleCode;
           req.saleCodeNavigation = undefined;
   
-          this.http.post<PhoneRepairHistory>(environment.url + '/api/PhoneRepairHistories/', req).subscribe(
+          this.http.post<PhoneRepairHistory>(server() + '/api/PhoneRepairHistories/', req).subscribe(
             res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
             err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1)
           );
@@ -65,7 +65,7 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
     else{
       req.saleCode = undefined;
       req.saleCodeNavigation = undefined;
-      this.http.post<PhoneRepairHistory>(environment.url + '/api/PhoneRepairHistories/', req).subscribe(
+      this.http.post<PhoneRepairHistory>(server() + '/api/PhoneRepairHistories/', req).subscribe(
         res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
         err =>this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1)
       );
@@ -78,7 +78,7 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
       if(model.saleCode != null){
         this.saleApi.edit(model.saleCodeNavigation, model.saleCode)
         .subscribe(res => {
-          this.http.put<any>(environment.url + '/api/PhoneRepairHistories/' 
+          this.http.put<any>(server() + '/api/PhoneRepairHistories/' 
             +ids[0] + '%2C' + ids[1]+'?imei=' +ids[0] +"&date=" + ids[1], model).subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -91,14 +91,14 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
             res => {
               model.saleCode = res.saleCode;
               model.saleCodeNavigation = null;
-              this.http.put<any>(environment.url + '/api/PhoneHistories/' 
+              this.http.put<any>(server() + '/api/PhoneHistories/' 
                 +ids[0] + '%2C' + ids[1]+'?imei=' +ids[0] +"&date=" + ids[1], model).subscribe(
                   res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
                   err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
           })
         }
         else{
-          this.http.put<any>(environment.url + '/api/PhoneHistories/' 
+          this.http.put<any>(server() + '/api/PhoneHistories/' 
             +ids[0] + '%2C' + ids[1]+'?imei=' +ids[0] +"&date=" + ids[1], model).subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -111,7 +111,7 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
         sale = model.saleCodeNavigation;
         this.saleApi.edit(sale, model.saleCode)
           .subscribe(res => {
-            this.http.put<any>(environment.url + '/api/PhoneRepairHistories/' 
+            this.http.put<any>(server() + '/api/PhoneRepairHistories/' 
               +ids[0] + '%2C' + ids[1]+'?imei=' +ids[0] +"&date=" + ids[1], model).subscribe(
                 res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
                 err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -122,7 +122,7 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
       else
       {
         sale = undefined;
-        this.http.put<any>(environment.url + '/api/PhoneRepairHistories/' 
+        this.http.put<any>(server() + '/api/PhoneRepairHistories/' 
           +ids[0] + '%2C' + ids[1]+'?imei=' +ids[0] +"&date=" + ids[1], model).subscribe(
             res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
             err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -132,14 +132,14 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
   }
   delete(data : any){
     const ids = [data.imei, data.date];
-    return this.http.delete<any>(environment.url + '/api/PhoneRepairHistories/'
+    return this.http.delete<any>(server() + '/api/PhoneRepairHistories/'
                       +ids[0] + '%2C' + ids[1]+'?imei=' +ids[0] +"&date=" + ids[1]);
   }
   mapperAdd(data:any){
     if(data.actionHistory != "Transferido desde otra sucursal" && data.actionHistory != "Transferido hacia otra sucursal"){
       data.toBranch = this.authService.myUser.value.branch;
     }
-    let model : PhoneHistory = {
+    let model : PhoneRepairHistory = {
       imei : data.imei,
       userCode: this.authService.myUser.value.userCode!,
       date : data.date,
@@ -168,7 +168,7 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
     if(data.toBranch == undefined && (data.actionHistory != "Transferido desde otra sucursal" && data.actionHistory != "Transferido hacia otra sucursal")){
       data.toBranch = this.authService.myUser.value.branch;
     }
-    let model : PhoneHistory = {
+    let model : PhoneRepairHistory = {
       imei : data.imei,
       userCode: data.userCode,
       date : data.date,

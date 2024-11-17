@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -54,6 +55,7 @@ namespace Tecnicell.Server.Controllers.Api
         // PUT: api/Currencies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{code}")]
+        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK")]
         public async Task<IActionResult> PutCurrency(string code, CurrencyViewModel currency)
         {
             if (code != currency.CurrencyCode)
@@ -85,6 +87,7 @@ namespace Tecnicell.Server.Controllers.Api
         // POST: api/Currencies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK")]
         public async Task<ActionResult<CurrencyViewModel>> PostCurrency(CurrencyViewModel currency)
         {
             currency.CurrencyCode = GenerateCode();
@@ -112,6 +115,7 @@ namespace Tecnicell.Server.Controllers.Api
 
         // DELETE: api/Currencies/5
         [HttpDelete("{code}")]
+        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK")]
         public async Task<IActionResult> DeleteCurrency(string code)
         {
             var currency = await _context.Currencies.FindAsync(code);

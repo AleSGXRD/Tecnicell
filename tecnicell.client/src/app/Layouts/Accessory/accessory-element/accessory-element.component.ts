@@ -7,7 +7,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AccessoryResponse } from '../../../Interfaces/business/ApiResponses/AccessoryResponse';
 import { TableProperties } from '../../../Interfaces/tools/Table/TableProperties';
 import { SpacesField } from '../../../Interfaces/tools/Table/HeaderField';
-import { TableFieldType } from '../../../Interfaces/tools/Table/TableField';
+import { TableFieldType, Values } from '../../../Interfaces/tools/Table/TableField';
 import { FormField, FormFieldOption } from '../../../Interfaces/tools/Form/FormField';
 import { CurrencyApiService } from '../../../Services/api/Extras/currency-api.service';
 import { ActionHistoryApiService } from '../../../Services/api/Extras/action-history-api.service';
@@ -20,6 +20,9 @@ import { Accessory } from '../../../Interfaces/business/Models/Accessory';
 import { ActionsTable } from '../../../Interfaces/tools/Actions';
 import { FilterField, FilterType } from '../../../Interfaces/tools/Filters/Filters';
 import { FilterTableService } from '../../../Services/Filter/filter-table.service';
+import { ActionsType, filterActions } from '../../../Logic/Actions';
+import { ActionStyleCustom, MoneyStyleCustom } from '../../../Logic/TableFieldCustoms';
+import { SupplierApiService } from '../../../Services/api/Extras/supplier-api.service';
 
 @Component({
   selector: 'app-accessory-element',
@@ -52,6 +55,10 @@ export class AccessoryElementComponent {
         space: SpacesField.small
       },
       {
+        name: 'Proveedor',
+        space : SpacesField.small
+      },
+      {
         name:'Descripción',
         space: SpacesField.normal
       },
@@ -82,6 +89,7 @@ export class AccessoryElementComponent {
         type : TableFieldType.Property,
         propertyName : "actionHistory",
         show:true,
+        styles: ActionStyleCustom
       },
       {
         type : TableFieldType.Property,
@@ -92,6 +100,11 @@ export class AccessoryElementComponent {
       {
         type : TableFieldType.Select,
         propertyName : "toBranch",
+        show:true,
+      },
+      {
+        type: TableFieldType.Select,
+        propertyName: "supplierCode",
         show:true,
       },
       {
@@ -111,10 +124,11 @@ export class AccessoryElementComponent {
         show:true,
       },
       {
-        type : TableFieldType.Property,
+        type : TableFieldType.Revenue,
         propertyName : "saleCodeNavigation",
         subPropertyName:"cost",
         show:true,
+        styles: MoneyStyleCustom
       },
       {
         type : TableFieldType.Date,
@@ -161,6 +175,19 @@ export class AccessoryElementComponent {
       }
     },
     {
+      type : "select", 
+      formControlName:"supplierCode",
+      name: "Proveedor",
+      placeholder : "Proveedor...",
+      fieldRequired : false,
+      options:[],
+      errors : [],
+      condition:{
+        formControlName: 'actionHistory',
+        value : ["Entrada"],
+      }
+    },
+    {
       type : "textarea",
       formControlName:"description",
       name: "Descripción de la acción",
@@ -177,7 +204,7 @@ export class AccessoryElementComponent {
     {
       type : "collapse",
       formControlName:"sale",
-      name: "Compra",
+      name: "Método de pago",
       placeholder : "",
       fieldRequired : false,
       fields: [
@@ -225,6 +252,11 @@ export class AccessoryElementComponent {
       propertyName : 'actionHistory',
     },
     {
+      name: 'Proveedores',
+      type: FilterType.SELECT,
+      propertyName : 'supplierCode',
+    },
+    {
       name:'Descripción',
       type:FilterType.TEXT,
       propertyName: 'description'
@@ -237,6 +269,7 @@ export class AccessoryElementComponent {
   actionsValues! : FormFieldOption[];
   branchesValues! : FormFieldOption[];
   accessoryTypesValues! : FormFieldOption[];
+  supplierValues! : FormFieldOption[]
 
   constructor(private route:ActivatedRoute,
     public dialogService : DialogService,
@@ -249,7 +282,8 @@ export class AccessoryElementComponent {
     private currencyApi : CurrencyApiService,
     private actionsApi : ActionHistoryApiService,
     private branchesApi : BranchApiService,
-    private accessoryTypesApi : AccessoryTypeApiService
+    private accessoryTypesApi : AccessoryTypeApiService,
+    private supplierApi : SupplierApiService
   ){
     
   }
@@ -259,12 +293,12 @@ export class AccessoryElementComponent {
     await this.route.params.subscribe(
       params =>{
         this.id = params['id'];
-        console.log(this.id);
+        
         this.direction.push(this.id);
         this.apiService.get(this.id).subscribe(
           res => {
             this.value = res;
-            console.log(this.value);
+            console.log(res)
             this.tableHistories.values = this.value.histories;
             
             this.formHistories = this.formBuilder.nonNullable.group({
@@ -278,6 +312,7 @@ export class AccessoryElementComponent {
               sale: [false, []],
               saleCode: [null, []],
               currencyCode:  [undefined, []],
+              supplierCode: [undefined, []],
               cost: [undefined,[]],
               warranty:  [null,[]],
               toBranch:[null,[]]
@@ -288,11 +323,58 @@ export class AccessoryElementComponent {
         )
       }
     );
+
+    this.supplierApi.select().subscribe(res => {
+      res.unshift({
+        supplierCode : 'none',
+        name:'',
+      })
+      this.supplierValues = res.map(supplier => {
+        const field : FormFieldOption = {
+          value : supplier.supplierCode,
+          name : supplier.name
+        }
+        return field;
+      })
+      const field = this.inputsFormFields.find(element => element.formControlName == "supplierCode");
+      if(field){
+        field.options = this.supplierValues;
+      }
+      const tableCodeNavigation = this.tableHistories.tableFields.filter(
+        element => 
+          element.type == TableFieldType.Select
+      )
+      const fieldTable = tableCodeNavigation.find(
+        element => {
+          if(element.subPropertyName!= undefined){
+            return element.subPropertyName == "supplierCode"
+          }
+          return element.propertyName == "supplierCode";
+        }
+      );
+      if(fieldTable)
+        fieldTable.cases = res.map(supplier=>{
+          return {
+            key : supplier.supplierCode,
+            value : supplier.name
+          } 
+        })
+
+      const filterField = this.filtersOptions.find(filter => filter.propertyName == "supplierCode")
+      if(filterField != null)
+        filterField.options = this.supplierValues.map(action =>{
+            return {
+              name : action.name,
+              value : action.value
+            }
+          }
+        )
+    })
     
     await this.currencyApi.select().subscribe(res => {
       res.unshift({
         currencyCode : 'none',
-        currencyName:'None',
+        currencyName:'',
       })
       
       this.currencyValues = res.map(currency => {
@@ -332,8 +414,8 @@ export class AccessoryElementComponent {
         this.loaded[1] = true;
     })
     await this.actionsApi.select().subscribe(res => {
-        this.actionsValues = res.filter(element => element.name != "Pieza Sacada" && element.name != "Pieza Puesta" && element.name != "Armado")
-        .map(action => 
+        this.actionsValues = filterActions(res, ActionsType.ACCESSORY)
+        .map((action:any) => 
             {
               const field : FormFieldOption = {
                 value : action.name,

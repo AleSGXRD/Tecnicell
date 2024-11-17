@@ -7,7 +7,15 @@ export interface TableField{
         url: string,
         idPropertyName: string,
     }
-    cases? : Values[]
+    cases? : Values[],
+    styles?:StyleField[]
+}
+export interface StyleField{
+    condition?:{
+        formControlName:string,
+        value:any,
+    },
+    style:string,
 }
 export interface Values{
     key: string,
@@ -17,5 +25,6 @@ export enum TableFieldType{
     Property = "Property",
     Date = "Date",
     Link = "Link",
-    Select = "Select"
+    Select = "Select",
+    Revenue = "Revenue"
 }

@@ -19,6 +19,8 @@ public partial class PhoneHistory
 
     public string? SaleCode { get; set; }
 
+    public string? SupplierCode {  get; set; }
+
     public virtual ActionHistory? ActionHistoryNavigation { get; set; }
 
     public virtual Phone ImeiNavigation { get; set; } = null!;
@@ -26,6 +28,8 @@ public partial class PhoneHistory
     public virtual Sale? SaleCodeNavigation { get; set; }
 
     public virtual Branch? ToBranchNavigation { get; set; }
+
+    public virtual Supplier? SupplierNavigation { get; set; }
 
     public virtual UserInfo UserCodeNavigation { get; set; } = null!;
 }

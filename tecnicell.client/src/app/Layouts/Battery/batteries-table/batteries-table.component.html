@@ -5,13 +5,13 @@
       <app-dialog></app-dialog>
       <app-dialog-delete ></app-dialog-delete>
       <div class="grid grid-cols-1 content-start gap-4 items-center">
-        <app-navigation-mobile class="w-full" [apiService]="apiService" [form]="form" [formService]="formService" [inputsFormFields]="inputsFormFields"></app-navigation-mobile>
+        <app-navigation-mobile class="w-full" [apiService]="apiService" [histories]="'battery-histories'" [form]="form" [formService]="formService" [inputsFormFields]="inputsFormFields"></app-navigation-mobile>
       
         <div class="flex-row justify-between px-8 xl:px-24">
           <app-direction [direction]="direction"></app-direction>
         </div>
         <app-form [dialogService]="dialogService" class="z-30" [formService]="formService"></app-form>
-          <div class="px-8 xl:px-24 flex flex-col gap-4">
+          <div class="px-8 xl:px-24 flex flex-col gap-4 mb-32">
               <app-options [histories]="'battery-histories'" [filterService]="FilterService" [filtersOptions]="filtersOptions" [apiService]="apiService" [formAdd]="form" [service]="formService" [inputs]="inputsFormFields" class="w-full"></app-options>
               <app-table [apiService]="apiService" [dialogService]="dialogService" [formService]="formService"
                         [filterTableService]="FilterService" [inputsFormFields]="inputsFormFields" [form]="form"

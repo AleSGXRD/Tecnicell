@@ -1,0 +1,13 @@
+
+td{
+    @apply font-light text-center py-2 bg-gray-200 dark:bg-zinc-700 dark:text-gray-100 bg-opacity-25 hover:bg-opacity-50 transition-all;
+}
+th, td{
+    @apply w-80;
+}
+tr{
+    @apply shadow-sm;
+}
+th{
+    @apply uppercase font-medium tracking-widest py-2 hover:bg-gray-100 hover:dark:bg-zinc-700 dark:text-gray-50;
+}

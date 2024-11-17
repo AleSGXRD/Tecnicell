@@ -18,6 +18,9 @@ import { PhoneResponse } from '../../../Interfaces/business/ApiResponses/PhoneRe
 import { PhoneApiService } from '../../../Services/api/Phone/phone-api.service';
 import { PhoneHistoryApiService } from '../../../Services/api/Phone/phone-history-api.service';
 import { BrandApiService } from '../../../Services/api/Extras/battery-brand-api.service';
+import { ActionStyleCustom, MoneyStyleCustom } from '../../../Logic/TableFieldCustoms';
+import { SupplierApiService } from '../../../Services/api/Extras/supplier-api.service';
+import { ActionsType, filterActions } from '../../../Logic/Actions';
 
 
 @Component({
@@ -45,6 +48,10 @@ export class PhoneElementComponent {
       {
         name: "Usuario",
         space: SpacesField.small
+      },
+      {
+        name: 'Proveedor',
+        space : SpacesField.small
       },
       {
         name:'Sucursal',
@@ -77,6 +84,7 @@ export class PhoneElementComponent {
         type : TableFieldType.Property,
         propertyName : "actionHistory",
         show:true,
+        styles: ActionStyleCustom
       },
       {
         type : TableFieldType.Property,
@@ -87,6 +95,11 @@ export class PhoneElementComponent {
       {
         type : TableFieldType.Select,
         propertyName : "toBranch",
+        show:true,
+      },
+      {
+        type: TableFieldType.Select,
+        propertyName: "supplierCode",
         show:true,
       },
       {
@@ -101,10 +114,11 @@ export class PhoneElementComponent {
         show:true,
       },
       {
-        type : TableFieldType.Property,
+        type : TableFieldType.Revenue,
         propertyName : "saleCodeNavigation",
         subPropertyName:"cost",
         show:true,
+        styles: MoneyStyleCustom
       },
       {
         type : TableFieldType.Date,
@@ -151,6 +165,19 @@ export class PhoneElementComponent {
       }
     },
     {
+      type : "select", 
+      formControlName:"supplierCode",
+      name: "Proveedor",
+      placeholder : "Proveedor...",
+      fieldRequired : false,
+      options:[],
+      condition:{
+        formControlName: 'actionHistory',
+        value : ["Entrada"],
+      },
+      errors : [],
+    },
+    {
       type : "textarea",
       formControlName:"description",
       name: "Descripción de la acción",
@@ -160,7 +187,7 @@ export class PhoneElementComponent {
     {
       type : "collapse",
       formControlName:"sale",
-      name: "Compra",
+      name: "Método de pago",
       placeholder : "",
       fieldRequired : false,
       fields: [
@@ -208,6 +235,11 @@ export class PhoneElementComponent {
       propertyName : 'actionHistory',
     },
     {
+      name: 'Proveedores',
+      type: FilterType.SELECT,
+      propertyName : 'supplierCode',
+    },
+    {
       name:'Descripción',
       type:FilterType.TEXT,
       propertyName: 'description'
@@ -220,6 +252,7 @@ export class PhoneElementComponent {
   actionsValues! : FormFieldOption[];
   branchesValues! : FormFieldOption[];
   brandsValues! : FormFieldOption[];
+  supplierValues! : FormFieldOption[]
 
   constructor(private route:ActivatedRoute,
     public dialogService : DialogService,
@@ -232,7 +265,8 @@ export class PhoneElementComponent {
     private currencyApi : CurrencyApiService,
     private actionsApi : ActionHistoryApiService,
     private branchesApi : BranchApiService,
-    private brandsApi : BrandApiService
+    private brandsApi : BrandApiService,
+    private supplierApi: SupplierApiService
   ){
     
   }
@@ -259,6 +293,7 @@ export class PhoneElementComponent {
               sale: [false, []],
               saleCode: [null, []],
               currencyCode:  [undefined, []],
+              supplierCode: [undefined,[]],
               cost: [undefined,[]],
               warranty:  [null,[]],
               toBranch:[undefined,[]]
@@ -269,8 +304,58 @@ export class PhoneElementComponent {
         )
       }
     );
+    this.supplierApi.select().subscribe(res => {
+      res.unshift({
+        supplierCode : 'none',
+        name:'',
+      })
+      this.supplierValues = res.map(supplier => {
+        const field : FormFieldOption = {
+          value : supplier.supplierCode,
+          name : supplier.name
+        }
+        return field;
+      })
+      const field = this.inputsFormFields.find(element => element.formControlName == "supplierCode");
+      if(field){
+        field.options = this.supplierValues;
+      }
+      const tableCodeNavigation = this.tableHistories.tableFields.filter(
+        element => 
+          element.type == TableFieldType.Select
+      )
+      const fieldTable = tableCodeNavigation.find(
+        element => {
+          if(element.subPropertyName!= undefined){
+            return element.subPropertyName == "supplierCode"
+          }
+          return element.propertyName == "supplierCode";
+        }
+      );
+      if(fieldTable)
+        fieldTable.cases = res.map(supplier=>{
+          return {
+            key : supplier.supplierCode,
+            value : supplier.name
+          } 
+        })
+
+      const filterField = this.filtersOptions.find(filter => filter.propertyName == "supplierCode")
+      if(filterField != null)
+        filterField.options = this.supplierValues.map(action =>{
+            return {
+              name : action.name,
+              value : action.value
+            }
+          }
+        )
+    })
     
     await this.currencyApi.select().subscribe(res => {
+      res.unshift({
+        currencyCode : 'none',
+        currencyName:'',
+      })
       this.currencyValues = res.map(currency => {
         const field : FormFieldOption = {
           value : currency.currencyCode,
@@ -308,7 +393,7 @@ export class PhoneElementComponent {
         this.loaded[1] = true;
     })
     await this.actionsApi.select().subscribe(res => {
-        this.actionsValues = res.map(action => 
+        this.actionsValues = filterActions(res,ActionsType.PHONE).map((action:any)  => 
             {
               const field : FormFieldOption = {
                 value : action.name,
@@ -391,26 +476,46 @@ export class PhoneElementComponent {
   }
   
   editData(){
+    const name = this.value.view.name.replace(this.value.view.type.toUpperCase() + " ", '');
     const form  = this.formBuilder.group({
-      imei: [this.value.view.code,[Validators.required]],
+      imei: [this.value.view.code, [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
       brand: [this.value.view.type,[Validators.required]],
+      name : [name, []],
       salePrice: [this.value.view.salePrice,[Validators.required]],
     })
     const inputs :FormField[]= [
       {
-        type : "text",
+        type : "textlimited",
         formControlName:"imei",
         name: "IMEI.",
         placeholder : "IMEI...",
         fieldRequired : true,
+        errors : [
+          {
+            type: 'maxLength',
+            message : 'Debe ser de 16 caracteres',
+          },
+          {
+            type: 'minLength',
+            message : 'Debe ser de 16 caracteres'
+          }
+        ],
+        limit:16
       },
       {
         type : "select", // deberia ser fecha
         formControlName:"brand",
-        name: "Marca de la Batería.",
-        placeholder : "Marca de la Batería...",
+        name: "Marca del Teléfono.",
+        placeholder : "Marca del Teléfono...",
         fieldRequired : true,
         options : this.brandsValues
+      },
+      {
+        type : "text",
+        formControlName:"name",
+        name: "Modelo del teléfono.",
+        placeholder : "Modelo del teléfono...",
+        fieldRequired : true,
       },
       {
         type : "price",

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Phone, PhoneHistory } from '../../../Interfaces/business/Models/Phone';
 import { environment } from '../../../../environments/environment';
-import { reloadPage } from '../../../Logic/ReloadPage';
 import { HttpClient } from '@angular/common/http';
 import { PhoneHistoryApiService } from './phone-history-api.service';
 import { SaleApiService } from '../Extras/sale-api.service';
@@ -12,6 +11,7 @@ import { ApiService } from '../ApiService.service';
 import { SaleViewModel } from '../../../Interfaces/business/Models/Sale';
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +27,15 @@ export class PhoneApiService implements ApiService<PhoneView,PhoneResponse> {
   }
 
   select(): Observable<PhoneView[]>{
-    return this.http.get<PhoneView[]>(environment.url + '/api/Phones');
+    return this.http.get<PhoneView[]>(server() + '/api/Phones');
   }
   get(id:any) : Observable<PhoneResponse>{
-      return this.http.get<PhoneResponse>(environment.url + '/api/Phones/'+id);
+      return this.http.get<PhoneResponse>(server() + '/api/Phones/'+id);
   }
   add(data : any){
     const req :PhoneRequest = this.mapperToRequest(data);
 
-    this.http.post<any>(environment.url + '/api/Phones/', req.model).subscribe(
+    this.http.post<any>(server() + '/api/Phones/', req.model).subscribe(
       res=>{
         data.phoneCode = res.phoneCode;
         data.date = new Date();
@@ -46,14 +46,14 @@ export class PhoneApiService implements ApiService<PhoneView,PhoneResponse> {
   }
   edit(data : any, id : any){
     const model : any = this.mapperToEdit(data);
-    this.http.put<any>(environment.url + '/api/Phones/' + data.phoneCode, model)
+    this.http.put<any>(server() + '/api/Phones/' + data.phoneCode, model)
             .subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1)
             );
   }
   delete(data : any){
-    return this.http.delete<any>(environment.url + '/api/Phones/' + data.code);
+    return this.http.delete<any>(server() + '/api/Phones/' + data.code);
   }
   mapperToRequest(data:any) :PhoneRequest{
     const phone : Phone ={
@@ -62,7 +62,6 @@ export class PhoneApiService implements ApiService<PhoneView,PhoneResponse> {
       salePrice: data.salePrice,
       brand : data.brand,
     }
-    console.log(data);
     let sale!: SaleViewModel;
     if(data.sale == true){
       if(data.currencyCode != undefined && data.cost != undefined){
@@ -79,10 +78,10 @@ export class PhoneApiService implements ApiService<PhoneView,PhoneResponse> {
       date : new Date(),
       userCode: this.authService.myUser.value.userCode!,
       actionHistory : data.actionHistory,
+      supplierCode: data.supplierCode == 'none'? null: data.supplierCode,
       description : data.description,
       toBranch : data.toBranch
     }
-    console.log(history);
     if(sale && data.sale == true){
       history.saleCodeNavigation = sale;
     }
@@ -90,7 +89,6 @@ export class PhoneApiService implements ApiService<PhoneView,PhoneResponse> {
       model : phone,
       history : history
     }
-    console.log(request);
     return request;
   }
   mapperToEdit(data:any){

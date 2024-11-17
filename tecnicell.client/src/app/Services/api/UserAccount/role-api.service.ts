@@ -3,9 +3,8 @@ import { ApiService } from '../ApiService.service';
 import { Role } from '../../../Interfaces/business/Models/Role';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { reloadPage } from '../../../Logic/ReloadPage';
 import { NotificationSystemService } from '../../notification-system.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -17,22 +16,22 @@ export class RoleApiService implements ApiService<Role,Role> {
   ) {}
 
   select(): Observable<Role[]>{
-    return this.http.get<Role[]>(environment.url + '/api/Roles');
+    return this.http.get<Role[]>(server() + '/api/Roles');
   }
   get(id:any) : Observable<Role>{
-      return this.http.get<Role>(environment.url + '/api/Roles/'+id);
+      return this.http.get<Role>(server() + '/api/Roles/'+id);
   }
   add(data : any){
-    this.http.post(environment.url + '/api/Roles/',data).subscribe(
+    this.http.post(server() + '/api/Roles/',data).subscribe(
       res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
       err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1))
   }
   edit(data : any){
-    this.http.put(environment.url + '/api/Roles/' + data.roleCode,data).subscribe(
+    this.http.put(server() + '/api/Roles/' + data.roleCode,data).subscribe(
       res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
       err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
   }
   delete(data : any){
-      return this.http.delete(environment.url + '/api/Roles/'+data.roleCodes);
+      return this.http.delete(server() + '/api/Roles/'+data.roleCodes);
   }
 }

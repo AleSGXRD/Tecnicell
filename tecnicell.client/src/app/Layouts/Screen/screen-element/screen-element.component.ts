@@ -18,6 +18,9 @@ import { BranchApiService } from '../../../Services/api/Extras/branch-api.servic
 import { ScreenApiService } from '../../../Services/api/Screen/screen-api.service';
 import { ScreenHistoryApiService } from '../../../Services/api/Screen/screen-history-api.service';
 import { BrandApiService } from '../../../Services/api/Extras/battery-brand-api.service';
+import { ActionsType, filterActions } from '../../../Logic/Actions';
+import { ActionStyleCustom, MoneyStyleCustom } from '../../../Logic/TableFieldCustoms';
+import { SupplierApiService } from '../../../Services/api/Extras/supplier-api.service';
 
 @Component({
   selector: 'app-screen-element',
@@ -44,6 +47,10 @@ export class ScreenElementComponent {
       {
         name:'Usuario',
         space: SpacesField.small
+      },
+      {
+        name: 'Proveedor',
+        space : SpacesField.small
       },
       {
         name:'Sucursal',
@@ -80,6 +87,7 @@ export class ScreenElementComponent {
         type : TableFieldType.Property,
         propertyName : "actionHistory",
         show:true,
+        styles:ActionStyleCustom
       },
       {
         type : TableFieldType.Property,
@@ -90,6 +98,11 @@ export class ScreenElementComponent {
       {
         type : TableFieldType.Select,
         propertyName : "toBranch",
+        show:true,
+      },
+      {
+        type: TableFieldType.Select,
+        propertyName: "supplierCode",
         show:true,
       },
       {
@@ -109,10 +122,11 @@ export class ScreenElementComponent {
         show:true,
       },
       {
-        type : TableFieldType.Property,
+        type : TableFieldType.Revenue,
         propertyName : "saleCodeNavigation",
         subPropertyName:"cost",
         show:true,
+        styles:MoneyStyleCustom
       },
       {
         type : TableFieldType.Date,
@@ -159,6 +173,19 @@ export class ScreenElementComponent {
       }
     },
     {
+      type : "select", 
+      formControlName:"supplierCode",
+      name: "Proveedor",
+      placeholder : "Proveedor...",
+      fieldRequired : false,
+      options:[],
+      errors : [],
+      condition:{
+        formControlName: 'actionHistory',
+        value : ["Entrada"],
+      }
+    },
+    {
       type : "textarea",
       formControlName:"description",
       name: "Descripción de la acción",
@@ -175,7 +202,7 @@ export class ScreenElementComponent {
     {
       type : "collapse",
       formControlName:"sale",
-      name: "Compra",
+      name: "Método de pago",
       placeholder : "",
       fieldRequired : false,
       fields: [
@@ -223,6 +250,11 @@ export class ScreenElementComponent {
       propertyName : 'actionHistory',
     },
     {
+      name: 'Proveedores',
+      type: FilterType.SELECT,
+      propertyName : 'supplierCode',
+    },
+    {
       name:'Descripción',
       type:FilterType.TEXT,
       propertyName: 'description'
@@ -235,6 +267,7 @@ export class ScreenElementComponent {
   actionsValues! : FormFieldOption[];
   branchesValues! : FormFieldOption[];
   brandsValues! : FormFieldOption[];
+  supplierValues! : FormFieldOption[]
 
   constructor(private route:ActivatedRoute,
     public dialogService : DialogService,
@@ -247,7 +280,8 @@ export class ScreenElementComponent {
     private currencyApi : CurrencyApiService,
     private actionsApi : ActionHistoryApiService,
     private branchesApi : BranchApiService,
-    private brandsApi : BrandApiService
+    private brandsApi : BrandApiService,
+    private supplierApi : SupplierApiService
   ){
     
   }
@@ -275,6 +309,7 @@ export class ScreenElementComponent {
               sale: [false, []],
               saleCode: [null, []],
               currencyCode:  [undefined, []],
+              supplierCode : [undefined,[]],
               cost: [undefined,[]],
               warranty:  [null,[]],
               toBranch:[undefined,[]]
@@ -285,8 +320,58 @@ export class ScreenElementComponent {
         )
       }
     );
+    this.supplierApi.select().subscribe(res => {
+      res.unshift({
+        supplierCode : 'none',
+        name:'',
+      })
+      this.supplierValues = res.map(supplier => {
+        const field : FormFieldOption = {
+          value : supplier.supplierCode,
+          name : supplier.name
+        }
+        return field;
+      })
+      const field = this.inputsFormFields.find(element => element.formControlName == "supplierCode");
+      if(field){
+        field.options = this.supplierValues;
+      }
+      const tableCodeNavigation = this.tableHistories.tableFields.filter(
+        element => 
+          element.type == TableFieldType.Select
+      )
+      const fieldTable = tableCodeNavigation.find(
+        element => {
+          if(element.subPropertyName!= undefined){
+            return element.subPropertyName == "supplierCode"
+          }
+          return element.propertyName == "supplierCode";
+        }
+      );
+      if(fieldTable)
+        fieldTable.cases = res.map(supplier=>{
+          return {
+            key : supplier.supplierCode,
+            value : supplier.name
+          } 
+        })
+
+      const filterField = this.filtersOptions.find(filter => filter.propertyName == "supplierCode")
+      if(filterField != null)
+        filterField.options = this.supplierValues.map(action =>{
+            return {
+              name : action.name,
+              value : action.value
+            }
+          }
+        )
+    })
     
     await this.currencyApi.select().subscribe(res => {
+      res.unshift({
+        currencyCode : 'none',
+        currencyName:'',
+      })
       this.currencyValues = res.map(currency => {
         const field : FormFieldOption = {
           value : currency.currencyCode,
@@ -324,8 +409,8 @@ export class ScreenElementComponent {
         this.loaded[1] = true;
     })
     await this.actionsApi.select().subscribe(res => {
-        this.actionsValues = res.filter(element => element.name != "Pieza Sacada" && element.name != "Pieza Puesta" && element.name != "Armado")
-        .map(action => 
+        this.actionsValues = filterActions(res,ActionsType.BATTERY)
+        .map((action:any) => 
             {
               const field : FormFieldOption = {
                 value : action.name,
@@ -417,19 +502,19 @@ export class ScreenElementComponent {
     })
     const inputs :FormField[]= [
       {
-        type : "text",
-        formControlName:"name",
-        name: "Nombre de la Batería.",
-        placeholder : "Nombre de la Batería...",
-        fieldRequired : true,
-      },
-      {
         type : "select", // deberia ser fecha
         formControlName:"brand",
-        name: "Marca de la Batería.",
-        placeholder : "Marca de la Batería...",
+        name: "Marca de la Pantalla.",
+        placeholder : "Marca de la Pantalla...",
         fieldRequired : true,
         options : this.brandsValues
+      },
+      {
+        type : "text",
+        formControlName:"name",
+        name: "Modelo de la Pantalla.",
+        placeholder : "Modelo de la Pantalla...",
+        fieldRequired : true,
       },
       {
         type : "price",

@@ -1,1 +1,2 @@
 C:\Users\AleXRD\source\repos\Tecnicell\tecnicell.client\obj\Debug\tecnicell.client.esproj.CoreCompileInputs.cache
+C:\Users\Vergil\Documents\GitHub\Tecnicell\tecnicell.client\obj\Debug\tecnicell.client.esproj.CoreCompileInputs.cache

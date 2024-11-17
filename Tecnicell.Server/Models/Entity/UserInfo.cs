@@ -30,6 +30,7 @@ public partial class UserInfo
     public virtual Role? RoleNavigation { get; set; }
 
     public virtual ICollection<ScreenHistory> ScreenHistories { get; set; } = new List<ScreenHistory>();
+    public virtual ICollection<DiaryWork> DiaryWorks { get; set; } = new List<DiaryWork>();
 
     public virtual UserAccount? UserAccount { get; set; }
 }

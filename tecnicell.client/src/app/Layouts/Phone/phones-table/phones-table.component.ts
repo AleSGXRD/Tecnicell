@@ -14,6 +14,8 @@ import { ActionHistoryApiService } from '../../../Services/api/Extras/action-his
 import { BranchApiService } from '../../../Services/api/Extras/branch-api.service';
 import { PhoneApiService } from '../../../Services/api/Phone/phone-api.service';
 import { BrandApiService } from '../../../Services/api/Extras/battery-brand-api.service';
+import { CurrentStateStyleCustom } from '../../../Logic/TableFieldCustoms';
+import { SupplierApiService } from '../../../Services/api/Extras/supplier-api.service';
 
 @Component({
   selector: 'app-phones-table',
@@ -32,14 +34,14 @@ export class PhonesTableComponent  {
     headerFields : [
       {
         name:'IMEI',
-        space: SpacesField.small
+        space: SpacesField.normal
       },
       {
         name:'Marca',
         space: SpacesField.small
       },
       {
-        name:'Nombre',
+        name:'Modelo',
         space: SpacesField.small
       },
       {
@@ -84,6 +86,7 @@ export class PhonesTableComponent  {
         type : TableFieldType.Property,
         propertyName : "currentState",
         show:true,
+        styles:CurrentStateStyleCustom
       },
       {
         type : TableFieldType.Property,
@@ -95,7 +98,7 @@ export class PhonesTableComponent  {
 
   //Form
   form : any = this.formBuilder.nonNullable.group({
-    imei: [undefined, Validators.required],
+    imei: [undefined, [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
     brand:       ['', [Validators.required]],
     name:         [undefined, [Validators.required]],
     salePrice:    [undefined, []],
@@ -103,21 +106,29 @@ export class PhonesTableComponent  {
     description: ['', []],
     sale: [false, []],
     currencyCode:  [undefined, []],
+    supplierCode: [undefined, []],
     cost: [undefined,[]],
     warranty:  [null,[]],
     branchCode:[null,[]]
   })
   inputsFormFields :FormField[]= [
     {
-      type : "text",
+      type : "textlimited",
       formControlName:"imei",
       name: "IMEI.",
       placeholder : "IMEI...",
       fieldRequired : true,
-      errors : [{
-        type : 'required',
-        message: 'Se necesita rellenar este campo'
-      }],
+      errors : [
+        {
+          type: 'maxLength',
+          message : 'Debe ser de 16 caracteres',
+        },
+        {
+          type: 'minLength',
+          message : 'Debe ser de 16 caracteres'
+        }
+      ],
+      limit: 16
     },
     {
       type : "select",
@@ -129,8 +140,8 @@ export class PhonesTableComponent  {
     {
       type : "text",
       formControlName:"name",
-      name: "Nombre del telefono.",
-      placeholder : "Nombre del telefono...",
+      name: "Modelo del telefono.",
+      placeholder : "Modelo del telefono...",
       fieldRequired : true,
     },
     {
@@ -149,15 +160,15 @@ export class PhonesTableComponent  {
       options:[]
     },
     {
-      type : "select", // deberia ser fecha
-      formControlName:"branchCode",
-      name: "Sucursal",
-      placeholder : "Sucursal...",
+      type : "select",
+      formControlName:"supplierCode",
+      name: "Proveedor",
+      placeholder : "Proveedor...",
       fieldRequired : false,
       errors : [],
       condition:{
         formControlName: 'actionHistory',
-        value : ["Transferido desde otra sucursal", "Transferido hacia otra sucursal"],
+        value : ["Entrada"],
       }
     },
     {
@@ -170,7 +181,7 @@ export class PhonesTableComponent  {
     {
       type : "collapse",
       formControlName:"sale",
-      name: "Compra",
+      name: "Metodo de Pago",
       placeholder : "",
       fieldRequired : false,
       fields: [
@@ -215,8 +226,9 @@ export class PhonesTableComponent  {
       propertyName : 'type',
     },
     {
-      name: 'Nombre del teléfono.',
+      name: 'Modelo del teléfono.',
       type: FilterType.TEXT,
+      save:true,
       propertyName : 'name',
     }
   ]
@@ -225,6 +237,7 @@ export class PhonesTableComponent  {
   actionsValues! : FormFieldOption[];
   branchesValues! : FormFieldOption[];
   brandValues! : FormFieldOption[];
+  supplierValues! : FormFieldOption[]
 
   actionsTable: ActionsTable = ActionsTable.DELETE;
   
@@ -237,7 +250,8 @@ export class PhonesTableComponent  {
     private currencyApi : CurrencyApiService,
     private actionsApi : ActionHistoryApiService,
     private branchesApi : BranchApiService,
-    private brandsApi : BrandApiService
+    private brandsApi : BrandApiService,
+    private supplierApi : SupplierApiService
   ){
   }
   
@@ -246,7 +260,29 @@ export class PhonesTableComponent  {
     //Add 'implements OnInit' to the class.
     this.apiService.select().subscribe(res => {this.table.values = res;});
     
+    
+    this.supplierApi.select().subscribe(res => {
+      res.unshift({
+        supplierCode : 'none',
+        name:'',
+      })
+      this.supplierValues = res.map(supplier => {
+        const field : FormFieldOption = {
+          value : supplier.supplierCode,
+          name : supplier.name
+        }
+        return field;
+      })
+      const field = this.inputsFormFields.find(element => element.formControlName == "supplierCode");
+      if(field){
+        field.options = this.supplierValues;
+      }
+    })
     this.currencyApi.select().subscribe(res => {
+      res.unshift({
+        currencyCode : 'none',
+        currencyName:'',
+      })
       this.currencyValues = res.map(currency => {
         const field : FormFieldOption = {
           value : currency.currencyCode,

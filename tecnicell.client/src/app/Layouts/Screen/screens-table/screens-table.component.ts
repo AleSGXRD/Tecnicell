@@ -14,6 +14,8 @@ import { ActionHistoryApiService } from '../../../Services/api/Extras/action-his
 import { BranchApiService } from '../../../Services/api/Extras/branch-api.service';
 import { ScreenApiService } from '../../../Services/api/Screen/screen-api.service';
 import { BrandApiService } from '../../../Services/api/Extras/battery-brand-api.service';
+import { StateStyleCustom } from '../../../Logic/TableFieldCustoms';
+import { SupplierApiService } from '../../../Services/api/Extras/supplier-api.service';
 
 @Component({
   selector: 'app-screens-table',
@@ -32,14 +34,14 @@ export class ScreensTableComponent {
     headerFields : [
       {
         name:'Codigo',
-        space: SpacesField.small
+        space: SpacesField.normal
       },
       {
         name:'Marca',
         space: SpacesField.small
       },
       {
-        name:'Nombre',
+        name:'Modelo',
         space: SpacesField.small
       },
       {
@@ -98,6 +100,7 @@ export class ScreensTableComponent {
         type : TableFieldType.Property,
         propertyName : "available",
         show:true,
+        styles: StateStyleCustom
       }
     ], 
   };
@@ -113,28 +116,29 @@ export class ScreensTableComponent {
     warrantyScreen :[undefined, [Validators.required]],
     sale: [false, []],
     currencyCode:  [undefined, []],
+    supplierCode: [undefined, []],
     cost: [undefined,[]],
     warranty:  [null,[]],
     branchCode:[null,[]]
   })
   inputsFormFields :FormField[]= [
     {
-      type : "text",
-      formControlName:"name",
-      name: "Nombre de la Pantalla.",
-      placeholder : "Nombre...",
-      fieldRequired : true,
-      errors : [{
-        type : 'required',
-        message: 'Se necesita rellenar este campo'
-      }],
-    },
-    {
       type : "select",
       formControlName:"brand",
       name: "Marca.",
       placeholder : "Marca...",
       fieldRequired : true,
+    },
+    {
+      type : "text",
+      formControlName:"name",
+      name: "Modelo de la Pantalla.",
+      placeholder : "Modelo de la Pantalla...",
+      fieldRequired : true,
+      errors : [{
+        type : 'required',
+        message: 'Se necesita rellenar este campo'
+      }],
     },
     {
       type : "price",
@@ -159,15 +163,15 @@ export class ScreensTableComponent {
       options:[]
     },
     {
-      type : "select", // deberia ser fecha
-      formControlName:"branchCode",
-      name: "Sucursal",
-      placeholder : "Sucursal...",
+      type : "select",
+      formControlName:"supplierCode",
+      name: "Proveedor",
+      placeholder : "Proveedor...",
       fieldRequired : false,
       errors : [],
       condition:{
         formControlName: 'actionHistory',
-        value : ["Transferido desde otra sucursal", "Transferido hacia otra sucursal"],
+        value : ["Entrada"],
       }
     },
     {
@@ -187,7 +191,7 @@ export class ScreensTableComponent {
     {
       type : "collapse",
       formControlName:"sale",
-      name: "Compra",
+      name: "Método de pago",
       placeholder : "",
       fieldRequired : false,
       fields: [
@@ -227,8 +231,9 @@ export class ScreensTableComponent {
       propertyName : 'type',
     },
     {
-      name:'Nombre',
+      name:'Modelo',
       type:FilterType.TEXT,
+      save:true,
       propertyName: 'name'
     }
   ]
@@ -237,6 +242,7 @@ export class ScreensTableComponent {
   actionsValues! : FormFieldOption[];
   branchesValues! : FormFieldOption[];
   brandValues! : FormFieldOption[];
+  supplierValues! : FormFieldOption[]
 
   actionsTable: ActionsTable = ActionsTable.DELETE;
   
@@ -249,16 +255,39 @@ export class ScreensTableComponent {
     private currencyApi : CurrencyApiService,
     private actionsApi : ActionHistoryApiService,
     private branchesApi : BranchApiService,
-    private brandsApi : BrandApiService
+    private brandsApi : BrandApiService,
+    private supplierApi : SupplierApiService
   ){
   }
   
   async ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.apiService.select().subscribe(res => {console.log(res);this.table.values = res;});
+    this.apiService.select().subscribe(res => {this.table.values = res;});
     
+    
+    this.supplierApi.select().subscribe(res => {
+      res.unshift({
+        supplierCode : 'none',
+        name:'',
+      })
+      this.supplierValues = res.map(supplier => {
+        const field : FormFieldOption = {
+          value : supplier.supplierCode,
+          name : supplier.name
+        }
+        return field;
+      })
+      const field = this.inputsFormFields.find(element => element.formControlName == "supplierCode");
+      if(field){
+        field.options = this.supplierValues;
+      }
+    })
     this.currencyApi.select().subscribe(res => {
+      res.unshift({
+        currencyCode : 'none',
+        currencyName:'',
+      })
       this.currencyValues = res.map(currency => {
         const field : FormFieldOption = {
           value : currency.currencyCode,

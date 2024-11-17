@@ -14,6 +14,10 @@ import { TableFieldType } from '../../../Interfaces/tools/Table/TableField';
 import { SpacesField } from '../../../Interfaces/tools/Table/HeaderField';
 import { TableProperties } from '../../../Interfaces/tools/Table/TableProperties';
 import { ScreenHistoryApiService } from '../../../Services/api/Screen/screen-history-api.service';
+import { ActionsType, filterActions } from '../../../Logic/Actions';
+import { ActionStyleCustom, MoneyStyleCustom } from '../../../Logic/TableFieldCustoms';
+import { ScreenApiService } from '../../../Services/api/Screen/screen-api.service';
+import { getFirstDayOfWeek, getLastDayOfWeek } from '../../../Logic/DaysController';
 
 @Component({
   selector: 'app-screen-histories',
@@ -34,7 +38,11 @@ export class ScreenHistoriesComponent {
     headerFields : [
       {
         name:'Codigo',
-        space: SpacesField.small
+        space: SpacesField.normal
+      },
+      {
+        name:'Pantalla',
+        space: SpacesField.normal
       },
       {
         name:'Fecha',
@@ -80,6 +88,11 @@ export class ScreenHistoriesComponent {
         }
       },
       {
+        type : TableFieldType.Select,
+        propertyName : "screenCode",
+        show:true,
+      },
+      {
         type : TableFieldType.Date,
         show:true,
         propertyName : "date",
@@ -94,6 +107,7 @@ export class ScreenHistoriesComponent {
         type : TableFieldType.Property,
         propertyName : "actionHistory",
         show:true,
+        styles:ActionStyleCustom
       },
       {
         type : TableFieldType.Property,
@@ -112,10 +126,11 @@ export class ScreenHistoriesComponent {
         show:true,
       },
       {
-        type : TableFieldType.Property,
+        type : TableFieldType.Revenue,
         propertyName : "saleCodeNavigation",
         subPropertyName: "cost",
         show:true,
+        styles:MoneyStyleCustom
       },
       {
         type : TableFieldType.Date,
@@ -171,14 +186,41 @@ export class ScreenHistoriesComponent {
     public apiService: ScreenHistoryApiService,
 
     private currencyApi : CurrencyApiService,
+    private screenApi : ScreenApiService,
     private actionsApi : ActionHistoryApiService,
-    private branchesApi : BranchApiService
   ){
+    this.filtersOptions[0].value = {
+      start : getFirstDayOfWeek(),
+      end : getLastDayOfWeek()
+    }
+    this.FilterService.emit(this.filtersOptions);
   }
   
   async ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+
+    this.screenApi.select().subscribe(res => {
+      const tableCodeNavigation = this.table.tableFields.filter(
+        element => 
+          element.type == TableFieldType.Select
+      )
+      const fieldTable = tableCodeNavigation.find(
+        element => {
+          if(element.subPropertyName!= undefined){
+            return element.subPropertyName == "screenCode"
+          }
+          return element.propertyName == "screenCode";
+        }
+      );
+      if(fieldTable)
+        fieldTable.cases = res.map(model=>{
+          return {
+            key : model.code,
+            value : model.type + " " + model.name
+          }
+        })
+    })
     
     this.currencyApi.select().subscribe(res => {
       this.currencyValues = res.map(currency => {
@@ -219,8 +261,8 @@ export class ScreenHistoriesComponent {
 
     })
     this.actionsApi.select().subscribe(res => {
-        this.actionsValues = res.filter(action => action.name != "Pieza Extraida" && action.name != "Pieza Puesta" && action.name != "Armado")
-           .map(action => 
+        this.actionsValues = filterActions(res,ActionsType.SCREEN)
+           .map((action:any) => 
             {
               const field : FormFieldOption = {
                 value : action.name,
@@ -240,17 +282,7 @@ export class ScreenHistoriesComponent {
           }
         )
       
-    });
-    this.branchesApi.select().subscribe(res => {
-      this.branchesValues = res.map(branch => {
-        const field : FormFieldOption = {
-          value : branch.branchCode,
-          name : branch.name
-        }
-        return field;
-      })
-    }
-    );
+    })
     
     this.apiService.select().subscribe(res => {
       this.table.values = res;

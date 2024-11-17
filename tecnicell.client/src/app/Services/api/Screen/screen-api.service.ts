@@ -7,11 +7,11 @@ import { ScreenHistoryApiService } from './screen-history-api.service';
 import { SaleApiService } from '../Extras/sale-api.service';
 import { Observable } from 'rxjs';
 import { ScreenRequest } from '../../../Interfaces/business/ApiRequest/ScreenRequest';
-import { reloadPage } from '../../../Logic/ReloadPage';
 import { Screen, ScreenHistory } from '../../../Interfaces/business/Models/Screen';
 import { SaleViewModel } from '../../../Interfaces/business/Models/Sale';
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -27,16 +27,16 @@ export class ScreenApiService implements ApiService<ScreenView, ScreenResponse> 
   }
 
   select(): Observable<ScreenView[]>{
-    return this.http.get<ScreenView[]>(environment.url + '/api/Screens');
+    return this.http.get<ScreenView[]>(server() + '/api/Screens');
   }
   get(id:any) : Observable<ScreenResponse>{
-      return this.http.get<ScreenResponse>(environment.url + '/api/Screens/'+id);
+      return this.http.get<ScreenResponse>(server() + '/api/Screens/'+id);
   }
   add(data : any){
     
     const req : ScreenRequest = this.mapperToRequest(data);
 
-    this.http.post<any>(environment.url + '/api/Screens/', req.model).subscribe(
+    this.http.post<any>(server() + '/api/Screens/', req.model).subscribe(
       res=>{
         data.screenCode = res.screenCode;
         data.date = new Date();
@@ -47,14 +47,14 @@ export class ScreenApiService implements ApiService<ScreenView, ScreenResponse> 
   }
   edit(data : any, id : any){
     const model : any = this.mapperToEdit(data);
-    this.http.put<any>(environment.url + '/api/Screens/' + data.screenCode, model)
+    this.http.put<any>(server() + '/api/Screens/' + data.screenCode, model)
             .subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1)
             );
   }
   delete(data : any){
-    return this.http.delete<any>(environment.url + '/api/Screens/' + data.code);
+    return this.http.delete<any>(server() + '/api/Screens/' + data.code);
   }
   mapperToRequest(data:any) : ScreenRequest{
     const screen : Screen ={
@@ -82,9 +82,9 @@ export class ScreenApiService implements ApiService<ScreenView, ScreenResponse> 
       actionHistory : data.actionHistory,
       description : data.description,
       quantity : data.quantity,
+      supplierCode: data.supplierCode == 'none'? null: data.supplierCode,
       toBranch : data.toBranch
     }
-    console.log(history);
     if(sale && data.sale == true){
       history.saleCodeNavigation = sale;
     }
@@ -92,7 +92,6 @@ export class ScreenApiService implements ApiService<ScreenView, ScreenResponse> 
       model : screen,
       history : history
     }
-    console.log(request);
     return request;
   }
   mapperToEdit(data:any){

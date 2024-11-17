@@ -31,6 +31,12 @@ export class LoginComponent {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
+
+  changeServerAddress(){
+    const address = prompt('Introduzca la nueva direccion del servidor: http://localhost:5000');
+    if(address)
+      localStorage.setItem('server', address)
+  }
   
   submit(){
     let user : AuthRequest = {

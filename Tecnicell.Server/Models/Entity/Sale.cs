@@ -24,4 +24,6 @@ public partial class Sale
     public virtual ICollection<PhoneRepairHistory> PhoneRepairHistories { get; set; } = new List<PhoneRepairHistory>();
 
     public virtual ICollection<ScreenHistory> ScreenHistories { get; set; } = new List<ScreenHistory>();
+    public virtual ICollection<DiaryWork> DiaryWorks { get; set; } = new List<DiaryWork>();
+
 }

@@ -17,6 +17,11 @@ export class FormFieldComponent {
   form! : any;
 
   checked = false;
+  protected readonly value = signal('');
+
+  protected onInput(event: Event) {
+    this.value.set((event.target as HTMLInputElement).value);
+  }
 
   hide = signal(true);
   clickEvent(event: MouseEvent) {

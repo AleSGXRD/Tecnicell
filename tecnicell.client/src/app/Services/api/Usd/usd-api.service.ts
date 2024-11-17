@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { Sale } from '../../../Interfaces/business/Models/Sale';
 import { ApiService } from '../ApiService.service';
 import { NotificationSystemService } from '../../notification-system.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -24,25 +25,25 @@ export class UsdApiService implements ApiService<Usd,Usd> {
    }
   
    select(): Observable<Usd[]>{
-    return this.http.get<Usd[]>(environment.url + '/api/Usds');
+    return this.http.get<Usd[]>(server() + '/api/Usds');
   }
   get(id:any) : Observable<Usd>{
-      return this.http.get<Usd>(environment.url + '/api/Usds/'+id);
+      return this.http.get<Usd>(server() + '/api/Usds/'+id);
   }
   add(data : any){
     const model : any = this.mapper(data);
-    this.http.post<any>(environment.url + '/api/Usds/', model).subscribe(
+    this.http.post<any>(server() + '/api/Usds/', model).subscribe(
       res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
       err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1));
   }
   edit(data : any){
     const model : any = this.mapper(data);
-    this.http.put<any>(environment.url + '/api/Usds/' + data.UsdCode, model).subscribe(
+    this.http.put<any>(server() + '/api/Usds/' + data.UsdCode, model).subscribe(
       res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
       err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1));
   }
   delete(id : any){
-    return this.http.delete<any>(environment.url + '/api/Usds/' + id);
+    return this.http.delete<any>(server() + '/api/Usds/' + id);
   }
 
   mapper(data:any) : any{
@@ -53,7 +54,7 @@ export class UsdApiService implements ApiService<Usd,Usd> {
     return model;
   }
   getLast() {
-    this.http.get<Usd>(environment.url + '/api/Usds/last').subscribe(res => this.usd.next(res));
+    this.http.get<Usd>(server() + '/api/Usds/last').subscribe(res => this.usd.next(res));
   }
 
   getSale(quantity : number, price: number, warranty: number){
@@ -65,6 +66,19 @@ export class UsdApiService implements ApiService<Usd,Usd> {
     const sale : Sale ={
       currencyCode: "pN52_BZXv_Due0_4Gma",
       cost : (this.usd.value.value * price) * quantity,
+      warranty : (warranty == 0? undefined : date)
+    };
+    return sale
+  }
+  getSaleInMN(quantity : number, price: number, warranty: number){
+    if(this.usd.value.value == 0) return undefined;
+
+    var date = new Date();
+    date.setDate(date.getDate() + warranty);
+
+    const sale : Sale ={
+      currencyCode: "pN52_BZXv_Due0_4Gma",
+      cost : (price) * quantity,
       warranty : (warranty == 0? undefined : date)
     };
     return sale

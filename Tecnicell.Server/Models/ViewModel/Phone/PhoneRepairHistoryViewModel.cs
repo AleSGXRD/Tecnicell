@@ -18,9 +18,13 @@ namespace Tecnicell.Server.Models.ViewModel.Phone
 
         public string? SaleCode { get; set; }
 
+        public string? SupplierCode { get; set; }
+
         public virtual SaleViewModel? SaleCodeNavigation { get; set; }
 
         public virtual BranchViewModel? ToBranchNavigation { get; set; }
+
+        public virtual SupplierViewModel? SupplierNavigation {  get; set; }
 
         public virtual UserInfoViewModel? UserCodeNavigation { get; set; } = null!;
     }

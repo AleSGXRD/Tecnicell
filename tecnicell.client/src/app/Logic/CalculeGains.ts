@@ -11,6 +11,10 @@ export function calculeGains(currencies: any[], values: any[]){
 
 function processHistory(history : any, currency: any) : number{
     if(history['saleCodeNavigation'] == undefined) return 0;
+    if(history['actionHistory'] == undefined){
+      if(history['saleCodeNavigation']['currencyCode'] == currency.value)
+        return history['saleCodeNavigation']['cost']
+    }
   
     if(history['actionHistory'] == 'Entrada')
       if(history['saleCodeNavigation']['currencyCode'] == currency.value)

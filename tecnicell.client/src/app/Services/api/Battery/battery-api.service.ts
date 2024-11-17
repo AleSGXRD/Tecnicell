@@ -6,12 +6,12 @@ import { BatteryResponse, BatteryView } from '../../../Interfaces/business/ApiRe
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ApiService } from '../ApiService.service';
-import { reloadPage } from '../../../Logic/ReloadPage';
 import { Battery, BatteryHistory } from '../../../Interfaces/business/Models/Battery';
 import { BatteryRequest } from '../../../Interfaces/business/ApiRequest/BatteryRequest';
 import { SaleViewModel } from '../../../Interfaces/business/Models/Sale';
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +27,15 @@ export class BatteryApiService implements ApiService<BatteryView, BatteryRespons
   }
 
   select(): Observable<BatteryView[]>{
-    return this.http.get<BatteryView[]>(environment.url + '/api/Batteries');
+    return this.http.get<BatteryView[]>(server() + '/api/Batteries');
   }
   get(id:any) : Observable<BatteryResponse>{
-      return this.http.get<BatteryResponse>(environment.url + '/api/Batteries/'+id);
+      return this.http.get<BatteryResponse>(server() + '/api/Batteries/'+id);
   }
   add(data : any){
     const req : BatteryRequest = this.mapperToRequest(data);
 
-    this.http.post<any>(environment.url + '/api/Batteries/', req.model).subscribe(
+    this.http.post<any>(server() + '/api/Batteries/', req.model).subscribe(
       res=>{
         data.batteryCode = res.batteryCode;
         data.date = new Date();
@@ -46,14 +46,14 @@ export class BatteryApiService implements ApiService<BatteryView, BatteryRespons
   }
   edit(data : any, id : any){
     const model : any = this.mapperToEdit(data);
-    this.http.put<any>(environment.url + '/api/Batteries/' + data.batteryCode, model)
+    this.http.put<any>(server() + '/api/Batteries/' + data.batteryCode, model)
             .subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1)
             );
   }
   delete(data : any){
-    return this.http.delete<any>(environment.url + '/api/Batteries/' + data.code);
+    return this.http.delete<any>(server() + '/api/Batteries/' + data.code);
   }
   mapperToRequest(data:any) : BatteryRequest{
     const battery : Battery ={
@@ -80,6 +80,7 @@ export class BatteryApiService implements ApiService<BatteryView, BatteryRespons
       userCode: this.authService.myUser.value.userCode!,
       actionHistory : data.actionHistory,
       description : data.description,
+      supplierCode: data.supplierCode == 'none'? null: data.supplierCode,
       quantity : data.quantity,
       toBranch : data.toBranch
     }

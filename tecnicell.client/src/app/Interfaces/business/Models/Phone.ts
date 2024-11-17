@@ -1,6 +1,7 @@
 import { Branch } from "./Branch";
 import { Brand } from "./Brand";
 import { Sale } from "./Sale";
+import { Supplier } from "./Supplier";
 import { UserInfo } from "./UserAccount";
 
 export interface Phone {
@@ -20,6 +21,8 @@ export interface PhoneHistory {
     toBranch?:           string;
     description?:        string;
     saleCode?:           string;
+    supplierCode?:       string;
+    supplierNavigation?: Supplier;
     saleCodeNavigation?: Sale;
     toBranchNavigation?: Branch;
     userCodeNavigation?: UserInfo;

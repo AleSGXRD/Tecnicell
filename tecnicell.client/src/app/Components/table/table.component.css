@@ -2,7 +2,7 @@ table{
     @apply rounded-md  overflow-x-auto bg-white dark:bg-zinc-800  ;
 }
 table::-webkit-scrollbar{
-    height: 10px;
+    height: 8px;
 }
 table::-webkit-scrollbar-thumb{
     @apply bg-gray-300 rounded-lg;
@@ -14,7 +14,7 @@ th{
     @apply uppercase font-medium tracking-widest py-2 hover:bg-gray-100 hover:dark:bg-zinc-700 dark:text-gray-50;
 }
 td{
-    @apply font-light text-center py-2 bg-gray-200 dark:bg-zinc-700 dark:text-gray-100 bg-opacity-25 hover:bg-opacity-50 transition-all;
+    @apply font-light  text-center py-2 bg-gray-200 dark:bg-zinc-700 dark:text-gray-100 bg-opacity-25 hover:bg-opacity-50 transition-all;
 }
 th, td{
     @apply w-80;
@@ -36,4 +36,23 @@ a{
 }
 .actions{
     @apply flex flex-row justify-around;
+}
+.button{
+    @apply px-4 py-4 rounded-lg transition-all
+     hover:bg-gray-700 hover:bg-opacity-15
+}
+.green i{
+    @apply bg-green-500 text-gray-50 px-2 py-1 w-fit rounded-lg
+}
+.red i{
+    @apply bg-red-500 text-gray-50 px-2 py-1 w-fit rounded-lg
+}
+.yellow i{
+    @apply bg-yellow-500 text-gray-50 px-2 py-1 w-fit rounded-lg
+}
+.orange i{
+    @apply bg-orange-500 text-gray-50 px-2 py-1 w-fit rounded-lg
+}
+.gray i{
+    @apply bg-gray-500 text-gray-100 px-2 py-1 w-fit rounded-lg
 }

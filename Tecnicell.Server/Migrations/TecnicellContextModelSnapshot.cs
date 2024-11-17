@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tecnicell.Server.Context;
 
 #nullable disable
@@ -16,11 +15,7 @@ namespace Tecnicell.Server.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Accessory", b =>
                 {
@@ -41,7 +36,7 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("name");
 
                     b.Property<decimal?>("SalePrice")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("sale_price");
 
                     b.HasKey("AccessoryCode")
@@ -61,8 +56,12 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("accessory_code");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("date");
+
+                    b.Property<string>("UserCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("user_code");
 
                     b.Property<string>("ActionHistory")
                         .HasColumnType("character varying")
@@ -73,25 +72,33 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("description");
 
                     b.Property<int?>("Quantity")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("quantity");
 
                     b.Property<string>("SaleCode")
                         .HasColumnType("character varying")
                         .HasColumnName("sale_code");
 
+                    b.Property<string>("SupplierCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("supplier_code");
+
                     b.Property<string>("ToBranch")
                         .HasColumnType("character varying")
                         .HasColumnName("to_branch");
 
-                    b.HasKey("AccessoryCode", "Date")
+                    b.HasKey("AccessoryCode", "Date", "UserCode")
                         .HasName("accessory_history_pkey");
 
                     b.HasIndex("ActionHistory");
 
                     b.HasIndex("SaleCode");
 
+                    b.HasIndex("SupplierCode");
+
                     b.HasIndex("ToBranch");
+
+                    b.HasIndex("UserCode");
 
                     b.ToTable("accessory_history", (string)null);
                 });
@@ -115,7 +122,7 @@ namespace Tecnicell.Server.Migrations
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.AccessoryView", b =>
                 {
                     b.Property<string>("Available")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("available");
 
                     b.Property<string>("Code")
@@ -131,16 +138,20 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("name");
 
                     b.Property<long?>("Quantity")
-                        .HasColumnType("bigint")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("quantity");
 
                     b.Property<decimal?>("SalePrice")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("sale_price");
 
                     b.Property<string>("Type")
                         .HasColumnType("character varying")
                         .HasColumnName("type");
+
+                    b.Property<string>("TypeCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("type_code");
 
                     b.ToTable((string)null);
 
@@ -178,11 +189,11 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("name");
 
                     b.Property<decimal?>("SalePrice")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("sale_price");
 
                     b.Property<int?>("Warranty")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("warranty");
 
                     b.HasKey("BatteryCode")
@@ -195,22 +206,6 @@ namespace Tecnicell.Server.Migrations
                     b.ToTable("battery", (string)null);
                 });
 
-            modelBuilder.Entity("Tecnicell.Server.Models.Entity.BatteryBrand", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("character varying")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("character varying")
-                        .HasColumnName("description");
-
-                    b.HasKey("Name")
-                        .HasName("battery_brand_pkey");
-
-                    b.ToTable("battery_brand", (string)null);
-                });
-
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.BatteryHistory", b =>
                 {
                     b.Property<string>("BatteryCode")
@@ -218,8 +213,12 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("battery_code");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("date");
+
+                    b.Property<string>("UserCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("user_code");
 
                     b.Property<string>("ActionHistory")
                         .HasColumnType("character varying")
@@ -230,25 +229,33 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("description");
 
                     b.Property<int?>("Quantity")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("quantity");
 
                     b.Property<string>("SaleCode")
                         .HasColumnType("character varying")
                         .HasColumnName("sale_code");
 
+                    b.Property<string>("SupplierCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("supplier_code");
+
                     b.Property<string>("ToBranch")
                         .HasColumnType("character varying")
                         .HasColumnName("to_branch");
 
-                    b.HasKey("BatteryCode", "Date")
+                    b.HasKey("BatteryCode", "Date", "UserCode")
                         .HasName("battery_history_pkey");
 
                     b.HasIndex("ActionHistory");
 
                     b.HasIndex("SaleCode");
 
+                    b.HasIndex("SupplierCode");
+
                     b.HasIndex("ToBranch");
+
+                    b.HasIndex("UserCode");
 
                     b.ToTable("battery_history", (string)null);
                 });
@@ -256,7 +263,7 @@ namespace Tecnicell.Server.Migrations
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.BatteryView", b =>
                 {
                     b.Property<string>("Available")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("available");
 
                     b.Property<string>("Code")
@@ -272,16 +279,20 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("name");
 
                     b.Property<long?>("Quantity")
-                        .HasColumnType("bigint")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("quantity");
 
                     b.Property<decimal?>("SalePrice")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("sale_price");
 
                     b.Property<string>("Type")
                         .HasColumnType("character varying")
                         .HasColumnName("type");
+
+                    b.Property<int?>("Warranty")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("warranty");
 
                     b.ToTable((string)null);
 
@@ -304,6 +315,22 @@ namespace Tecnicell.Server.Migrations
                     b.ToTable("branch", (string)null);
                 });
 
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.Brand", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("character varying")
+                        .HasColumnName("description");
+
+                    b.HasKey("Name")
+                        .HasName("brand_pkey");
+
+                    b.ToTable("brand", (string)null);
+                });
+
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Currency", b =>
                 {
                     b.Property<string>("CurrencyCode")
@@ -320,21 +347,54 @@ namespace Tecnicell.Server.Migrations
                     b.ToTable("currency", (string)null);
                 });
 
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.DiaryWork", b =>
+                {
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("character varying")
+                        .HasColumnName("description");
+
+                    b.Property<string>("SaleCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("sale_code");
+
+                    b.Property<string>("UserCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("user_code");
+
+                    b.Property<string>("WorkType")
+                        .IsRequired()
+                        .HasColumnType("character varying");
+
+                    b.HasKey("Date");
+
+                    b.HasIndex("SaleCode");
+
+                    b.HasIndex("UserCode");
+
+                    b.HasIndex("WorkType");
+
+                    b.ToTable("diary_work", (string)null);
+                });
+
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Image", b =>
                 {
-                    b.Property<string>("Imagecode")
+                    b.Property<string>("ImageCode")
                         .HasColumnType("character varying")
-                        .HasColumnName("imagecode");
+                        .HasColumnName("image_code");
 
                     b.Property<byte[]>("File")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("file");
 
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
 
-                    b.HasKey("Imagecode")
+                    b.HasKey("ImageCode")
                         .HasName("image_pkey");
 
                     b.ToTable("image", (string)null);
@@ -354,8 +414,12 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("image_code");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
                     b.Property<decimal?>("SalePrice")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("sale_price");
 
                     b.HasKey("Imei")
@@ -368,22 +432,6 @@ namespace Tecnicell.Server.Migrations
                     b.ToTable("phone", (string)null);
                 });
 
-            modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneBrand", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("character varying")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("character varying")
-                        .HasColumnName("description");
-
-                    b.HasKey("Name")
-                        .HasName("phone_brand_pkey");
-
-                    b.ToTable("phone_brand", (string)null);
-                });
-
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneHistory", b =>
                 {
                     b.Property<string>("Imei")
@@ -391,8 +439,12 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("imei");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("date");
+
+                    b.Property<string>("UserCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("user_code");
 
                     b.Property<string>("ActionHistory")
                         .HasColumnType("character varying")
@@ -406,18 +458,26 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("sale_code");
 
+                    b.Property<string>("SupplierCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("supplier_code");
+
                     b.Property<string>("ToBranch")
                         .HasColumnType("character varying")
                         .HasColumnName("to_branch");
 
-                    b.HasKey("Imei", "Date")
+                    b.HasKey("Imei", "Date", "UserCode")
                         .HasName("phone_history_pkey");
 
                     b.HasIndex("ActionHistory");
 
                     b.HasIndex("SaleCode");
 
+                    b.HasIndex("SupplierCode");
+
                     b.HasIndex("ToBranch");
+
+                    b.HasIndex("UserCode");
 
                     b.ToTable("phone_history", (string)null);
                 });
@@ -448,8 +508,12 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("image_code");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
                     b.Property<decimal?>("Price")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("price");
 
                     b.HasKey("Imei")
@@ -469,8 +533,12 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("imei");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("date");
+
+                    b.Property<string>("UserCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("user_code");
 
                     b.Property<string>("ActionHistory")
                         .HasColumnType("character varying")
@@ -488,7 +556,7 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("to_branch");
 
-                    b.HasKey("Imei", "Date")
+                    b.HasKey("Imei", "Date", "UserCode")
                         .HasName("phone_repair_history_pkey");
 
                     b.HasIndex("ActionHistory");
@@ -497,17 +565,23 @@ namespace Tecnicell.Server.Migrations
 
                     b.HasIndex("ToBranch");
 
+                    b.HasIndex("UserCode");
+
                     b.ToTable("phone_repair_history", (string)null);
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneRepairView", b =>
                 {
                     b.Property<string>("ActionDescription")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("action_description");
 
+                    b.Property<string>("Code")
+                        .HasColumnType("character varying")
+                        .HasColumnName("code");
+
                     b.Property<string>("CurrentState")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("current_state");
 
                     b.Property<string>("CustomerId")
@@ -522,25 +596,25 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("customer_number");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("character varying")
-                        .HasColumnName("description");
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("date");
 
                     b.Property<string>("ImageCode")
                         .HasColumnType("character varying")
                         .HasColumnName("image_code");
-
-                    b.Property<string>("Imei")
-                        .HasColumnType("character varying")
-                        .HasColumnName("imei");
 
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
 
                     b.Property<decimal?>("Price")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("price");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("character varying")
+                        .HasColumnName("type");
 
                     b.ToTable((string)null);
 
@@ -550,36 +624,36 @@ namespace Tecnicell.Server.Migrations
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneView", b =>
                 {
                     b.Property<string>("ActionDescription")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("action_description");
 
+                    b.Property<string>("Code")
+                        .HasColumnType("character varying")
+                        .HasColumnName("code");
+
                     b.Property<decimal?>("Cost")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("cost");
 
                     b.Property<string>("CurrentState")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("current_state");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("character varying")
-                        .HasColumnName("description");
 
                     b.Property<string>("ImageCode")
                         .HasColumnType("character varying")
                         .HasColumnName("image_code");
-
-                    b.Property<string>("Imei")
-                        .HasColumnType("character varying")
-                        .HasColumnName("imei");
 
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
 
                     b.Property<decimal?>("SalePrice")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("sale_price");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("character varying")
+                        .HasColumnName("type");
 
                     b.ToTable((string)null);
 
@@ -609,7 +683,7 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("sale_code");
 
                     b.Property<decimal?>("Cost")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("cost");
 
                     b.Property<string>("CurrencyCode")
@@ -617,7 +691,7 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("currency_code");
 
                     b.Property<DateTime?>("Warranty")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("warranty");
 
                     b.HasKey("SaleCode")
@@ -639,7 +713,7 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("brand");
 
                     b.Property<decimal?>("Height")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("height");
 
                     b.Property<string>("ImageCode")
@@ -651,15 +725,15 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("name");
 
                     b.Property<decimal?>("SalePrice")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("sale_price");
 
                     b.Property<int?>("Warranty")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("warranty");
 
                     b.Property<decimal?>("Width")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("width");
 
                     b.HasKey("ScreenCode")
@@ -679,8 +753,12 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("screen_code");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("date");
+
+                    b.Property<string>("UserCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("user_code");
 
                     b.Property<string>("ActionHistory")
                         .HasColumnType("character varying")
@@ -691,25 +769,33 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("description");
 
                     b.Property<int?>("Quantity")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("quantity");
 
                     b.Property<string>("SaleCode")
                         .HasColumnType("character varying")
                         .HasColumnName("sale_code");
 
+                    b.Property<string>("SupplierCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("supplier_code");
+
                     b.Property<string>("ToBranch")
                         .HasColumnType("character varying")
                         .HasColumnName("to_branch");
 
-                    b.HasKey("ScreenCode", "Date")
+                    b.HasKey("ScreenCode", "Date", "UserCode")
                         .HasName("screen_history_pkey");
 
                     b.HasIndex("ActionHistory");
 
                     b.HasIndex("SaleCode");
 
+                    b.HasIndex("SupplierCode");
+
                     b.HasIndex("ToBranch");
+
+                    b.HasIndex("UserCode");
 
                     b.ToTable("screen_history", (string)null);
                 });
@@ -717,7 +803,7 @@ namespace Tecnicell.Server.Migrations
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.ScreenView", b =>
                 {
                     b.Property<string>("Available")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("available");
 
                     b.Property<string>("Code")
@@ -733,20 +819,71 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnName("name");
 
                     b.Property<long?>("Quantity")
-                        .HasColumnType("bigint")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("quantity");
 
                     b.Property<decimal?>("SalePrice")
-                        .HasColumnType("numeric")
+                        .HasColumnType("TEXT")
                         .HasColumnName("sale_price");
 
                     b.Property<string>("Type")
                         .HasColumnType("character varying")
                         .HasColumnName("type");
 
+                    b.Property<int?>("Warranty")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("warranty");
+
                     b.ToTable((string)null);
 
                     b.ToView("screen_view", (string)null);
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.Search", b =>
+                {
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("character varying")
+                        .HasColumnName("value");
+
+                    b.HasKey("Date")
+                        .HasName("searchs_pkey");
+
+                    b.ToTable("searchs", (string)null);
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.Supplier", b =>
+                {
+                    b.Property<string>("SupplierCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("supplier_code");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
+                    b.HasKey("SupplierCode");
+
+                    b.ToTable("supplier", (string)null);
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.Usd", b =>
+                {
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("date");
+
+                    b.Property<int?>("Value")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("value");
+
+                    b.HasKey("Date")
+                        .HasName("usd_pkey");
+
+                    b.ToTable("usd", (string)null);
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.UserAccount", b =>
@@ -754,10 +891,6 @@ namespace Tecnicell.Server.Migrations
                     b.Property<string>("UserCode")
                         .HasColumnType("character varying")
                         .HasColumnName("user_code");
-
-                    b.Property<string>("ImageCode")
-                        .HasColumnType("character varying")
-                        .HasColumnName("image_code");
 
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
@@ -767,18 +900,55 @@ namespace Tecnicell.Server.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("password");
 
+                    b.HasKey("UserCode")
+                        .HasName("user_account_pkey");
+
+                    b.ToTable("user_account", (string)null);
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.UserInfo", b =>
+                {
+                    b.Property<string>("UserCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("user_code");
+
+                    b.Property<string>("Branch")
+                        .HasColumnType("character varying")
+                        .HasColumnName("branch");
+
+                    b.Property<string>("ImageCode")
+                        .HasColumnType("character varying")
+                        .HasColumnName("image_code");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
                     b.Property<string>("Role")
                         .HasColumnType("character varying")
                         .HasColumnName("role");
 
                     b.HasKey("UserCode")
-                        .HasName("user_account_pkey");
+                        .HasName("user_info_pkey");
+
+                    b.HasIndex("Branch");
 
                     b.HasIndex("ImageCode");
 
                     b.HasIndex("Role");
 
-                    b.ToTable("user_account", (string)null);
+                    b.ToTable("user_info", (string)null);
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.WorkType", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying")
+                        .HasColumnName("accessory_code");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("work_type", (string)null);
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Accessory", b =>
@@ -786,12 +956,14 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.AccessoryType", "AccessoryTypeNavigation")
                         .WithMany("Accessories")
                         .HasForeignKey("AccessoryType")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("accessory_accessory_type_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
                         .WithMany("Accessories")
                         .HasForeignKey("ImageCode")
-                        .HasConstraintName("accessory_image_fkey");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("accessory_image_code_fkey");
 
                     b.Navigation("AccessoryTypeNavigation");
 
@@ -803,6 +975,7 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.Accessory", "AccessoryCodeNavigation")
                         .WithMany("AccessoryHistories")
                         .HasForeignKey("AccessoryCode")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("accessory_history_accessory_code_fkey");
 
@@ -814,12 +987,24 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.Sale", "SaleCodeNavigation")
                         .WithMany("AccessoryHistories")
                         .HasForeignKey("SaleCode")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("accessory_history_sale_code_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.Supplier", "SupplierNavigation")
+                        .WithMany("AccessoryHistories")
+                        .HasForeignKey("SupplierCode")
+                        .HasConstraintName("accessory_history_supplier_code_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Branch", "ToBranchNavigation")
                         .WithMany("AccessoryHistories")
                         .HasForeignKey("ToBranch")
                         .HasConstraintName("accessory_history_to_branch_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.UserInfo", "UserCodeNavigation")
+                        .WithMany("AccessoryHistories")
+                        .HasForeignKey("UserCode")
+                        .IsRequired()
+                        .HasConstraintName("accessory_history_user_code_fkey");
 
                     b.Navigation("AccessoryCodeNavigation");
 
@@ -827,12 +1012,16 @@ namespace Tecnicell.Server.Migrations
 
                     b.Navigation("SaleCodeNavigation");
 
+                    b.Navigation("SupplierNavigation");
+
                     b.Navigation("ToBranchNavigation");
+
+                    b.Navigation("UserCodeNavigation");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Battery", b =>
                 {
-                    b.HasOne("Tecnicell.Server.Models.Entity.BatteryBrand", "BrandNavigation")
+                    b.HasOne("Tecnicell.Server.Models.Entity.Brand", "BrandNavigation")
                         .WithMany("Batteries")
                         .HasForeignKey("Brand")
                         .HasConstraintName("battery_brand_fkey");
@@ -840,6 +1029,7 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
                         .WithMany("Batteries")
                         .HasForeignKey("ImageCode")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("battery_image_code_fkey");
 
                     b.Navigation("BrandNavigation");
@@ -857,18 +1047,31 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.Battery", "BatteryCodeNavigation")
                         .WithMany("BatteryHistories")
                         .HasForeignKey("BatteryCode")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("battery_history_battery_code_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Sale", "SaleCodeNavigation")
                         .WithMany("BatteryHistories")
                         .HasForeignKey("SaleCode")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("battery_history_sale_code_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.Supplier", "SupplierNavigation")
+                        .WithMany("BatteryHistories")
+                        .HasForeignKey("SupplierCode")
+                        .HasConstraintName("battery_history_supplier_code_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Branch", "ToBranchNavigation")
                         .WithMany("BatteryHistories")
                         .HasForeignKey("ToBranch")
                         .HasConstraintName("battery_history_to_branch_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.UserInfo", "UserCodeNavigation")
+                        .WithMany("BatteryHistories")
+                        .HasForeignKey("UserCode")
+                        .IsRequired()
+                        .HasConstraintName("battery_history_user_code_fkey");
 
                     b.Navigation("ActionHistoryNavigation");
 
@@ -876,12 +1079,43 @@ namespace Tecnicell.Server.Migrations
 
                     b.Navigation("SaleCodeNavigation");
 
+                    b.Navigation("SupplierNavigation");
+
                     b.Navigation("ToBranchNavigation");
+
+                    b.Navigation("UserCodeNavigation");
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.DiaryWork", b =>
+                {
+                    b.HasOne("Tecnicell.Server.Models.Entity.Sale", "SaleCodeNavigation")
+                        .WithMany("DiaryWorks")
+                        .HasForeignKey("SaleCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("dairy_work_sale_code_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.UserInfo", "UserCodeNavigation")
+                        .WithMany("DiaryWorks")
+                        .HasForeignKey("UserCode")
+                        .HasConstraintName("dairy_work_user_code_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.WorkType", "WorkTypeNavigation")
+                        .WithMany("DiaryWorks")
+                        .HasForeignKey("WorkType")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Dairy_Work_Work_Type");
+
+                    b.Navigation("SaleCodeNavigation");
+
+                    b.Navigation("UserCodeNavigation");
+
+                    b.Navigation("WorkTypeNavigation");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Phone", b =>
                 {
-                    b.HasOne("Tecnicell.Server.Models.Entity.PhoneBrand", "BrandNavigation")
+                    b.HasOne("Tecnicell.Server.Models.Entity.Brand", "BrandNavigation")
                         .WithMany("Phones")
                         .HasForeignKey("Brand")
                         .HasConstraintName("phone_brand_fkey");
@@ -889,7 +1123,8 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
                         .WithMany("Phones")
                         .HasForeignKey("ImageCode")
-                        .HasConstraintName("phone_image_fkey");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("phone_image_code_fkey");
 
                     b.Navigation("BrandNavigation");
 
@@ -906,18 +1141,31 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.Phone", "ImeiNavigation")
                         .WithMany("PhoneHistories")
                         .HasForeignKey("Imei")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("phone_history_imei_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Sale", "SaleCodeNavigation")
                         .WithMany("PhoneHistories")
                         .HasForeignKey("SaleCode")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("phone_history_sale_code_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.Supplier", "SupplierNavigation")
+                        .WithMany("PhoneHistories")
+                        .HasForeignKey("SupplierCode")
+                        .HasConstraintName("phone_history_supplier_code_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Branch", "ToBranchNavigation")
                         .WithMany("PhoneHistories")
                         .HasForeignKey("ToBranch")
                         .HasConstraintName("phone_history_to_branch_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.UserInfo", "UserCodeNavigation")
+                        .WithMany("PhoneHistories")
+                        .HasForeignKey("UserCode")
+                        .IsRequired()
+                        .HasConstraintName("phone_history_user_code_fkey");
 
                     b.Navigation("ActionHistoryNavigation");
 
@@ -925,12 +1173,16 @@ namespace Tecnicell.Server.Migrations
 
                     b.Navigation("SaleCodeNavigation");
 
+                    b.Navigation("SupplierNavigation");
+
                     b.Navigation("ToBranchNavigation");
+
+                    b.Navigation("UserCodeNavigation");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneRepair", b =>
                 {
-                    b.HasOne("Tecnicell.Server.Models.Entity.PhoneBrand", "BrandNavigation")
+                    b.HasOne("Tecnicell.Server.Models.Entity.Brand", "BrandNavigation")
                         .WithMany("PhoneRepairs")
                         .HasForeignKey("Brand")
                         .HasConstraintName("phone_repair_brand_fkey");
@@ -938,7 +1190,8 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
                         .WithMany("PhoneRepairs")
                         .HasForeignKey("ImageCode")
-                        .HasConstraintName("phone_repair_image_fkey");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("phone_repair_image_code_fkey");
 
                     b.Navigation("BrandNavigation");
 
@@ -955,18 +1208,26 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.PhoneRepair", "ImeiNavigation")
                         .WithMany("PhoneRepairHistories")
                         .HasForeignKey("Imei")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("phone_repair_history_imei_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Sale", "SaleCodeNavigation")
                         .WithMany("PhoneRepairHistories")
                         .HasForeignKey("SaleCode")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("phone_repair_history_sale_code_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Branch", "ToBranchNavigation")
                         .WithMany("PhoneRepairHistories")
                         .HasForeignKey("ToBranch")
                         .HasConstraintName("phone_repair_history_to_branch_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.UserInfo", "UserCodeNavigation")
+                        .WithMany("PhoneRepairHistories")
+                        .HasForeignKey("UserCode")
+                        .IsRequired()
+                        .HasConstraintName("phone_repair_history_user_code_fkey");
 
                     b.Navigation("ActionHistoryNavigation");
 
@@ -975,6 +1236,8 @@ namespace Tecnicell.Server.Migrations
                     b.Navigation("SaleCodeNavigation");
 
                     b.Navigation("ToBranchNavigation");
+
+                    b.Navigation("UserCodeNavigation");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Sale", b =>
@@ -989,7 +1252,7 @@ namespace Tecnicell.Server.Migrations
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Screen", b =>
                 {
-                    b.HasOne("Tecnicell.Server.Models.Entity.PhoneBrand", "BrandNavigation")
+                    b.HasOne("Tecnicell.Server.Models.Entity.Brand", "BrandNavigation")
                         .WithMany("Screens")
                         .HasForeignKey("Brand")
                         .HasConstraintName("screen_brand_fkey");
@@ -997,7 +1260,8 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
                         .WithMany("Screens")
                         .HasForeignKey("ImageCode")
-                        .HasConstraintName("screen_image_fkey");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("screen_image_code_fkey");
 
                     b.Navigation("BrandNavigation");
 
@@ -1014,18 +1278,31 @@ namespace Tecnicell.Server.Migrations
                     b.HasOne("Tecnicell.Server.Models.Entity.Sale", "SaleCodeNavigation")
                         .WithMany("ScreenHistories")
                         .HasForeignKey("SaleCode")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("screen_history_sale_code_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Screen", "ScreenCodeNavigation")
                         .WithMany("ScreenHistories")
                         .HasForeignKey("ScreenCode")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("screen_history_screen_code_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.Supplier", "SupplierNavigation")
+                        .WithMany("ScreenHistories")
+                        .HasForeignKey("SupplierCode")
+                        .HasConstraintName("screen_history_supplier_code_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Branch", "ToBranchNavigation")
                         .WithMany("ScreenHistories")
                         .HasForeignKey("ToBranch")
                         .HasConstraintName("screen_history_to_branch_fkey");
+
+                    b.HasOne("Tecnicell.Server.Models.Entity.UserInfo", "UserCodeNavigation")
+                        .WithMany("ScreenHistories")
+                        .HasForeignKey("UserCode")
+                        .IsRequired()
+                        .HasConstraintName("screen_history_user_code_fkey");
 
                     b.Navigation("ActionHistoryNavigation");
 
@@ -1033,20 +1310,44 @@ namespace Tecnicell.Server.Migrations
 
                     b.Navigation("ScreenCodeNavigation");
 
+                    b.Navigation("SupplierNavigation");
+
                     b.Navigation("ToBranchNavigation");
+
+                    b.Navigation("UserCodeNavigation");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.UserAccount", b =>
                 {
+                    b.HasOne("Tecnicell.Server.Models.Entity.UserInfo", "UserCodeNavigation")
+                        .WithOne("UserAccount")
+                        .HasForeignKey("Tecnicell.Server.Models.Entity.UserAccount", "UserCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("user_account_user_code_fkey");
+
+                    b.Navigation("UserCodeNavigation");
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.UserInfo", b =>
+                {
+                    b.HasOne("Tecnicell.Server.Models.Entity.Branch", "BranchNavigation")
+                        .WithMany("UserInfos")
+                        .HasForeignKey("Branch")
+                        .HasConstraintName("user_info_branch_fkey");
+
                     b.HasOne("Tecnicell.Server.Models.Entity.Image", "ImageCodeNavigation")
-                        .WithMany("UserAccounts")
+                        .WithMany("UserInfos")
                         .HasForeignKey("ImageCode")
-                        .HasConstraintName("user_account_image_fkey");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("user_info_image_code_fkey");
 
                     b.HasOne("Tecnicell.Server.Models.Entity.Role", "RoleNavigation")
-                        .WithMany("UserAccounts")
+                        .WithMany("UserInfos")
                         .HasForeignKey("Role")
-                        .HasConstraintName("user_account_role_fkey");
+                        .HasConstraintName("user_info_role_fkey");
+
+                    b.Navigation("BranchNavigation");
 
                     b.Navigation("ImageCodeNavigation");
 
@@ -1081,11 +1382,6 @@ namespace Tecnicell.Server.Migrations
                     b.Navigation("BatteryHistories");
                 });
 
-            modelBuilder.Entity("Tecnicell.Server.Models.Entity.BatteryBrand", b =>
-                {
-                    b.Navigation("Batteries");
-                });
-
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Branch", b =>
                 {
                     b.Navigation("AccessoryHistories");
@@ -1097,6 +1393,19 @@ namespace Tecnicell.Server.Migrations
                     b.Navigation("PhoneRepairHistories");
 
                     b.Navigation("ScreenHistories");
+
+                    b.Navigation("UserInfos");
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.Brand", b =>
+                {
+                    b.Navigation("Batteries");
+
+                    b.Navigation("PhoneRepairs");
+
+                    b.Navigation("Phones");
+
+                    b.Navigation("Screens");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Currency", b =>
@@ -1116,21 +1425,12 @@ namespace Tecnicell.Server.Migrations
 
                     b.Navigation("Screens");
 
-                    b.Navigation("UserAccounts");
+                    b.Navigation("UserInfos");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Phone", b =>
                 {
                     b.Navigation("PhoneHistories");
-                });
-
-            modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneBrand", b =>
-                {
-                    b.Navigation("PhoneRepairs");
-
-                    b.Navigation("Phones");
-
-                    b.Navigation("Screens");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.PhoneRepair", b =>
@@ -1140,7 +1440,7 @@ namespace Tecnicell.Server.Migrations
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Role", b =>
                 {
-                    b.Navigation("UserAccounts");
+                    b.Navigation("UserInfos");
                 });
 
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Sale", b =>
@@ -1148,6 +1448,8 @@ namespace Tecnicell.Server.Migrations
                     b.Navigation("AccessoryHistories");
 
                     b.Navigation("BatteryHistories");
+
+                    b.Navigation("DiaryWorks");
 
                     b.Navigation("PhoneHistories");
 
@@ -1159,6 +1461,39 @@ namespace Tecnicell.Server.Migrations
             modelBuilder.Entity("Tecnicell.Server.Models.Entity.Screen", b =>
                 {
                     b.Navigation("ScreenHistories");
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.Supplier", b =>
+                {
+                    b.Navigation("AccessoryHistories");
+
+                    b.Navigation("BatteryHistories");
+
+                    b.Navigation("PhoneHistories");
+
+                    b.Navigation("ScreenHistories");
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.UserInfo", b =>
+                {
+                    b.Navigation("AccessoryHistories");
+
+                    b.Navigation("BatteryHistories");
+
+                    b.Navigation("DiaryWorks");
+
+                    b.Navigation("PhoneHistories");
+
+                    b.Navigation("PhoneRepairHistories");
+
+                    b.Navigation("ScreenHistories");
+
+                    b.Navigation("UserAccount");
+                });
+
+            modelBuilder.Entity("Tecnicell.Server.Models.Entity.WorkType", b =>
+                {
+                    b.Navigation("DiaryWorks");
                 });
 #pragma warning restore 612, 618
         }

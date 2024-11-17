@@ -15,6 +15,7 @@ import { CurrencyApiService } from '../../../Services/api/Extras/currency-api.se
 import { ActionHistoryApiService } from '../../../Services/api/Extras/action-history-api.service';
 import { BranchApiService } from '../../../Services/api/Extras/branch-api.service';
 import { BrandApiService } from '../../../Services/api/Extras/battery-brand-api.service';
+import { CurrentStateStyleCustom } from '../../../Logic/TableFieldCustoms';
 
 @Component({
   selector: 'app-phone-repairs-table',
@@ -33,14 +34,14 @@ export class PhoneRepairsTableComponent {
     headerFields : [
       {
         name:'IMEI',
+        space: SpacesField.normal
+      },
+      {
+        name:'Modelo del teléfono',
         space: SpacesField.small
       },
       {
         name:'Marca',
-        space: SpacesField.small
-      },
-      {
-        name:'Nombre del teléfono',
         space: SpacesField.small
       },
       {
@@ -81,12 +82,12 @@ export class PhoneRepairsTableComponent {
       {
         type : TableFieldType.Property,
         show:true,
-        propertyName : "type",
+        propertyName : "name",
       },
       {
         type : TableFieldType.Property,
         show:true,
-        propertyName : "name",
+        propertyName : "type",
       },
       {
         type : TableFieldType.Property,
@@ -97,6 +98,7 @@ export class PhoneRepairsTableComponent {
         type : TableFieldType.Property,
         propertyName : "currentState",
         show:true,
+        styles:CurrentStateStyleCustom
       },
       {
         type : TableFieldType.Property,
@@ -123,13 +125,13 @@ export class PhoneRepairsTableComponent {
 
   //Form
   form : any = this.formBuilder.nonNullable.group({
-    imei: [undefined, Validators.required],
+    imei: [undefined, [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
     brand:       ['', [Validators.required]],
     name:       ['',[Validators.required]],
     price:    [undefined, []],
     customerId : [undefined, [Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
     customerName: ['', [Validators.required]],
-    customerNumber: ['',[Validators.required]],
+    customerNumber: ['',[]],
     actionHistory: ['', [Validators.required]],
     description: ['', []],
     sale: [false, []],
@@ -140,15 +142,22 @@ export class PhoneRepairsTableComponent {
   })
   inputsFormFields :FormField[]= [
     {
-      type : "text",
+      type : "textlimited",
       formControlName:"imei",
       name: "IMEI.",
       placeholder : "IMEI...",
       fieldRequired : true,
-      errors : [{
-        type : 'required',
-        message: 'Se necesita rellenar este campo'
-      }],
+      errors : [
+        {
+          type: 'maxLength',
+          message : 'Debe ser de 16 caracteres',
+        },
+        {
+          type: 'minLength',
+          message : 'Debe ser de 16 caracteres'
+        }
+      ],
+      limit: 16
     },
     {
       type : "select",
@@ -160,8 +169,8 @@ export class PhoneRepairsTableComponent {
     {
       type : "text",
       formControlName:"name",
-      name: "Nombre del teléfono.",
-      placeholder : "Nombre del teléfono...",
+      name: "Modelo del teléfono.",
+      placeholder : "Modelo del teléfono...",
       fieldRequired : true,
     },
     {
@@ -172,7 +181,7 @@ export class PhoneRepairsTableComponent {
       fieldRequired : true,
     },
     {
-      type : "text",
+      type : "textlimited",
       formControlName:"customerId",
       name: "CI del cliente.",
       placeholder : "CI ...",
@@ -186,14 +195,16 @@ export class PhoneRepairsTableComponent {
           type: 'minLength',
           message : 'Debe ser de 11 caracteres'
         }
-      ]
+      ],
+      limit:11
     },
     {
       type : "telephone",
       formControlName:"customerNumber",
       name: "Número del cliente.",
       placeholder : "54667788",
-      fieldRequired : true,
+      fieldRequired : false,
+      limit: 8
     },
     {
       type : "price",
@@ -211,18 +222,6 @@ export class PhoneRepairsTableComponent {
       options:[]
     },
     {
-      type : "select", // deberia ser fecha
-      formControlName:"branchCode",
-      name: "Sucursal",
-      placeholder : "Sucursal...",
-      fieldRequired : false,
-      errors : [],
-      condition:{
-        formControlName: 'actionHistory',
-        value : ["Transferido desde otra sucursal", "Transferido hacia otra sucursal"],
-      }
-    },
-    {
       type : "textarea",
       formControlName:"description",
       name: "Descripción de la acción",
@@ -232,7 +231,7 @@ export class PhoneRepairsTableComponent {
     {
       type : "collapse",
       formControlName:"sale",
-      name: "Compra",
+      name: "Método de pago",
       placeholder : "",
       fieldRequired : false,
       fields: [
@@ -319,6 +318,10 @@ export class PhoneRepairsTableComponent {
     this.apiService.select().subscribe(res => {this.table.values = res;});
     
     this.currencyApi.select().subscribe(res => {
+      res.unshift({
+        currencyCode : 'none',
+        currencyName:'',
+      })
       this.currencyValues = res.map(currency => {
         const field : FormFieldOption = {
           value : currency.currencyCode,

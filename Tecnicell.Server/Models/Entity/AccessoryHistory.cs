@@ -20,6 +20,8 @@ public partial class AccessoryHistory
     public int? Quantity { get; set; }
 
     public string? SaleCode { get; set; }
+   
+    public string? SupplierCode { get; set; }
 
     public virtual Accessory AccessoryCodeNavigation { get; set; } = null!;
 
@@ -28,6 +30,8 @@ public partial class AccessoryHistory
     public virtual Sale? SaleCodeNavigation { get; set; }
 
     public virtual Branch? ToBranchNavigation { get; set; }
+
+    public virtual Supplier? SupplierNavigation { get; set; }
 
     public virtual UserInfo UserCodeNavigation { get; set; } = null!;
 }

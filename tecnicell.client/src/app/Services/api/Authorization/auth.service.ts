@@ -6,6 +6,7 @@ import { Response } from '../../../Interfaces/business/Authorization/Response';
 import {  UserInfo } from '../../../Interfaces/business/Models/UserAccount';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,11 @@ export class AuthService {
   }
 
   auth(user:AuthRequest) {
-      return this.http.post<Response>(environment.url + '/api/UserAuthorization/login', user);
+      return this.http.post<Response>(server() + '/api/UserAuthorization/login', user);
   }
 
   getUser(userCode:string){
-    return this.http.get<UserInfo>(environment.url + '/api/UserInfos/' + userCode);
+    return this.http.get<UserInfo>(server() + '/api/UserInfos/' + userCode);
   }
 
   loadUser(){

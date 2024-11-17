@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:4200",
 "RedirectUrl": "",
 "LaunchCommand": "npm start",
-"WorkingDirectory": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\..\\tecnicell.client",
+"WorkingDirectory": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\..\\tecnicell.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }

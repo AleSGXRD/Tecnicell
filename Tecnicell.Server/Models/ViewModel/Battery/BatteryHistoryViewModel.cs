@@ -20,6 +20,10 @@ namespace Tecnicell.Server.Models.ViewModel.Battery
 
         public string? SaleCode { get; set; }
 
+        public string? SupplierCode { get; set; }
+
+        public virtual SupplierViewModel? SupplierCodeNavigation { get; set; }
+
         public virtual SaleViewModel? SaleCodeNavigation { get; set; }
 
         public virtual BranchViewModel? ToBranchNavigation { get; set; }

@@ -21,6 +21,8 @@ import { FilterField, FilterType } from '../../../Interfaces/tools/Filters/Filte
 import { FormType } from '../../../Interfaces/tools/Form/FormType';
 import { UserInfo } from '../../../Interfaces/business/Models/UserAccount';
 import { AuthService } from '../../../Services/api/Authorization/auth.service';
+import { ActionStyleCustom, StateStyleCustom } from '../../../Logic/TableFieldCustoms';
+import { SupplierApiService } from '../../../Services/api/Extras/supplier-api.service';
 
 @Component({
   selector: 'app-accessories-table',
@@ -41,7 +43,7 @@ export class AccessoriesTableComponent {
     headerFields : [
       {
         name:'Codigo',
-        space: SpacesField.small
+        space: SpacesField.normal
       },
       {
         name:'Tipo de Accesorio',
@@ -98,6 +100,7 @@ export class AccessoriesTableComponent {
         type : TableFieldType.Property,
         propertyName : "available",
         show:true,
+        styles:StateStyleCustom
       }
     ], 
   };
@@ -105,7 +108,6 @@ export class AccessoriesTableComponent {
   //Form
   form : any = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
-    
     accessoryType:       ['', [Validators.required]],
     salePrice:    [undefined, []],
     actionHistory: ['', [Validators.required]],
@@ -113,22 +115,12 @@ export class AccessoriesTableComponent {
     quantity: [undefined, [Validators.required]],
     sale: [false, []],
     currencyCode:  [undefined, []],
+    supplierCode: [undefined,[]],
     cost: [0,[]],
     warranty:  [null,[]],
     branchCode:[null,[]]
   })
   inputsFormFields :FormField[]= [
-    {
-      type : "text",
-      formControlName:"name",
-      name: "Nombre de Accesorio.",
-      placeholder : "Nombre...",
-      fieldRequired : true,
-      errors : [{
-        type : 'required',
-        message: 'Se necesita rellenar este campo'
-      }],
-    },
     {
       type : "select",
       formControlName:"accessoryType",
@@ -142,6 +134,17 @@ export class AccessoriesTableComponent {
         type : 'maxlength',
         message: 'El campo debe ser solo de 11 caracteres'
       }]
+    },
+    {
+      type : "text",
+      formControlName:"name",
+      name: "Nombre de Accesorio.",
+      placeholder : "Nombre...",
+      fieldRequired : true,
+      errors : [{
+        type : 'required',
+        message: 'Se necesita rellenar este campo'
+      }],
     },
     {
       type : "price",
@@ -159,15 +162,15 @@ export class AccessoriesTableComponent {
       options:[]
     },
     {
-      type : "select", // deberia ser fecha
-      formControlName:"branchCode",
-      name: "Sucursal",
-      placeholder : "Sucursal...",
+      type : "select",
+      formControlName:"supplierCode",
+      name: "Proveedor",
+      placeholder : "Proveedor...",
       fieldRequired : false,
-      errors : [],
+      options:[],
       condition:{
         formControlName: 'actionHistory',
-        value : ["Transferido desde otra sucursal", "Transferido hacia otra sucursal"],
+        value : ["Entrada"],
       }
     },
     {
@@ -187,7 +190,7 @@ export class AccessoriesTableComponent {
     {
       type : "collapse",
       formControlName:"sale",
-      name: "Compra",
+      name: "Metodo de Pago",
       placeholder : "",
       fieldRequired : false,
       fields: [
@@ -228,6 +231,7 @@ export class AccessoriesTableComponent {
     },
     {
       name:'Nombre',
+      save:true,
       type:FilterType.TEXT,
       propertyName: 'name'
     }
@@ -236,6 +240,7 @@ export class AccessoriesTableComponent {
   currencyValues! : FormFieldOption[] ;
   actionsValues! : FormFieldOption[];
   branchesValues! : FormFieldOption[];
+  supplierValues! : FormFieldOption[];
   accessoryTypesValues! : FormFieldOption[];
 
   actionsTable: ActionsTable = ActionsTable.DELETE;  
@@ -249,15 +254,38 @@ export class AccessoriesTableComponent {
     private actionsApi : ActionHistoryApiService,
     private branchesApi : BranchApiService,
     private accessoryTypesApi : AccessoryTypeApiService,
+    private supplierApi : SupplierApiService
   ){
   }
   
   async ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.apiService.select().subscribe(res => {this.table.values = res; console.log(res)});
+    this.apiService.select().subscribe(res => {this.table.values = res; });
+
+    this.supplierApi.select().subscribe(res => {
+      res.unshift({
+        supplierCode : 'none',
+        name:'',
+      })
+      this.supplierValues = res.map(supplier => {
+        const field : FormFieldOption = {
+          value : supplier.supplierCode,
+          name : supplier.name
+        }
+        return field;
+      })
+      const field = this.inputsFormFields.find(element => element.formControlName == "supplierCode");
+      if(field){
+        field.options = this.supplierValues;
+      }
+    })
     
     this.currencyApi.select().subscribe(res => {
+      res.unshift({
+        currencyCode : 'none',
+        currencyName:'',
+      })
       this.currencyValues = res.map(currency => {
         const field : FormFieldOption = {
           value : currency.currencyCode,
@@ -274,7 +302,7 @@ export class AccessoriesTableComponent {
       }
     })
     this.actionsApi.select().subscribe(res => {
-        this.actionsValues = res.filter(action => action.name == "Entrada" || action.name == "Transferido desde otra sucursal")
+        this.actionsValues = res.filter(action => action.name == "Entrada")
            .map(action => 
             {
               const field : FormFieldOption = {

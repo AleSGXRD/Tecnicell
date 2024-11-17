@@ -9,6 +9,7 @@ import { SaleApiService } from '../Extras/sale-api.service';
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
 import { UsdApiService } from '../Usd/usd-api.service';
+import server from '../../../Logic/ServerAdress';
 
 @Injectable({
   providedIn: 'root'
@@ -26,10 +27,10 @@ export class AccessoryHistoryApiService  implements ApiService<AccessoryHistory,
   }
 
   select(): Observable<AccessoryHistory[]>{
-    return this.http.get<AccessoryHistory[]>(environment.url + '/api/AccessoryHistories');
+    return this.http.get<AccessoryHistory[]>(server() + '/api/AccessoryHistories');
   }
   get(id:any) : Observable<AccessoryHistory[]>{
-      return this.http.get<AccessoryHistory[]>(environment.url + '/api/AccessoryHistories/'+id);
+      return this.http.get<AccessoryHistory[]>(server() + '/api/AccessoryHistories/'+id);
   }
   add(  data : any){
     let req : AccessoryHistory = this.mapperAdd(data);
@@ -53,7 +54,7 @@ export class AccessoryHistoryApiService  implements ApiService<AccessoryHistory,
           req.saleCode = res.saleCode;
           req.saleCodeNavigation = undefined;
   
-          this.http.post<AccessoryHistory>(environment.url + '/api/AccessoryHistories/', req).subscribe(
+          this.http.post<AccessoryHistory>(server() + '/api/AccessoryHistories/', req).subscribe(
             res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
             err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1)
           );
@@ -63,7 +64,7 @@ export class AccessoryHistoryApiService  implements ApiService<AccessoryHistory,
     else{
       req.saleCode = undefined;
       req.saleCodeNavigation = undefined;
-      this.http.post<AccessoryHistory>(environment.url + '/api/AccessoryHistories/', req).subscribe(
+      this.http.post<AccessoryHistory>(server() + '/api/AccessoryHistories/', req).subscribe(
         res=> this.notificationService.showNotifcation("Se ha añadido el elemento con exito!", 0),
         err =>this.notificationService.showNotifcation("Ha ocurrido un error al intentar añadir el elemento.", 1)
       );
@@ -76,7 +77,7 @@ export class AccessoryHistoryApiService  implements ApiService<AccessoryHistory,
       if(model.saleCode != null){
         this.saleApi.edit(model.saleCodeNavigation, model.saleCode)
         .subscribe(res => {
-          this.http.put<any>(environment.url + '/api/AccessoryHistories/' 
+          this.http.put<any>(server() + '/api/AccessoryHistories/' 
             +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -89,14 +90,14 @@ export class AccessoryHistoryApiService  implements ApiService<AccessoryHistory,
             res => {
               model.saleCode = res.saleCode;
               model.saleCodeNavigation = null;
-              this.http.put<any>(environment.url + '/api/AccessoryHistories/' 
+              this.http.put<any>(server() + '/api/AccessoryHistories/' 
                 +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
                   res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
                   err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
           })
         }
         else{
-          this.http.put<any>(environment.url + '/api/AccessoryHistories/' 
+          this.http.put<any>(server() + '/api/AccessoryHistories/' 
             +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -109,7 +110,7 @@ export class AccessoryHistoryApiService  implements ApiService<AccessoryHistory,
         sale = model.saleCodeNavigation;
         this.saleApi.edit(sale, model.saleCode)
           .subscribe(res => {
-            this.http.put<any>(environment.url + '/api/AccessoryHistories/' 
+            this.http.put<any>(server() + '/api/AccessoryHistories/' 
               +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
                 res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
                 err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -120,7 +121,7 @@ export class AccessoryHistoryApiService  implements ApiService<AccessoryHistory,
       else
       {
         sale = undefined;
-        this.http.put<any>(environment.url + '/api/AccessoryHistories/' 
+        this.http.put<any>(server() + '/api/AccessoryHistories/' 
           +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1], model).subscribe(
             res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
             err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -130,7 +131,7 @@ export class AccessoryHistoryApiService  implements ApiService<AccessoryHistory,
   }
   delete(data : any){
     const ids = [data.accessoryCode, data.date];
-    return this.http.delete<any>(environment.url + '/api/AccessoryHistories/'
+    return this.http.delete<any>(server() + '/api/AccessoryHistories/'
                       +ids[0] + '%2C' + ids[1]+'?code=' +ids[0] +"&date=" + ids[1]);
   }
   mapperAdd(data:any): AccessoryHistory{
@@ -144,10 +145,12 @@ export class AccessoryHistoryApiService  implements ApiService<AccessoryHistory,
       date : data.date,
       actionHistory : data.actionHistory,
       description: data.description,
+      supplierCode: data.supplierCode == 'none'? null: data.supplierCode,
       toBranch : data.toBranch,
       quantity:   data.quantity,
       saleCode : "default",
     };
+    console.log(data, model)
     if(data.currencyCode != undefined&&data.currencyCode == 'none'){
       model.saleCodeNavigation = {
         currencyCode : undefined,
@@ -175,6 +178,7 @@ export class AccessoryHistoryApiService  implements ApiService<AccessoryHistory,
       date : data.date,
       actionHistory : data.actionHistory,
       description: data.description,
+      supplierCode: data.supplierCode == 'none'? null: data.supplierCode,
       toBranch : data.toBranch,
       quantity:   data.quantity,
       saleCode : data.saleCode ?? undefined,

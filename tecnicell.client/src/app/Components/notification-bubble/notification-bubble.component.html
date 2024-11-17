@@ -1,5 +1,5 @@
 
-<div class="absolute flex justify-center left-0 right-0 bottom-0 ">
+<div class="fixed flex justify-center left-0 right-0 bottom-0 ">
     @if(notification.message != ''){
         <div id="message" [className]="'bubble z-50 hide ' + (notification.type == 0? 'success' : 'error')">
             {{notification.message}}

@@ -10,6 +10,7 @@ namespace Tecnicell.Server.Mapper.Classes.ScreenMappers
             SaleMapper saleMapper = new SaleMapper();
             BranchMapper branchMapper = new BranchMapper();
             UserInfoMapper userInfoMapper = new UserInfoMapper();
+            SupplierMapper supplierMapper = new SupplierMapper();
 
             ScreenHistory model = new ScreenHistory
             {
@@ -21,10 +22,12 @@ namespace Tecnicell.Server.Mapper.Classes.ScreenMappers
                 SaleCode = viewmodel.SaleCode,
                 ScreenCode = viewmodel.ScreenCode,
                 ToBranch = viewmodel.ToBranch,
+                SupplierCode = viewmodel.SupplierCode
             };
             if (viewmodel.SaleCodeNavigation != null) model.SaleCodeNavigation = saleMapper.ToModel(viewmodel.SaleCodeNavigation);
             if (viewmodel.ToBranchNavigation != null) model.ToBranchNavigation = branchMapper.ToModel(viewmodel.ToBranchNavigation);
             if (viewmodel.UserCodeNavigation != null) model.UserCodeNavigation = userInfoMapper.ToModel(viewmodel.UserCodeNavigation);
+            if (viewmodel.SupplierNavigation != null) model.SupplierNavigation = supplierMapper.ToModel(viewmodel.SupplierNavigation);
 
             return model;
         }
@@ -34,6 +37,7 @@ namespace Tecnicell.Server.Mapper.Classes.ScreenMappers
             SaleMapper saleMapper = new SaleMapper();
             BranchMapper branchMapper = new BranchMapper();
             UserInfoMapper userInfoMapper = new UserInfoMapper();
+            SupplierMapper supplierMapper = new SupplierMapper();
 
             ScreenHistoryViewModel viewmodel = new ScreenHistoryViewModel
             {
@@ -45,10 +49,12 @@ namespace Tecnicell.Server.Mapper.Classes.ScreenMappers
                 SaleCode = model.SaleCode,
                 ScreenCode = model.ScreenCode,
                 ToBranch = model.ToBranch,
+                SupplierCode = model.SupplierCode
             };
             if (model.SaleCodeNavigation != null) viewmodel.SaleCodeNavigation = saleMapper.ToViewModel(model.SaleCodeNavigation);
             if (model.ToBranchNavigation != null) viewmodel.ToBranchNavigation = branchMapper.ToViewModel(model.ToBranchNavigation);
             if (model.UserCodeNavigation != null) viewmodel.UserCodeNavigation = userInfoMapper.ToViewModel(model.UserCodeNavigation);
+            if (model.SupplierNavigation != null) viewmodel.SupplierNavigation = supplierMapper.ToViewModel(model.SupplierNavigation);
 
             return viewmodel;
         }

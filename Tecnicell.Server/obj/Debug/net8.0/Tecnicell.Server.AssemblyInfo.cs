@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Tecnicell.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7fe57b352ec15c45a51b1577bab0012c1ee9fad6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+db1d40adddefee4ad5737c3dfb5f71488dce728a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Tecnicell.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Tecnicell.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

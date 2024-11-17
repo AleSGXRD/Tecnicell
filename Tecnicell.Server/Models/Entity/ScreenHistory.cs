@@ -21,6 +21,8 @@ public partial class ScreenHistory
 
     public string? SaleCode { get; set; }
 
+    public string? SupplierCode {  get; set; }
+
     public virtual ActionHistory? ActionHistoryNavigation { get; set; }
 
     public virtual Sale? SaleCodeNavigation { get; set; }
@@ -28,6 +30,8 @@ public partial class ScreenHistory
     public virtual Screen ScreenCodeNavigation { get; set; } = null!;
 
     public virtual Branch? ToBranchNavigation { get; set; }
+
+    public virtual Supplier? SupplierNavigation {  get; set; }
 
     public virtual UserInfo UserCodeNavigation { get; set; } = null!;
 }

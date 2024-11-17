@@ -60,6 +60,13 @@ import { BatteryHistoriesComponent } from './Layouts/Battery/battery-histories/b
 import { ScreenHistoriesComponent } from './Layouts/Screen/screen-histories/screen-histories.component';
 import { PhoneHistoriesComponent } from './Layouts/Phone/phone-histories/phone-histories.component';
 import { PhoneRepairHistoriesComponent } from './Layouts/PhoneRepair/phone-repair-histories/phone-repair-histories.component';
+import { SearchsTableComponent } from './Layouts/Extras/searchs-table/searchs-table.component';
+import { PreformanceComponent } from './Layouts/Preformance/preformance/preformance.component';
+import { TableFieldComponent } from './Components/table-field/table-field.component';
+import { SuppliersTableComponent } from './Layouts/Extras/suppliers-table/suppliers-table.component';
+import { WorkTypesTableComponent } from './Layouts/Extras/work-types-table/work-types-table.component';
+import { DiaryWorksTableComponent } from './Layouts/DiaryWork/diary-works-table/diary-works-table.component';
+import { DbManagerComponent } from './Layouts/Db/db-manager/db-manager.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +102,13 @@ import { PhoneRepairHistoriesComponent } from './Layouts/PhoneRepair/phone-repai
     ScreenHistoriesComponent,
     PhoneHistoriesComponent,
     PhoneRepairHistoriesComponent,
+    SearchsTableComponent,
+    PreformanceComponent,
+    TableFieldComponent,
+    SuppliersTableComponent,
+    WorkTypesTableComponent,
+    DiaryWorksTableComponent,
+    DbManagerComponent,
      
   ],
   imports: [

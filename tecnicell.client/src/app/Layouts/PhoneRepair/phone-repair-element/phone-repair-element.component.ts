@@ -18,6 +18,8 @@ import { CurrencyApiService } from '../../../Services/api/Extras/currency-api.se
 import { ActionHistoryApiService } from '../../../Services/api/Extras/action-history-api.service';
 import { BranchApiService } from '../../../Services/api/Extras/branch-api.service';
 import { BrandApiService } from '../../../Services/api/Extras/battery-brand-api.service';
+import { ActionStyleCustom, MoneyStyleCustom } from '../../../Logic/TableFieldCustoms';
+import { ActionsType, filterActions } from '../../../Logic/Actions';
 
 @Component({
   selector: 'app-phone-repair-element',
@@ -76,6 +78,7 @@ export class PhoneRepairElementComponent {
         type : TableFieldType.Property,
         propertyName : "actionHistory",
         show:true,
+        styles: ActionStyleCustom
       },
       {
         type : TableFieldType.Property,
@@ -100,10 +103,11 @@ export class PhoneRepairElementComponent {
         show:true,
       },
       {
-        type : TableFieldType.Property,
+        type : TableFieldType.Revenue,
         propertyName : "saleCodeNavigation",
         subPropertyName:"cost",
         show:true,
+        styles: MoneyStyleCustom
       },
       {
         type : TableFieldType.Date,
@@ -159,7 +163,7 @@ export class PhoneRepairElementComponent {
     {
       type : "collapse",
       formControlName:"sale",
-      name: "Compra",
+      name: "Método de pago",
       placeholder : "",
       fieldRequired : false,
       fields: [
@@ -248,7 +252,7 @@ export class PhoneRepairElementComponent {
             this.tableHistories.values = this.value.histories;
             
             this.formHistories = this.formBuilder.nonNullable.group({
-              imei: [this.value.view.code,[]],
+              imei: [undefined, [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
               salePrice: [this.value.view.price, []],
               userCode:[undefined, []],
               date:[new Date(),[]],
@@ -270,6 +274,10 @@ export class PhoneRepairElementComponent {
     );
     
     await this.currencyApi.select().subscribe(res => {
+      res.unshift({
+        currencyCode : 'none',
+        currencyName:'',
+      })
       this.currencyValues = res.map(currency => {
         const field : FormFieldOption = {
           value : currency.currencyCode,
@@ -307,7 +315,7 @@ export class PhoneRepairElementComponent {
         this.loaded[1] = true;
     })
     await this.actionsApi.select().subscribe(res => {
-        this.actionsValues = res.map(action => 
+        this.actionsValues = filterActions(res,ActionsType.PHONE).map((action:any) => 
             {
               const field : FormFieldOption = {
                 value : action.name,
@@ -390,29 +398,39 @@ export class PhoneRepairElementComponent {
   }
   
   editData(){
+    const name = this.value.view.name.replace(this.value.view.type.toUpperCase() + " ", '');
     const form  = this.formBuilder.group({
-      imei: [this.value.view.code,[Validators.required]],
+      imei: [this.value.view.code, [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
       brand: [this.value.view.type,[Validators.required]],
+      name : [name, []],
       price: [this.value.view.price,[Validators.required]],
       customerId: [this.value.view.customerId, [Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
       customerName : [this.value.view.customerName, [Validators.required]],
-      customerNumber : [this.value.view.customerNumber, [Validators.required]]
+      customerNumber : [this.value.view.customerNumber, []]
     })
     const inputs :FormField[]= [
       {
-        type : "text",
+        type : "textlimited",
         formControlName:"imei",
         name: "IMEI.",
         placeholder : "IMEI...",
         fieldRequired : true,
+        limit:16
       },
       {
         type : "select", // deberia ser fecha
         formControlName:"brand",
-        name: "Marca de la Batería.",
-        placeholder : "Marca de la Batería...",
+        name: "Marca del Teléfono.",
+        placeholder : "Marca del Teléfono...",
         fieldRequired : true,
         options : this.brandsValues
+      },
+      {
+        type : "text",
+        formControlName:"name",
+        name: "Modelo del teléfono.",
+        placeholder : "Modelo del teléfono...",
+        fieldRequired : true,
       },
       {
         type : "price",
@@ -429,7 +447,7 @@ export class PhoneRepairElementComponent {
         fieldRequired : true,
       },
       {
-        type : "text",
+        type : "textlimited",
         formControlName:"customerId",
         name: "CI del cliente.",
         placeholder : "CI ...",
@@ -443,7 +461,8 @@ export class PhoneRepairElementComponent {
             type: 'minLength',
             message : 'Debe ser de 11 caracteres'
           }
-        ]
+        ],
+        limit:11
       },
       {
         type : "telephone",
@@ -451,6 +470,7 @@ export class PhoneRepairElementComponent {
         name: "Número del cliente.",
         placeholder : "54667788",
         fieldRequired : true,
+        limit:8
       },
     ]
     this.formService.idEditting = this.value.view;

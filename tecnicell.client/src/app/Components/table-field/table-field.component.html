@@ -1,0 +1,50 @@
+@if(property.type == 'Property'){
+    <td [className]="'w-'+space">
+        @if(property.subPropertyName != undefined){
+            @if(value[property.propertyName] != undefined){
+                {{value[property.propertyName][property.subPropertyName]}}
+            }
+        }
+        @else {
+            {{value[property.propertyName]}}
+        }
+    </td>
+}
+@if(property.type == 'Date'){
+    <td [className]="'w-'+space">
+        @if(property.subPropertyName != undefined){
+            @if(value[property.propertyName] != undefined){
+                {{value[property.propertyName][property.subPropertyName] | date:'short'}}
+            }
+        }
+        @else {
+            {{value[property.propertyName] | date:'short'}}
+        }
+    </td>
+}
+@if(property.type == 'Select') {
+    <td [className]="'w-'+space">
+        @if(value[property.propertyName] !=null){
+            @for (cases of property.cases; track $index) {
+                @if(property.subPropertyName != undefined){
+                    
+                    @if(cases.key == value[property.propertyName][property.subPropertyName]){
+                        {{cases.value}}
+                    }
+                }
+                @else {
+                    @if(cases.key == value[property.propertyName]){
+                        {{cases.value}}
+                    }
+                }
+            }
+        }
+    </td>
+}
+@if(property.type == 'Link')  {
+    <td [className]="'w-'+space+' text-center'">
+        <a [href]="property.link?.url + value[property.link!.idPropertyName]">
+            {{value[property.propertyName]}}
+        </a>
+    </td>
+}

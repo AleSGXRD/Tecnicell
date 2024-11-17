@@ -9,11 +9,11 @@ import { FormField } from '../../Interfaces/tools/Form/FormField';
 import { TableField, TableFieldType } from '../../Interfaces/tools/Table/TableField';
 import { TableProperties } from '../../Interfaces/tools/Table/TableProperties';
 import { ApiService } from '../../Services/api/ApiService.service';
-import { reloadPage } from '../../Logic/ReloadPage';
 import { ActionsTable } from '../../Interfaces/tools/Actions';
 import { FilterTableService } from '../../Services/Filter/filter-table.service';
 import { FilterField } from '../../Interfaces/tools/Filters/Filters';
 import { NotificationSystemService } from '../../Services/notification-system.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -53,12 +53,12 @@ export class TableComponent {
 
   @Input()
   actions : ActionsTable = ActionsTable.NONE;
-
+  
+  maxElements :number = 10;
 
   constructor(private formBuilder: FormBuilder,
     private notifcationService : NotificationSystemService
-  ){
-  }
+  ){}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -71,6 +71,23 @@ export class TableComponent {
     );
   }
 
+  currentSheet : number =0;
+
+  sheets(){
+    return Math.ceil(this.table.values.length / this.maxElements)-1;
+  }
+  passNextSheet(){
+    this.currentSheet += 1;
+    if(this.currentSheet > this.sheets()){
+      this.currentSheet = 0;
+    }
+  }
+  passPrevSheet(){
+    this.currentSheet -= 1;
+    if(this.currentSheet <0){
+      this.currentSheet = this.sheets();
+    }
+  }
   filterData(){
     if(this.filterOptions != null){
       let tableValues = this.valuesDefault;
@@ -126,6 +143,7 @@ export class TableComponent {
           tableValues = tableValues.filter(
             value => {
                 if(value[filter.propertyName] == undefined) return false;
+                console.log(value[filter.propertyName])
                 return value[filter.propertyName].toLowerCase().includes(filter.value.toLowerCase())
           })
         }
@@ -138,6 +156,7 @@ export class TableComponent {
     }
     else{
       this.table.values = this.valuesDefault;
+      console.log(this.table.values)
     }
   }
 
@@ -168,6 +187,18 @@ export class TableComponent {
           console.log(err)
       );
     });
+  }
+  resolveStyles(property:TableField,$index:number){
+    if(property.styles == undefined)return ' ';
+    let styles = property.styles.map((value, index, array) => {
+      if(value.condition != undefined ){
+        const field = this.table.values[$index][value.condition.formControlName];
+        if(field == value.condition.value)
+          return value.style
+      }
+      return ''
+    })
+    return styles.join(' ')
   }
 
 }

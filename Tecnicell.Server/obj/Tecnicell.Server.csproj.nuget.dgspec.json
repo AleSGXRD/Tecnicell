@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj": {}
+    "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj": {
+    "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj",
+        "projectUniqueName": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj",
         "projectName": "Tecnicell.Server",
-        "projectPath": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj",
-        "packagesPath": "C:\\Users\\AleXRD\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\AleXRD\\source\\repos\\Tecnicell\\Tecnicell.Server\\obj\\",
+        "projectPath": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj",
+        "packagesPath": "C:\\Users\\Vergil\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\AleXRD\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Vergil\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,9 +46,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.0.1, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.8, )"
+            },
+            "Microsoft.AspNetCore.HttpOverrides": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.AspNetCore.SpaProxy": {
               "target": "Package",
@@ -105,7 +114,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

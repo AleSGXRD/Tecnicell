@@ -70,6 +70,12 @@ public partial class TecnicellContext : DbContext
 
     public virtual DbSet<UserInfo> UserInfos { get; set; }
 
+    public virtual DbSet<DiaryWork> DiaryWorks { get; set; }
+
+    public virtual DbSet<WorkType> WorkTypes { get; set; }
+
+    public virtual DbSet<Supplier> Suppliers { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Accessory>(entity =>
@@ -102,6 +108,56 @@ public partial class TecnicellContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("accessory_image_code_fkey");
         });
+        modelBuilder.Entity<Supplier>(entity => {
+            entity.ToTable("supplier");
+
+            entity.Property(e => e.SupplierCode)
+                .HasColumnType("character varying")
+                .HasColumnName("supplier_code");
+            entity.HasKey(e => e.SupplierCode);
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("name");
+        });
+        // Configuración de la tabla WorkType
+        modelBuilder.Entity<WorkType>(entity =>
+        {
+            entity.ToTable("work_type");
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("accessory_code");
+            entity.HasKey(e => e.Name);
+        });
+
+        // Configuración de la tabla DairyWork
+        modelBuilder.Entity<DiaryWork>(entity =>
+        {
+            entity.ToTable("diary_work");
+            entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.Description)
+                .HasColumnType("character varying")
+                .HasColumnName("description");
+            entity.Property(e => e.SaleCode)
+                .HasColumnType("character varying")
+                .HasColumnName("sale_code");
+            entity.HasKey(e => e.Date);
+            entity.Property(e => e.UserCode)
+                .HasColumnType("character varying")
+                .HasColumnName("user_code");
+
+            entity.HasOne(d => d.WorkTypeNavigation)
+                .WithMany(p => p.DiaryWorks)
+                .HasForeignKey(d => d.WorkType)
+                .HasConstraintName("FK_Dairy_Work_Work_Type");
+
+            entity.HasOne(d => d.SaleCodeNavigation).WithMany(p => p.DiaryWorks)
+                .HasForeignKey(d => d.SaleCode)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("dairy_work_sale_code_fkey");
+            entity.HasOne(d => d.UserCodeNavigation).WithMany(p => p.DiaryWorks)
+                .HasForeignKey(d => d.UserCode)
+                .HasConstraintName("dairy_work_user_code_fkey");
+        });
 
         modelBuilder.Entity<AccessoryHistory>(entity =>
         {
@@ -129,6 +185,13 @@ public partial class TecnicellContext : DbContext
             entity.Property(e => e.ToBranch)
                 .HasColumnType("character varying")
                 .HasColumnName("to_branch");
+            entity.Property(e => e.SupplierCode)
+               .HasColumnType("character varying")
+               .HasColumnName("supplier_code");
+
+            entity.HasOne(d => d.SupplierNavigation).WithMany(p => p.AccessoryHistories)
+                .HasForeignKey(d => d.SupplierCode)
+                .HasConstraintName("accessory_history_supplier_code_fkey");
 
             entity.HasOne(d => d.AccessoryCodeNavigation).WithMany(p => p.AccessoryHistories)
                 .HasForeignKey(d => d.AccessoryCode)
@@ -261,6 +324,13 @@ public partial class TecnicellContext : DbContext
             entity.Property(e => e.ToBranch)
                 .HasColumnType("character varying")
                 .HasColumnName("to_branch");
+            entity.Property(e => e.SupplierCode)
+               .HasColumnType("character varying")
+               .HasColumnName("supplier_code");
+
+            entity.HasOne(d => d.SupplierNavigation).WithMany(p => p.BatteryHistories)
+                .HasForeignKey(d => d.SupplierCode)
+                .HasConstraintName("battery_history_supplier_code_fkey");
 
             entity.HasOne(d => d.ActionHistoryNavigation).WithMany(p => p.BatteryHistories)
                 .HasForeignKey(d => d.ActionHistory)
@@ -322,7 +392,6 @@ public partial class TecnicellContext : DbContext
                 .HasColumnType("character varying")
                 .HasColumnName("name");
         });
-
         modelBuilder.Entity<Brand>(entity =>
         {
             entity.HasKey(e => e.Name).HasName("brand_pkey");
@@ -421,6 +490,13 @@ public partial class TecnicellContext : DbContext
             entity.Property(e => e.ToBranch)
                 .HasColumnType("character varying")
                 .HasColumnName("to_branch");
+            entity.Property(e => e.SupplierCode)
+               .HasColumnType("character varying")
+               .HasColumnName("supplier_code");
+
+            entity.HasOne(d => d.SupplierNavigation).WithMany(p => p.PhoneHistories)
+                .HasForeignKey(d => d.SupplierCode)
+                .HasConstraintName("phone_history_supplier_code_fkey");
 
             entity.HasOne(d => d.ActionHistoryNavigation).WithMany(p => p.PhoneHistories)
                 .HasForeignKey(d => d.ActionHistory)
@@ -683,6 +759,14 @@ public partial class TecnicellContext : DbContext
             entity.Property(e => e.ToBranch)
                 .HasColumnType("character varying")
                 .HasColumnName("to_branch");
+
+            entity.Property(e => e.SupplierCode)
+               .HasColumnType("character varying")
+               .HasColumnName("supplier_code");
+
+            entity.HasOne(d => d.SupplierNavigation).WithMany(p => p.ScreenHistories)
+                .HasForeignKey(d => d.SupplierCode)
+                .HasConstraintName("screen_history_supplier_code_fkey");
 
             entity.HasOne(d => d.ActionHistoryNavigation).WithMany(p => p.ScreenHistories)
                 .HasForeignKey(d => d.ActionHistory)

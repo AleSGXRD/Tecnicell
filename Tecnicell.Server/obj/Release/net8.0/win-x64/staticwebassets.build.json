@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "J+H0RR+8RAAA8XsgSKI3jk54GpFb9E0bElxCcj1MCWY=",
+  "Source": "Tecnicell.Server",
+  "BasePath": "_content/Tecnicell.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\tecnicell.client.esproj",
+      "Version": 2,
+      "Source": "tecnicell.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Release;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Release;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

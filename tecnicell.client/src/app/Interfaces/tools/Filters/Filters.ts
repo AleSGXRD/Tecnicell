@@ -4,6 +4,7 @@ import { Values } from "../Table/TableField";
 export interface FilterField{
     name:string,
     type: FilterType,
+    save?: boolean,
     propertyName : string,
     otherProperties? : [{
         propertyName:string,

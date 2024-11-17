@@ -14,6 +14,9 @@ import { TableFieldType } from '../../../Interfaces/tools/Table/TableField';
 import { SpacesField } from '../../../Interfaces/tools/Table/HeaderField';
 import { TableProperties } from '../../../Interfaces/tools/Table/TableProperties';
 import { PhoneRepairHistoryApiService } from '../../../Services/api/PhoneRepair/phone-repair-history-api.service';
+import { ActionStyleCustom, MoneyStyleCustom } from '../../../Logic/TableFieldCustoms';
+import { PhoneRepairApiService } from '../../../Services/api/PhoneRepair/phone-repair-api.service';
+import { getFirstDayOfWeek, getLastDayOfWeek } from '../../../Logic/DaysController';
 
 @Component({
   selector: 'app-phone-repair-histories',
@@ -34,7 +37,11 @@ export class PhoneRepairHistoriesComponent {
     headerFields : [
       {
         name:'Codigo',
-        space: SpacesField.small
+        space: SpacesField.normal
+      },
+      {
+        name:'Telefono',
+        space: SpacesField.normal
       },
       {
         name:'Fecha',
@@ -75,9 +82,14 @@ export class PhoneRepairHistoriesComponent {
         propertyName : "imei",
         show:true,
         link : {
-          url:'phone/',
+          url:'phonerepair/',
           idPropertyName:'imei'
         }
+      },
+      {
+        type : TableFieldType.Select,
+        propertyName : "imei",
+        show:true
       },
       {
         type : TableFieldType.Date,
@@ -94,6 +106,7 @@ export class PhoneRepairHistoriesComponent {
         type : TableFieldType.Property,
         propertyName : "actionHistory",
         show:true,
+        styles: ActionStyleCustom
       },
       {
         type : TableFieldType.Property,
@@ -112,10 +125,11 @@ export class PhoneRepairHistoriesComponent {
         show:true,
       },
       {
-        type : TableFieldType.Property,
+        type : TableFieldType.Revenue,
         propertyName : "saleCodeNavigation",
         subPropertyName: "cost",
         show:true,
+        styles: MoneyStyleCustom
       },
       {
         type : TableFieldType.Date,
@@ -171,15 +185,40 @@ export class PhoneRepairHistoriesComponent {
     public apiService: PhoneRepairHistoryApiService,
 
     private currencyApi : CurrencyApiService,
+    private phoneRepairApi : PhoneRepairApiService,
     private actionsApi : ActionHistoryApiService,
-    private branchesApi : BranchApiService
   ){
+    this.filtersOptions[0].value = {
+      start : getFirstDayOfWeek(),
+      end : getLastDayOfWeek()
+    }
+    this.FilterService.emit(this.filtersOptions);
   }
   
   async ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    
+    this.phoneRepairApi.select().subscribe(res => {
+      const tableCodeNavigation = this.table.tableFields.filter(
+        element => 
+          element.type == TableFieldType.Select
+      )
+      const fieldTable = tableCodeNavigation.find(
+        element => {
+          if(element.subPropertyName!= undefined){
+            return element.subPropertyName == "imei"
+          }
+          return element.propertyName == "imei";
+        }
+      );
+      if(fieldTable)
+        fieldTable.cases = res.map(model=>{
+          return {
+            key : model.code,
+            value : model.type + " " + model.name
+          }
+        })
+    })
     this.currencyApi.select().subscribe(res => {
       this.currencyValues = res.map(currency => {
         const field : FormFieldOption = {
@@ -240,16 +279,6 @@ export class PhoneRepairHistoriesComponent {
         )
       
     });
-    this.branchesApi.select().subscribe(res => {
-      this.branchesValues = res.map(branch => {
-        const field : FormFieldOption = {
-          value : branch.branchCode,
-          name : branch.name
-        }
-        return field;
-      })
-    }
-    );
     
     this.apiService.select().subscribe(res => {
       this.table.values = res;

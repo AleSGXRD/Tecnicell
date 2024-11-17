@@ -16,6 +16,10 @@ import { AccessoryHistoryApiService } from '../../../Services/api/Accessory/acce
 import { CurrencyGains } from '../../../Interfaces/tools/CurrencyGains';
 import { filter } from 'rxjs';
 import { calculeGains } from '../../../Logic/CalculeGains';
+import { ActionsType, filterActions } from '../../../Logic/Actions';
+import { ActionStyleCustom, MoneyStyleCustom } from '../../../Logic/TableFieldCustoms';
+import { AccessoryApiRequestService } from '../../../Services/api/Accessory/accessory-api-request.service';
+import { getFirstDayOfWeek, getLastDayOfWeek } from '../../../Logic/DaysController';
 
 @Component({
   selector: 'app-accessory-histories',
@@ -23,7 +27,6 @@ import { calculeGains } from '../../../Logic/CalculeGains';
   styleUrl: './accessory-histories.component.css'
 })
 export class AccessoryHistoriesComponent {
-  
 
   load : boolean = false;
 
@@ -35,7 +38,11 @@ export class AccessoryHistoriesComponent {
     values : [],
     headerFields : [
       {
-        name:'Codigo',
+        name:'Código',
+        space: SpacesField.normal
+      },
+      {
+        name:'Accessorio',
         space: SpacesField.small
       },
       {
@@ -82,6 +89,11 @@ export class AccessoryHistoriesComponent {
         }
       },
       {
+        type : TableFieldType.Select,
+        propertyName : "accessoryCode",
+        show:true,
+      },
+      {
         type : TableFieldType.Date,
         show:true,
         propertyName : "date",
@@ -96,6 +108,7 @@ export class AccessoryHistoriesComponent {
         type : TableFieldType.Property,
         propertyName : "actionHistory",
         show:true,
+        styles:ActionStyleCustom
       },
       {
         type : TableFieldType.Property,
@@ -114,10 +127,11 @@ export class AccessoryHistoriesComponent {
         show:true,
       },
       {
-        type : TableFieldType.Property,
+        type : TableFieldType.Revenue,
         propertyName : "saleCodeNavigation",
         subPropertyName: "cost",
         show:true,
+        styles:MoneyStyleCustom
       },
       {
         type : TableFieldType.Date,
@@ -158,6 +172,8 @@ export class AccessoryHistoriesComponent {
     }
   ]
 
+  accessoryValues! : FormFieldOption[];
+
   currencyValues! : FormFieldOption[];
   currencyGains! : CurrencyGains[];
 
@@ -173,15 +189,42 @@ export class AccessoryHistoriesComponent {
     public apiService: AccessoryHistoryApiService,
 
     private currencyApi : CurrencyApiService,
+    private accessoriesApi : AccessoryApiRequestService,
     private actionsApi : ActionHistoryApiService,
-    private branchesApi : BranchApiService,
-    private accessoryTypesApi : AccessoryTypeApiService
   ){
+    this.filtersOptions[0].value = {
+      start : getFirstDayOfWeek(),
+      end : getLastDayOfWeek()
+    }
+    this.FilterService.emit(this.filtersOptions);
   }
   
   async ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+
+    this.accessoriesApi.select().subscribe(res => {
+      const tableCodeNavigation = this.table.tableFields.filter(
+        element => 
+          element.type == TableFieldType.Select
+      )
+      const fieldTable = tableCodeNavigation.find(
+        element => {
+          if(element.subPropertyName!= undefined){
+            return element.subPropertyName == "accessoryCode"
+          }
+          return element.propertyName == "accessoryCode";
+        }
+      );
+      if(fieldTable)
+        fieldTable.cases = res.map(accessory=>{
+          return {
+            key : accessory.code,
+            value :accessory.name
+          }
+        })
+      
+    })
     
     this.currencyApi.select().subscribe(res => {
       this.currencyValues = res.map(currency => {
@@ -222,8 +265,8 @@ export class AccessoryHistoriesComponent {
 
     })
     this.actionsApi.select().subscribe(res => {
-        this.actionsValues = res.filter(action => action.name != "Pieza Extraida" && action.name != "Pieza Puesta" && action.name != "Armado")
-           .map(action => 
+        this.actionsValues = filterActions(res, ActionsType.ACCESSORY)
+           .map((action:any) => 
             {
               const field : FormFieldOption = {
                 value : action.name,
@@ -244,34 +287,6 @@ export class AccessoryHistoriesComponent {
         )
       
     });
-    this.branchesApi.select().subscribe(res => {
-      this.branchesValues = res.map(branch => {
-        const field : FormFieldOption = {
-          value : branch.branchCode,
-          name : branch.name
-        }
-        return field;
-      })
-    }
-    );
-    this.accessoryTypesApi.select().subscribe(res => {
-      this.accessoryTypesValues = res.map(types => {
-        const field : FormFieldOption = {
-          value : types.accessoryTypeCode,
-          name : types.name
-        }
-        return field;
-      })
-      const filterField = this.filtersOptions.find(filter => filter.propertyName == "typeCode")
-      if(filterField != null)
-        filterField.options = this.accessoryTypesValues.map(type =>{
-            return {
-              name : type.name,
-              value : type.value
-            }
-          }
-        )
-    })
     
     this.apiService.select().subscribe(res => {
       this.table.values = res;

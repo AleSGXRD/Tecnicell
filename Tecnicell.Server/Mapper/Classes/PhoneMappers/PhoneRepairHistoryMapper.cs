@@ -10,6 +10,7 @@ namespace Tecnicell.Server.Mapper.Classes.Phone
             SaleMapper saleMapper = new SaleMapper();
             BranchMapper branchMapper = new BranchMapper();
             UserInfoMapper userInfoMapper = new UserInfoMapper();
+            SupplierMapper supplierMapper = new SupplierMapper();
 
             PhoneRepairHistory model = new PhoneRepairHistory { 
                 Imei = viewmodel.Imei,
@@ -23,7 +24,7 @@ namespace Tecnicell.Server.Mapper.Classes.Phone
             if (viewmodel.SaleCodeNavigation != null) model.SaleCodeNavigation = saleMapper.ToModel(viewmodel.SaleCodeNavigation);
             if (viewmodel.ToBranchNavigation != null) model.ToBranchNavigation = branchMapper.ToModel(viewmodel.ToBranchNavigation);
             if (viewmodel.UserCodeNavigation != null) model.UserCodeNavigation = userInfoMapper.ToModel(viewmodel.UserCodeNavigation);
-
+            
             return model;
         }
 
@@ -32,6 +33,7 @@ namespace Tecnicell.Server.Mapper.Classes.Phone
             SaleMapper saleMapper = new SaleMapper();
             BranchMapper branchMapper = new BranchMapper();
             UserInfoMapper userInfoMapper = new UserInfoMapper();
+            SupplierMapper supplierMapper = new SupplierMapper();
 
             PhoneRepairHistoryViewModel viewmodel = new PhoneRepairHistoryViewModel
             {
@@ -41,12 +43,12 @@ namespace Tecnicell.Server.Mapper.Classes.Phone
                 Description = model.Description,
                 SaleCode = model.SaleCode,
                 ToBranch = model.ToBranch,
-                ActionHistory = model.ActionHistory,
+                ActionHistory = model.ActionHistory
             };
             if (model.SaleCodeNavigation != null) viewmodel.SaleCodeNavigation = saleMapper.ToViewModel(model.SaleCodeNavigation);
             if (model.ToBranchNavigation != null) viewmodel.ToBranchNavigation = branchMapper.ToViewModel(model.ToBranchNavigation);
             if (model.UserCodeNavigation != null) viewmodel.UserCodeNavigation = userInfoMapper.ToViewModel(model.UserCodeNavigation);
-
+            
             return viewmodel;
         }
     }

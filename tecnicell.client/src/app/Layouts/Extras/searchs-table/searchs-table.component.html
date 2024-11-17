@@ -1,0 +1,23 @@
+@defer () {
+    <div class="flex flex-row min-h-screen ">
+      <app-sidebar [ngClass]="'xl:flex z-30 transition-transform -left-64 hidden'"></app-sidebar>
+      <app-dialog></app-dialog>
+      <app-dialog-delete ></app-dialog-delete>
+      <div  class="flex flex-col w-full content-start gap-4 items-center">
+        <app-navigation-mobile class="w-full" [apiService]="apiService" ></app-navigation-mobile>
+      
+          <div class="grid grid-cols-1 content-start gap-4 items-center">
+          
+            <div class="flex-row justify-between px-8 xl:px-24">
+              <app-direction [direction]="direction"></app-direction>
+            </div>
+              <div class="px-8 xl:px-24  gap-4 mb-32">
+                  <app-options [filterService]="FilterService" [filtersOptions]="filtersOptions" [apiService]="apiService" class="w-full"></app-options>
+                  <app-table [apiService]="apiService" [dialogService]="dialogService" 
+                            [filterTableService]="FilterService" 
+                            [table]="table" [actions]="actionsTable"></app-table> 
+          </div>
+        </div>
+      </div>
+    </div>
+  }
