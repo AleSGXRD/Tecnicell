@@ -3,28 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\vergil\\documents\\github\\tecnicell\\tecnicell.server\\controllers\\api\\phones\\phonerepairhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\phones\\phonerepairhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\vergil\\documents\\github\\tecnicell\\tecnicell.server\\controllers\\api\\accessories\\accessoryhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\accessories\\accessoryhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\vergil\\documents\\github\\tecnicell\\tecnicell.server\\controllers\\api\\batteries\\batteryhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\batteries\\batteryhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\vergil\\documents\\github\\tecnicell\\tecnicell.server\\controllers\\api\\diaryworks\\diaryworkscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\diaryworks\\diaryworkscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\vergil\\documents\\github\\tecnicell\\tecnicell.server\\controllers\\api\\diaryworks\\worktypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\controllers\\api\\diaryworks\\worktypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\vergil\\documents\\github\\tecnicell\\tecnicell.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\vergil\\documents\\github\\tecnicell\\tecnicell.server\\models\\viewmodel\\diarywork\\diaryworkviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\models\\viewmodel\\diarywork\\diaryworkviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\vergil\\documents\\github\\tecnicell\\tecnicell.server\\models\\entity\\dairywork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\models\\entity\\dairywork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|c:\\users\\vergil\\documents\\github\\tecnicell\\tecnicell.server\\logic\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD7A6D55-1A0D-43DB-A539-4B5393695C0D}|Tecnicell.Server\\Tecnicell.Server.csproj|solutionrelative:tecnicell.server\\logic\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 565,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -53,85 +49,73 @@
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DiaryWorkViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Models\\ViewModel\\DiaryWork\\DiaryWorkViewModel.cs",
-              "RelativeDocumentMoniker": "Tecnicell.Server\\Models\\ViewModel\\DiaryWork\\DiaryWorkViewModel.cs",
-              "ToolTip": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Models\\ViewModel\\DiaryWork\\DiaryWorkViewModel.cs",
-              "RelativeToolTip": "Tecnicell.Server\\Models\\ViewModel\\DiaryWork\\DiaryWorkViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T20:48:20.621Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DairyWork.cs",
-              "DocumentMoniker": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Models\\Entity\\DairyWork.cs",
-              "RelativeDocumentMoniker": "Tecnicell.Server\\Models\\Entity\\DairyWork.cs",
-              "ToolTip": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Models\\Entity\\DairyWork.cs",
-              "RelativeToolTip": "Tecnicell.Server\\Models\\Entity\\DairyWork.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T20:45:55.42Z",
-              "EditorCaption": ""
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "WorkTypesController.cs",
-              "DocumentMoniker": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\WorkTypesController.cs",
-              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\WorkTypesController.cs",
-              "ToolTip": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\WorkTypesController.cs",
-              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\WorkTypesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "PhoneRepairHistoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairHistoriesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairHistoriesController.cs",
+              "ToolTip": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairHistoriesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Phones\\PhoneRepairHistoriesController.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAwHQAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T20:26:03.718Z",
+              "WhenOpened": "2024-11-23T00:10:11.943Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DiaryWorksController.cs",
-              "DocumentMoniker": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\DiaryWorksController.cs",
-              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\DiaryWorksController.cs",
-              "ToolTip": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\DiaryWorksController.cs",
-              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\DiaryWorksController.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAiwHgAAABFAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "AccessoryHistoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoryHistoriesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoryHistoriesController.cs",
+              "ToolTip": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoryHistoriesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Accessories\\AccessoryHistoriesController.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAzwCUAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T20:24:05.216Z",
+              "WhenOpened": "2024-11-22T23:40:33.71Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "BatteryHistoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteryHistoriesController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteryHistoriesController.cs",
+              "ToolTip": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteryHistoriesController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\Batteries\\BatteryHistoriesController.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACQAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-22T22:29:55.861Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DiaryWorksController.cs",
+              "DocumentMoniker": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\DiaryWorksController.cs",
+              "RelativeDocumentMoniker": "Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\DiaryWorksController.cs",
+              "ToolTip": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\DiaryWorksController.cs",
+              "RelativeToolTip": "Tecnicell.Server\\Controllers\\Api\\DiaryWorks\\DiaryWorksController.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAYwDYAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-22T22:28:36.756Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Program.cs",
               "RelativeDocumentMoniker": "Tecnicell.Server\\Program.cs",
               "ToolTip": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Program.cs",
               "RelativeToolTip": "Tecnicell.Server\\Program.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAAAGAAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAADsAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-12T03:39:09.172Z",
+              "WhenOpened": "2024-11-22T22:21:43.839Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "DbInitializer.cs",
-              "DocumentMoniker": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Logic\\DbInitializer.cs",
-              "RelativeDocumentMoniker": "Tecnicell.Server\\Logic\\DbInitializer.cs",
-              "ToolTip": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Logic\\DbInitializer.cs",
-              "RelativeToolTip": "Tecnicell.Server\\Logic\\DbInitializer.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAUwBQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-12T03:35:18.031Z"
             }
           ]
         },

@@ -14,6 +14,7 @@ import { FilterTableService } from '../../Services/Filter/filter-table.service';
 import { FilterField } from '../../Interfaces/tools/Filters/Filters';
 import { NotificationSystemService } from '../../Services/notification-system.service';
 import { BehaviorSubject } from 'rxjs';
+import { toZonedTime} from 'date-fns-tz'
 
 @Component({
   selector: 'app-table',
@@ -54,7 +55,7 @@ export class TableComponent {
   @Input()
   actions : ActionsTable = ActionsTable.NONE;
   
-  maxElements :number = 10;
+  maxElements :number = 4;
 
   constructor(private formBuilder: FormBuilder,
     private notifcationService : NotificationSystemService
@@ -72,6 +73,14 @@ export class TableComponent {
   }
 
   currentSheet : number =0;
+
+  convertToLocalTime(date : any):Date |undefined{
+    if(date == undefined) return undefined;
+    const time = new Date(date);
+    const timeZoneOffset = -5; // Zona horaria de La Habana (UTC-5)
+    const localDate = new Date(time.getTime() + (timeZoneOffset * 60 * 60 * 1000));
+    return localDate;
+  }
 
   sheets(){
     return Math.ceil(this.table.values.length / this.maxElements)-1;

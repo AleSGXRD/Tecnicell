@@ -252,7 +252,7 @@ export class PhoneRepairElementComponent {
             this.tableHistories.values = this.value.histories;
             
             this.formHistories = this.formBuilder.nonNullable.group({
-              imei: [undefined, [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
+              imei: [this.value.view.code, [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
               salePrice: [this.value.view.price, []],
               userCode:[undefined, []],
               date:[new Date(),[]],

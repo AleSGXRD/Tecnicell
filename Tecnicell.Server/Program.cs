@@ -93,7 +93,8 @@ string GetLocalIPAddress() {
     throw new Exception("No network adapters with an IPv4 address in the system!"); 
 } 
 // Get the IP address and set the URL for the server
-string localIpAddress = GetLocalIPAddress(); 
-app.Run();
+string localIpAddress = GetLocalIPAddress();
+Console.WriteLine("Escuchando por: " + localIpAddress + " Puerto: " + 5000);
+app.Run("http://0.0.0.0:5000/");
 
 //app.Run();

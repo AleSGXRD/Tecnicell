@@ -19,7 +19,6 @@ namespace Tecnicell.Server.Logic
                 return;   // La base de datos ya ha sido inicializada
             }
 
-
             string sqlQueriesViews = @"
                 DROP VIEW IF EXISTS Accessory_View;
                 DROP VIEW IF EXISTS Battery_View;
@@ -211,10 +210,13 @@ namespace Tecnicell.Server.Logic
                 FROM phone_repair p
                 JOIN brand t ON p.brand = t.name
                 JOIN historial_filtrado h ON p.imei = h.imei
-                GROUP BY t.name, p.imei;
+                GROUP BY t.name, p.imei
+                ORDER BY date;
 
                 ";
             context.Database.ExecuteSqlRaw(sqlQueriesViews);
+
+
             string sqlQueries = @"
                 INSERT INTO currency(currency_code, currency_name) VALUES ('pN52_BZXv_Due0_4Gma', 'MN');
                 INSERT INTO role(

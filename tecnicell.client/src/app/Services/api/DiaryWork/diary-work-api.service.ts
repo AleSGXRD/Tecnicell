@@ -68,13 +68,12 @@ export class DiaryWorkApiService implements ApiService<DiaryWork, DiaryWork[]> {
     const model : any = this.mapperEdit(data);
     if(data.sale == true){
       if(model.saleCode != null){
-        this.saleApi.edit(model.saleCodeNavigation, model.saleCode)
+      this.saleApi.edit(model.saleCodeNavigation, model.saleCode)
         .subscribe(res => {
           this.http.put<any>(server() + '/api/DiaryWorks/' + model.date, model).subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
-            },
-            err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1)
+            }
           )
       }
       else{
@@ -97,7 +96,7 @@ export class DiaryWorkApiService implements ApiService<DiaryWork, DiaryWork[]> {
     }
     else {
       let sale : any;
-      if(model.saleCode != undefined){
+      if(model.saleCode != null){
         sale = model.saleCodeNavigation;
         this.saleApi.edit(sale, model.saleCode)
           .subscribe(res => {
@@ -126,7 +125,6 @@ export class DiaryWorkApiService implements ApiService<DiaryWork, DiaryWork[]> {
       date : data.date,
       workType : data.workType,
       description: data.description,
-      saleCode : "default",
       userCode: this.authService.myUser.value.userCode!,
     };
     if(data.currencyCode != undefined&&data.currencyCode == 'none'){
@@ -151,7 +149,7 @@ export class DiaryWorkApiService implements ApiService<DiaryWork, DiaryWork[]> {
       userCode: this.authService.myUser.value.userCode!,
       date : data.date,
       description: data.description,
-      saleCode : "default",
+      saleCode : data.saleCode ?? null,
     }
     if(data.currencyCode == 'none'){
       model.saleCodeNavigation = {

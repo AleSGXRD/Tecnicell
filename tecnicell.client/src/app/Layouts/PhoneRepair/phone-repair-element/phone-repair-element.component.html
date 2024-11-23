@@ -10,7 +10,7 @@
               <app-direction [direction]="direction"></app-direction>
             </div>
             <app-form class="z-30" [dialogService]="dialogService" [formService]="formService"></app-form>
-            <app-user-info class="px-8 xl:px-24 mb-32" (deleteData)="deleteData()" (editData)="editData()" [name]="getName()" [type]="getType()" [identifier]="getIdentifier()">
+            <app-user-info class="px-8 xl:px-24 mb-56" (deleteData)="deleteData()" (editData)="editData()" [name]="getName()" [type]="getType()" [identifier]="getIdentifier()">
                 <div class="xl:flex flex-wrap justify-center items-center gap-8 hidden mt-12">
                     
                     <div class="flex flex-row items-center rounded-xl bg-gray-100 px-4 py-2 relative">
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <app-options [filterService]="historiesFilterService" [filtersOptions]="filtersOptions" [formAdd]="formHistories" [service]="formService" [inputs]="inputsFormFields" [apiService]="historyService" class="w-full"></app-options>
-                <app-table  [apiService]="historyService" [dialogService]="dialogService" [formService]="formService" [filterTableService]="historiesFilterService"
+                <app-table      [apiService]="historyService" [dialogService]="dialogService" [formService]="formService" [filterTableService]="historiesFilterService"
                             [inputsFormFields]="inputsFormFields" [form]="formHistories"
                             [table]="tableHistories" [actions]="actionsTable"></app-table>
             </app-user-info>

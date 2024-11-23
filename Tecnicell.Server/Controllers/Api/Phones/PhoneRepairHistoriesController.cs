@@ -119,7 +119,7 @@ namespace Tecnicell.Server.Controllers.Api.Phones
                 }
             }
 
-            return CreatedAtAction("GetPhoneRepairHistory", new { imei = phoneRepairHistory.Imei, date = phoneRepairHistory.Date }, phoneRepairHistory);
+            return NoContent();
         }
 
         // DELETE: api/PhoneRepairHistories/5

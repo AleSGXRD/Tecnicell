@@ -25,7 +25,7 @@ export class SaleApiService implements ApiService<Sale,Sale> {
   }
   edit(data : any, id : any){
     const model : any = this.mapper(data);
-    return this.http.put<any>(server() + '/api/Sales/' + id, model);
+    return this.http.put<any>(server() + '/api/Sales/' + model.saleCode, model);
   }
   delete(id : any){
     return this.http.delete<any>(server() + '/api/Sales/' + id);

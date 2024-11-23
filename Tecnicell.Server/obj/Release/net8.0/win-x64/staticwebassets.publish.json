@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mhuYFbwU111ysxXwqql+WAf0RG7Ac3Vox2p0ehYDjus=",
+  "Hash": "9vLFG7teLxhog5nfLTTFCxjWYqedyoI/hds4mU48MpU=",
   "Source": "Tecnicell.Server",
   "BasePath": "_content/Tecnicell.Server",
   "Mode": "Default",
@@ -97,12 +97,12 @@
       "OriginalItemSpec": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\index.html"
     },
     {
-      "Identity": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\main-4ZSIMVCQ.js",
+      "Identity": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\main-FVLSSMAK.js",
       "SourceId": "tecnicell.client",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\",
       "BasePath": "/",
-      "RelativePath": "browser/main-4ZSIMVCQ.js",
+      "RelativePath": "browser/main-FVLSSMAK.js",
       "AssetKind": "Publish",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -113,7 +113,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\main-4ZSIMVCQ.js"
+      "OriginalItemSpec": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\main-FVLSSMAK.js"
     },
     {
       "Identity": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\polyfills-SCHOHYNV.js",
@@ -135,12 +135,12 @@
       "OriginalItemSpec": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\polyfills-SCHOHYNV.js"
     },
     {
-      "Identity": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\styles-QVZVIKF6.css",
+      "Identity": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\styles-LQY5TJAP.css",
       "SourceId": "tecnicell.client",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\",
       "BasePath": "/",
-      "RelativePath": "browser/styles-QVZVIKF6.css",
+      "RelativePath": "browser/styles-LQY5TJAP.css",
       "AssetKind": "Publish",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -151,7 +151,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\styles-QVZVIKF6.css"
+      "OriginalItemSpec": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\dist\\tecnicell.client\\browser\\styles-LQY5TJAP.css"
     }
   ]
 }

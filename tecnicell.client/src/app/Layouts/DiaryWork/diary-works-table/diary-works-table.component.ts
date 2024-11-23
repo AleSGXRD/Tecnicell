@@ -106,6 +106,11 @@ export class DiaryWorksTableComponent {
       },
       {
         type : TableFieldType.Select,
+        propertyName : "saleCode",
+        show:false,
+      },
+      {
+        type : TableFieldType.Select,
         propertyName : "saleCodeNavigation",
         subPropertyName:"saleCode",
         show:false,
@@ -123,6 +128,7 @@ export class DiaryWorksTableComponent {
     date: [new Date(), [Validators.required]],
     workType:       [undefined,[Validators.required]],
     userCode:     [undefined,[]],
+    saleCode:     [undefined,[]],
     description: [undefined, []],
     sale: [false, []],
     currencyCode:  [undefined, []],
@@ -201,7 +207,7 @@ export class DiaryWorksTableComponent {
   branchesValues! : FormFieldOption[];
   brandValues! : FormFieldOption[];
 
-  actionsTable: ActionsTable = ActionsTable.DELETE;
+  actionsTable: ActionsTable = ActionsTable.BOTH;
   
 
   constructor (public formService: FormService,

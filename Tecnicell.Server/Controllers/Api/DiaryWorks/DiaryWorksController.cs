@@ -17,6 +17,7 @@ namespace Tecnicell.Server.Controllers.Api.DiaryWorks
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
     public class DiaryWorksController : ControllerBase
     {
         private readonly TecnicellContext _context;
@@ -35,7 +36,7 @@ namespace Tecnicell.Server.Controllers.Api.DiaryWorks
             return await _context.DiaryWorks
                                 .Include(model => model.UserCodeNavigation)
                                 .Include(model => model.SaleCodeNavigation)
-                                .OrderDescending()
+                                .OrderByDescending(model => model.Date)
                                 .Select(model => _mapper.ToViewModel(model))
                                 .ToListAsync();
         }
@@ -60,7 +61,6 @@ namespace Tecnicell.Server.Controllers.Api.DiaryWorks
         // PUT: api/DiaryWorks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{date}")]
-        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
         public async Task<IActionResult> PutDiaryWork(DateTime date, DiaryWorkViewModel viewmodel)
         {
             if (date != viewmodel.Date)
@@ -92,7 +92,6 @@ namespace Tecnicell.Server.Controllers.Api.DiaryWorks
         // POST: api/DiaryWorks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
         public async Task<ActionResult<DiaryWorkViewModel>> PostDiaryWork(DiaryWorkViewModel viewmodel)
         {
             DiaryWork model = _mapper.ToModel(viewmodel);
@@ -113,12 +112,11 @@ namespace Tecnicell.Server.Controllers.Api.DiaryWorks
                 }
             }
 
-            return CreatedAtAction("GetDiaryWork", new { code = viewmodel.Date }, viewmodel);
+            return CreatedAtAction("GetDiaryWork", new { date = viewmodel.Date }, viewmodel);
         }
 
         // DELETE: api/DiaryWorks/5
         [HttpDelete("{date}")]
-        [Authorize(Roles = "KKYW_rkaT_Sñ64_jtRK, YHYc_ISif_7os0_ZqBR")]
         public async Task<IActionResult> DeleteDiaryWork(DateTime date)
         {
             var model = await _context.DiaryWorks.FindAsync(date);

@@ -91,14 +91,14 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
             res => {
               model.saleCode = res.saleCode;
               model.saleCodeNavigation = null;
-              this.http.put<any>(server() + '/api/PhoneHistories/' 
+              this.http.put<any>(server() + '/api/PhoneRepairHistories/' 
                 +ids[0] + '%2C' + ids[1]+'?imei=' +ids[0] +"&date=" + ids[1], model).subscribe(
                   res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
                   err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
           })
         }
         else{
-          this.http.put<any>(server() + '/api/PhoneHistories/' 
+          this.http.put<any>(server() + '/api/PhoneRepairHistories/' 
             +ids[0] + '%2C' + ids[1]+'?imei=' +ids[0] +"&date=" + ids[1], model).subscribe(
               res=> this.notificationService.showNotifcation("Se ha editado el elemento con exito!", 0),
               err => this.notificationService.showNotifcation("Ha ocurrido un error al intentar editar el elemento.", 1))
@@ -175,6 +175,7 @@ export class PhoneRepairHistoryApiService implements ApiService<PhoneRepairHisto
       actionHistory : data.actionHistory,
       description: data.description,
       toBranch : data.toBranch,
+      saleCode : data.saleCode ?? undefined,
     } 
     if(data.currencyCode == 'none'){
       model.saleCodeNavigation = {

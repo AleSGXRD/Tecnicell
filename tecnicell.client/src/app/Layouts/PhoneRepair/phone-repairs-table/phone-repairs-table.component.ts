@@ -45,7 +45,7 @@ export class PhoneRepairsTableComponent {
         space: SpacesField.small
       },
       {
-        name:'Precio de venta',
+        name:'Precio de reparación',
         space: SpacesField.small
       },
       {
@@ -125,7 +125,7 @@ export class PhoneRepairsTableComponent {
 
   //Form
   form : any = this.formBuilder.nonNullable.group({
-    imei: [undefined, [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
+    imei: [undefined, [Validators.required, Validators.maxLength(15), Validators.minLength(15)]],
     brand:       ['', [Validators.required]],
     name:       ['',[Validators.required]],
     price:    [undefined, []],
@@ -150,14 +150,14 @@ export class PhoneRepairsTableComponent {
       errors : [
         {
           type: 'maxLength',
-          message : 'Debe ser de 16 caracteres',
+          message : 'Debe ser de 15 caracteres',
         },
         {
           type: 'minLength',
-          message : 'Debe ser de 16 caracteres'
+          message : 'Debe ser de 15 caracteres'
         }
       ],
-      limit: 16
+      limit: 15
     },
     {
       type : "select",
