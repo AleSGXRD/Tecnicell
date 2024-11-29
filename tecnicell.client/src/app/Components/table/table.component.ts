@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { HeaderField, SpacesField } from '../../Interfaces/tools/Table/HeaderField';
 import { ButtonComponent } from "../buttons/button/button.component";
 import { FormService } from '../../Services/form/form.service';
@@ -15,6 +15,9 @@ import { FilterField } from '../../Interfaces/tools/Filters/Filters';
 import { NotificationSystemService } from '../../Services/notification-system.service';
 import { BehaviorSubject } from 'rxjs';
 import { toZonedTime} from 'date-fns-tz'
+import { AuthService } from '../../Services/api/Authorization/auth.service';
+import checkLevel, { AccessLevel } from '../../Logic/AccessLevel';
+import { MultipleDeleteService } from '../../Services/multiple-delete.service';
 
 @Component({
   selector: 'app-table',
@@ -55,20 +58,37 @@ export class TableComponent {
   @Input()
   actions : ActionsTable = ActionsTable.NONE;
   
-  maxElements :number = 4;
+  maxElements :number = 10;
+
+  access!:AccessLevel;
 
   constructor(private formBuilder: FormBuilder,
-    private notifcationService : NotificationSystemService
-  ){}
+    private notifcationService : NotificationSystemService,
+    private authService : AuthService,
+    private multipleDelete : MultipleDeleteService
+  ){
+    this.authService.myUser.subscribe(res=>{
+      this.access = checkLevel(res.role);
+    })
+  }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    
     this.valuesDefault = this.table.values;
     this.filterTableService?.filters.subscribe(
       res => {
         this.filterOptions = res;
         this.filterData();
       }
+    );
+    this.multipleDelete.deleteMultiples.subscribe(res => {
+      this.deleteAll();
+    })
+
+    this.multipleDelete.canUseMultipleDelete.next(
+      (this.actions ==  ActionsTable.DELETE || this.actions ==  ActionsTable.BOTH )||
+      ((this.actions ==  ActionsTable.DELETE_ADMIN || this.actions ==  ActionsTable.BOTH_ADMIN) &&this.access == 2)
     );
   }
 
@@ -80,6 +100,29 @@ export class TableComponent {
     const timeZoneOffset = -5; // Zona horaria de La Habana (UTC-5)
     const localDate = new Date(time.getTime() + (timeZoneOffset * 60 * 60 * 1000));
     return localDate;
+  }
+
+  onCheckChange(checked:boolean, index:number){
+    this.table.values[index].check = checked;
+
+    if(checked == true){
+      if(this.multipleDelete.canDelete.value == false)
+        this.multipleDelete.canDelete.next(true);
+    }
+
+    if(checked == false){
+      let desactive = true;
+      for(const element of this.table.values){
+        if(element.check != undefined){
+            if(element.check == true){
+              desactive =false;
+            }
+        }
+      }
+      if(desactive){
+        this.multipleDelete.canDelete.next(false);
+      }
+    }
   }
 
   sheets(){
@@ -165,7 +208,6 @@ export class TableComponent {
     }
     else{
       this.table.values = this.valuesDefault;
-      console.log(this.table.values)
     }
   }
 
@@ -197,6 +239,44 @@ export class TableComponent {
       );
     });
   }
+
+  async deleteOne(element:any): Promise<boolean>{
+    return new Promise<boolean>((resolve,reject)=>{
+      this.apiService.delete(element).subscribe(
+        res =>{
+          resolve(true);
+        },
+        err => {
+          console.log(err);
+          resolve(false);
+        }
+      )
+    })
+  }
+  deleteAll(){
+    this.dialogService.SetDeleteMethod(async ()=>{
+      let error = false;
+      const listElements = this.table.values.filter((element,index)=>{
+        return element.check == true
+      })
+
+      for (const element of listElements){
+        const success = await this.deleteOne(element);
+        if(success == false){
+          error = true;
+        }
+      }
+
+      if(error){
+        this.notifcationService.showNotifcation("Parece que ocurrio un error al intentar eliminar un elemento.", 1);
+      }
+      else{
+        this.notifcationService.showNotifcation("Se han eliminado todos los elementos",0)
+      }
+      this.multipleDelete.canDelete.next(false);
+    })
+  }
+
   resolveStyles(property:TableField,$index:number){
     if(property.styles == undefined)return ' ';
     let styles = property.styles.map((value, index, array) => {

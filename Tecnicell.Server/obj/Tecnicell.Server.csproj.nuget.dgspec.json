@@ -1,28 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj": {}
+    "/Users/dante/Documents/GitHub/Tecnicell/Tecnicell.Server/Tecnicell.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj": {
+    "/Users/dante/Documents/GitHub/Tecnicell/Tecnicell.Server/Tecnicell.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj",
+        "projectUniqueName": "/Users/dante/Documents/GitHub/Tecnicell/Tecnicell.Server/Tecnicell.Server.csproj",
         "projectName": "Tecnicell.Server",
-        "projectPath": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\Tecnicell.Server.csproj",
-        "packagesPath": "C:\\Users\\Vergil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\Tecnicell.Server\\obj\\",
+        "projectPath": "/Users/dante/Documents/GitHub/Tecnicell/Tecnicell.Server/Tecnicell.Server.csproj",
+        "packagesPath": "/Users/dante/.nuget/packages/",
+        "outputPath": "/Users/dante/Documents/GitHub/Tecnicell/Tecnicell.Server/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Vergil\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/dante/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -110,20 +107,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[8.0.10, 8.0.10]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[8.0.10, 8.0.10]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[8.0.10, 8.0.10]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -132,12 +115,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
-        }
-      },
-      "runtimes": {
-        "win-x64": {
-          "#import": []
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

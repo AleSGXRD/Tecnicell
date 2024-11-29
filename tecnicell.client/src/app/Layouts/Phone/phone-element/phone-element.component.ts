@@ -145,6 +145,31 @@ export class PhoneElementComponent {
   formHistories! : any ;
   inputsFormFields :FormField[]= [
     {
+      type : "collapse",
+      formControlName:"setTime",
+      name: "Fecha",
+      placeholder : "",
+      fieldRequired : false,
+      fields: [
+        {
+          type : "date",
+          formControlName:"day",
+          name: "Dia",
+          placeholder : "Dia...",
+          fieldRequired : false,
+          errors : []
+        },
+        {
+          type : "time", // deberia ser fecha
+          formControlName:"time",
+          name: "Hora",
+          placeholder : "Garantía...",
+          fieldRequired : false,
+          errors : []
+        },
+      ]
+    },
+    {
       type : "select",
       formControlName:"actionHistory",
       name: "Acción de Historial",
@@ -246,7 +271,7 @@ export class PhoneElementComponent {
     }
   ]
 
-  actionsTable : ActionsTable = ActionsTable.BOTH;
+  actionsTable : ActionsTable = ActionsTable.BOTH_ADMIN;
 
   currencyValues! : FormFieldOption[] ;
   actionsValues! : FormFieldOption[];
@@ -296,7 +321,13 @@ export class PhoneElementComponent {
               supplierCode: [undefined,[]],
               cost: [undefined,[]],
               warranty:  [null,[]],
-              toBranch:[undefined,[]]
+              toBranch:[undefined,[]],
+              setTime: [false,[]],
+              day: [undefined,[]],
+              hours : [undefined,[]],
+              minutes:[undefined,[]],
+              seconds:[undefined, []],
+              time : [undefined, []]
             })
             this.loaded[0] = true;
           },
@@ -484,24 +515,6 @@ export class PhoneElementComponent {
       salePrice: [this.value.view.salePrice,[Validators.required]],
     })
     const inputs :FormField[]= [
-      {
-        type : "textlimited",
-        formControlName:"imei",
-        name: "IMEI.",
-        placeholder : "IMEI...",
-        fieldRequired : true,
-        errors : [
-          {
-            type: 'maxLength',
-            message : 'Debe ser de 16 caracteres',
-          },
-          {
-            type: 'minLength',
-            message : 'Debe ser de 16 caracteres'
-          }
-        ],
-        limit:16
-      },
       {
         type : "select", // deberia ser fecha
         formControlName:"brand",

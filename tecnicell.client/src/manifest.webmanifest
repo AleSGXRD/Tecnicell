@@ -1,0 +1,22 @@
+{
+    "short_name": "Tecnicell",
+    "name": "Tecnicell",
+    "icons": [
+      {
+        "src": "assets/logo_transparent.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "assets/logo_transparent.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#4a90e2"
+  }
+  

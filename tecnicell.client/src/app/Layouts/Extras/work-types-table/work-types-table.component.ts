@@ -64,7 +64,7 @@ export class WorkTypesTableComponent {
     }
   ]
 
-  actionsTable: ActionsTable = ActionsTable.DELETE;
+  actionsTable: ActionsTable = ActionsTable.DELETE_ADMIN;
   
 
   constructor (public formService: FormService,

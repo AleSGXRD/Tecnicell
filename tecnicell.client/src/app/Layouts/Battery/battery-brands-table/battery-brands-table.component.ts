@@ -84,7 +84,7 @@ export class BatteryBrandsTableComponent {
     }
   ]
 
-  actionsTable: ActionsTable = ActionsTable.BOTH;
+  actionsTable: ActionsTable = ActionsTable.BOTH_ADMIN;
   
 
   constructor (public formService: FormService,

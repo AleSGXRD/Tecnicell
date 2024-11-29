@@ -13,6 +13,7 @@ import { Notification, NotificationType } from '../../../Components/notification
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
 import server from '../../../Logic/ServerAdress';
+import { generateDate } from '../../../Logic/ControlDate';
 @Injectable({
   providedIn: 'root'
 })
@@ -77,7 +78,7 @@ export class AccessoryApiRequestService implements ApiService<AccessoryView, Acc
       } 
     }
     let history : AccessoryHistory = {
-      date : new Date(),
+      date : data.setTime == false? new Date(): generateDate(data.day,data.hours,data.minutes,data.seconds,data.time),
       userCode: this.authService.myUser.value.userCode!,
       actionHistory : data.actionHistory,
       description : data.description,

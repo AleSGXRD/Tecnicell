@@ -33,10 +33,6 @@ export class ScreensTableComponent {
     values : [],
     headerFields : [
       {
-        name:'Codigo',
-        space: SpacesField.normal
-      },
-      {
         name:'Marca',
         space: SpacesField.small
       },
@@ -60,17 +56,12 @@ export class ScreensTableComponent {
         name:'Estado',
         space: SpacesField.small
       },
+      {
+        name:'Codigo',
+        space: SpacesField.normal
+      },
     ],
     tableFields :[
-      {
-        type : TableFieldType.Link,
-        propertyName : "code",
-        show:true,
-        link : {
-          url:'screen/',
-          idPropertyName:'code'
-        }
-      },
       {
         type : TableFieldType.Property,
         show:true,
@@ -101,7 +92,16 @@ export class ScreensTableComponent {
         propertyName : "available",
         show:true,
         styles: StateStyleCustom
-      }
+      },
+      {
+        type : TableFieldType.Link,
+        propertyName : "code",
+        show:true,
+        link : {
+          url:'screen/',
+          idPropertyName:'code'
+        }
+      },
     ], 
   };
 
@@ -119,9 +119,40 @@ export class ScreensTableComponent {
     supplierCode: [undefined, []],
     cost: [undefined,[]],
     warranty:  [null,[]],
-    branchCode:[null,[]]
+    branchCode:[null,[]],
+    setTime: [false,[]],
+    day: [undefined,[]],
+    hours : [undefined,[]],
+    minutes:[undefined,[]],
+    seconds:[undefined, []],
+    time : [undefined, []]
   })
   inputsFormFields :FormField[]= [
+    {
+      type : "collapse",
+      formControlName:"setTime",
+      name: "Fecha",
+      placeholder : "",
+      fieldRequired : false,
+      fields: [
+        {
+          type : "date",
+          formControlName:"day",
+          name: "Dia",
+          placeholder : "Dia...",
+          fieldRequired : false,
+          errors : []
+        },
+        {
+          type : "time", // deberia ser fecha
+          formControlName:"time",
+          name: "Hora",
+          placeholder : "Garantía...",
+          fieldRequired : false,
+          errors : []
+        },
+      ]
+    },
     {
       type : "select",
       formControlName:"brand",
@@ -244,7 +275,7 @@ export class ScreensTableComponent {
   brandValues! : FormFieldOption[];
   supplierValues! : FormFieldOption[]
 
-  actionsTable: ActionsTable = ActionsTable.DELETE;
+  actionsTable: ActionsTable = ActionsTable.DELETE_ADMIN;
   
 
   constructor (public formService: FormService,
@@ -264,7 +295,6 @@ export class ScreensTableComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.apiService.select().subscribe(res => {this.table.values = res;});
-    
     
     this.supplierApi.select().subscribe(res => {
       res.unshift({

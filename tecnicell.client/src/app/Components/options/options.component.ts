@@ -7,6 +7,7 @@ import { ApiService } from '../../Services/api/ApiService.service';
 import { FilterField } from '../../Interfaces/tools/Filters/Filters';
 import { FilterTableService } from '../../Services/Filter/filter-table.service';
 import { Router } from '@angular/router';
+import { MultipleDeleteService } from '../../Services/multiple-delete.service';
 
 @Component({
   selector: 'app-options',
@@ -36,8 +37,18 @@ export class OptionsComponent {
   @Input()
   histories! : string ;
 
-  constructor(private router: Router){
+  canUseMultipleDelete :boolean = false;
+  canDelete :boolean = false;
 
+  constructor(private router: Router,
+    private multipleDelete : MultipleDeleteService
+  ){
+    this.multipleDelete.canDelete.subscribe(res =>{
+      this.canDelete = res;
+    })
+    this.multipleDelete.canUseMultipleDelete.subscribe(res => {
+      this.canUseMultipleDelete = res;
+    })
   }
 
   ActiveForm(){
@@ -51,5 +62,9 @@ export class OptionsComponent {
 
   change(){
     this.filterService.emit(this.filtersOptions);
+  }
+  deleteAll(){
+    if(this.canDelete == false) return;
+    this.multipleDelete.deleteMultiples.emit();
   }
 }

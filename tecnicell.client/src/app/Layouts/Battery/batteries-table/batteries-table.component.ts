@@ -34,10 +34,6 @@ export class BatteriesTableComponent {
     values : [],
     headerFields : [
       {
-        name:'Codigo',
-        space: SpacesField.normal
-      },
-      {
         name:'Marca',
         space: SpacesField.small
       },
@@ -61,17 +57,12 @@ export class BatteriesTableComponent {
         name:'Estado',
         space: SpacesField.small
       },
+      {
+        name:'Codigo',
+        space: SpacesField.normal
+      },
     ],
     tableFields :[
-      {
-        type : TableFieldType.Link,
-        propertyName : "code",
-        show:true,
-        link : {
-          url:'battery/',
-          idPropertyName:'code'
-        }
-      },
       {
         type : TableFieldType.Property,
         show:true,
@@ -102,7 +93,16 @@ export class BatteriesTableComponent {
         propertyName : "available",
         show:true,
         styles: StateStyleCustom
-      }
+      },
+      {
+        type : TableFieldType.Link,
+        propertyName : "code",
+        show:true,
+        link : {
+          url:'battery/',
+          idPropertyName:'code'
+        }
+      },
     ], 
   };
 
@@ -120,9 +120,40 @@ export class BatteriesTableComponent {
     supplierCode: [undefined, []],
     cost: [undefined,[]],
     warranty:  [null,[]],
-    branchCode:[null,[]]
+    branchCode:[null,[]],
+    setTime: [false,[]],
+    day: [undefined,[]],
+    hours : [undefined,[]],
+    minutes:[undefined,[]],
+    seconds:[undefined, []],
+    time : [undefined, []]
   })
   inputsFormFields :FormField[]= [
+    {
+      type : "collapse",
+      formControlName:"setTime",
+      name: "Fecha",
+      placeholder : "",
+      fieldRequired : false,
+      fields: [
+        {
+          type : "date",
+          formControlName:"day",
+          name: "Dia",
+          placeholder : "Dia...",
+          fieldRequired : false,
+          errors : []
+        },
+        {
+          type : "time", // deberia ser fecha
+          formControlName:"time",
+          name: "Hora",
+          placeholder : "Garantía...",
+          fieldRequired : false,
+          errors : []
+        },
+      ]
+    },
     {
       type : "select",
       formControlName:"brand",
@@ -245,7 +276,7 @@ export class BatteriesTableComponent {
   brandValues! : FormFieldOption[];
   supplierValues! : FormFieldOption[];
 
-  actionsTable: ActionsTable = ActionsTable.DELETE;
+  actionsTable: ActionsTable = ActionsTable.DELETE_ADMIN;
   
 
   constructor (public formService: FormService,

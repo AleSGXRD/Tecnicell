@@ -12,6 +12,7 @@ import { SaleViewModel } from '../../../Interfaces/business/Models/Sale';
 import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
 import server from '../../../Logic/ServerAdress';
+import { generateDate } from '../../../Logic/ControlDate';
 
 @Injectable({
   providedIn: 'root'
@@ -75,7 +76,7 @@ export class PhoneApiService implements ApiService<PhoneView,PhoneResponse> {
       } 
     }
     let history :PhoneHistory = {
-      date : new Date(),
+      date : data.setTime == false? new Date() : generateDate(data.day,data.hours,data.minutes,data.seconds,data.time),
       userCode: this.authService.myUser.value.userCode!,
       actionHistory : data.actionHistory,
       supplierCode: data.supplierCode == 'none'? null: data.supplierCode,

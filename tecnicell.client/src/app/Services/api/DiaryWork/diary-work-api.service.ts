@@ -9,6 +9,7 @@ import { UsdApiService } from '../Usd/usd-api.service';
 import { ApiService } from '../ApiService.service';
 import { Observable } from 'rxjs';
 import { Sale } from '../../../Interfaces/business/Models/Sale';
+import { generateDate } from '../../../Logic/ControlDate';
 
 @Injectable({
   providedIn: 'root'
@@ -122,7 +123,7 @@ export class DiaryWorkApiService implements ApiService<DiaryWork, DiaryWork[]> {
   }
   mapperAdd(data:any){
     let model : DiaryWork = {
-      date : data.date,
+      date : data.setTime == false? data.date : generateDate(data.day,data.hours,data.minutes,data.seconds,data.time),
       workType : data.workType,
       description: data.description,
       userCode: this.authService.myUser.value.userCode!,

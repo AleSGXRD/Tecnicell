@@ -30,10 +30,6 @@ export class DashboardComponent {
     values : [],
     headerFields : [
       {
-        name:'IMEI',
-        space: SpacesField.small
-      },
-      {
         name:'Marca',
         space: SpacesField.small
       },
@@ -64,18 +60,13 @@ export class DashboardComponent {
       {
         name:'Descripción sobre la ultima acción',
         space: SpacesField.normal
-      }
+      },
+      {
+        name:'IMEI',
+        space: SpacesField.small
+      },
     ],
     tableFields :[
-      {
-        type : TableFieldType.Link,
-        propertyName : "code",
-        show:true,
-        link : {
-          url:'phonerepair/',
-          idPropertyName:'code'
-        }
-      },
       {
         type : TableFieldType.Property,
         show:true,
@@ -116,6 +107,15 @@ export class DashboardComponent {
         type : TableFieldType.Property,
         propertyName : "actionDescription",
         show:true,
+      },
+      {
+        type : TableFieldType.Link,
+        propertyName : "code",
+        show:true,
+        link : {
+          url:'phonerepair/',
+          idPropertyName:'code'
+        }
       },
     ], 
   };

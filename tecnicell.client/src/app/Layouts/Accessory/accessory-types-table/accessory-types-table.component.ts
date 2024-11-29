@@ -77,7 +77,7 @@ export class AccessoryTypesTableComponent {
     }
   ]
 
-  actionsTable: ActionsTable = ActionsTable.BOTH;
+  actionsTable: ActionsTable = ActionsTable.BOTH_ADMIN;
   
 
   constructor (public formService: FormService,

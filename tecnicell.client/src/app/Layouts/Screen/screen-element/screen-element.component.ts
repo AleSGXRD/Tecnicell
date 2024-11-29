@@ -153,6 +153,31 @@ export class ScreenElementComponent {
   formHistories! : any ;
   inputsFormFields :FormField[]= [
     {
+      type : "collapse",
+      formControlName:"setTime",
+      name: "Fecha",
+      placeholder : "",
+      fieldRequired : false,
+      fields: [
+        {
+          type : "date",
+          formControlName:"day",
+          name: "Dia",
+          placeholder : "Dia...",
+          fieldRequired : false,
+          errors : []
+        },
+        {
+          type : "time", // deberia ser fecha
+          formControlName:"time",
+          name: "Hora",
+          placeholder : "Garantía...",
+          fieldRequired : false,
+          errors : []
+        },
+      ]
+    },
+    {
       type : "select",
       formControlName:"actionHistory",
       name: "Acción de Historial",
@@ -261,7 +286,7 @@ export class ScreenElementComponent {
     }
   ]
 
-  actionsTable : ActionsTable = ActionsTable.BOTH;
+  actionsTable : ActionsTable = ActionsTable.BOTH_ADMIN;
 
   currencyValues! : FormFieldOption[] ;
   actionsValues! : FormFieldOption[];
@@ -312,7 +337,13 @@ export class ScreenElementComponent {
               supplierCode : [undefined,[]],
               cost: [undefined,[]],
               warranty:  [null,[]],
-              toBranch:[undefined,[]]
+              toBranch:[undefined,[]],
+              setTime: [false,[]],
+              day: [undefined,[]],
+              hours : [undefined,[]],
+              minutes:[undefined,[]],
+              seconds:[undefined, []],
+              time : [undefined, []]
             })
             this.loaded[0] = true;
           },

@@ -51,7 +51,7 @@ export class DiaryWorksTableComponent {
         space: SpacesField.small
       },
       {
-        name:'Costo Venta',
+        name:'Precio de reparación',
         space: SpacesField.small
       },
       {
@@ -134,8 +134,39 @@ export class DiaryWorksTableComponent {
     currencyCode:  [undefined, []],
     cost: [undefined,[]],
     warranty:  [null,[]],
+    setTime: [false,[]],
+    day: [undefined,[]],
+    hours : [undefined,[]],
+    minutes:[undefined,[]],
+    seconds:[undefined, []],
+    time : [undefined, []]
   })
   inputsFormFields :FormField[]= [
+    {
+      type : "collapse",
+      formControlName:"setTime",
+      name: "Fecha",
+      placeholder : "",
+      fieldRequired : false,
+      fields: [
+        {
+          type : "date",
+          formControlName:"day",
+          name: "Dia",
+          placeholder : "Dia...",
+          fieldRequired : false,
+          errors : []
+        },
+        {
+          type : "time", // deberia ser fecha
+          formControlName:"time",
+          name: "Hora",
+          placeholder : "Garantía...",
+          fieldRequired : false,
+          errors : []
+        },
+      ]
+    },
     {
       type : "select",
       formControlName:"workType",
@@ -229,8 +260,6 @@ export class DiaryWorksTableComponent {
   async ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    
-
     await this.currencyApi.select().subscribe(res => {
       res.unshift({
         currencyCode : 'none',

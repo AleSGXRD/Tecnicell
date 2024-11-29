@@ -82,19 +82,6 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<TecnicellContext>();
     DbInitializer.Initialize(context);
 }
-// Function to get the local IP address
-string GetLocalIPAddress() {
-    var host = Dns.GetHostEntry(Dns.GetHostName());
-    foreach (var ip in host.AddressList) {
-        if (ip.AddressFamily == AddressFamily.InterNetwork) {
-            return ip.ToString(); 
-        } 
-    } 
-    throw new Exception("No network adapters with an IPv4 address in the system!"); 
-} 
-// Get the IP address and set the URL for the server
-string localIpAddress = GetLocalIPAddress();
-Console.WriteLine("Escuchando por: " + localIpAddress + " Puerto: " + 5000);
 app.Run("http://0.0.0.0:5000/");
 
 //app.Run();

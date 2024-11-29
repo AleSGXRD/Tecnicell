@@ -10,6 +10,7 @@ import { NotificationSystemService } from '../../notification-system.service';
 import { AuthService } from '../Authorization/auth.service';
 import { UsdApiService } from '../Usd/usd-api.service';
 import server from '../../../Logic/ServerAdress';
+import { generateDate } from '../../../Logic/ControlDate';
 
 @Injectable({
   providedIn: 'root'
@@ -143,7 +144,7 @@ export class PhoneHistoryApiService implements ApiService<PhoneHistory, PhoneHis
     let model : PhoneHistory = {
       imei : data.imei,
       userCode: this.authService.myUser.value.userCode!,
-      date : data.date,
+      date : data.setTime == false? data.date : generateDate(data.day,data.hours,data.minutes,data.seconds,data.time),
       actionHistory : data.actionHistory,
       description: data.description,
       supplierCode: data.supplierCode == 'none'? null: data.supplierCode,

@@ -23,6 +23,7 @@ import { AccessoryApiRequestService } from '../../../Services/api/Accessory/acce
 import { PhoneApiService } from '../../../Services/api/Phone/phone-api.service';
 import { PhoneRepairApiService } from '../../../Services/api/PhoneRepair/phone-repair-api.service';
 import { ScreenApiService } from '../../../Services/api/Screen/screen-api.service';
+import { BatteryHistoryApiService } from '../../../Services/api/Battery/battery-history-api.service';
 
 @Component({
   selector: 'app-preformance',
@@ -618,7 +619,7 @@ export class PreformanceComponent {
     public dialogService:DialogService,
 
     public accessoryHistoryService: AccessoryHistoryApiService,
-    public batteryHistoryService: BatteryApiService,
+    public batteryHistoryService: BatteryHistoryApiService,
     public phoneHistoryService: PhoneHistoryApiService,
     public phoneRepairHistoryService: PhoneRepairHistoryApiService,
     public screenHistoryService: ScreenHistoryApiService,

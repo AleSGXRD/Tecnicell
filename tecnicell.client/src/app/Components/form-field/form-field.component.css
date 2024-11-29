@@ -12,3 +12,7 @@ input.example-right-align{
 input.example-right-align {
   -moz-appearance: textfield;
 }
+
+.time .mdc-text-field{
+  padding: 0px 4px !important;
+}

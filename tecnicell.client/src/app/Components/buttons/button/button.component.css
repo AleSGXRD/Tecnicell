@@ -16,6 +16,9 @@ button{
 .green{
     @apply text-green-500 shadow-green-500 border-green-500 hover:bg-green-500 hover:text-white;
 }
+.gray-button{
+    @apply text-gray-500 shadow-gray-500 border-gray-500 hover:bg-gray-500 hover:text-white;
+}
 .gray{
     @apply text-black border-opacity-0 shadow-none hover:bg-white;
 }

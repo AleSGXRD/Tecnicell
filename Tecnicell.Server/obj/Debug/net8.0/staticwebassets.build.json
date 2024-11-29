@@ -1,20 +1,20 @@
 {
   "Version": 1,
-  "Hash": "/4aJA1cFYwHuXY9EQnBVuf3VKFBCMebRvUAmxibJRbw=",
+  "Hash": "ge74/hP13WlixNFxzGC5VbXZ5+TqWTr7u3Kv5RoL2vc=",
   "Source": "Tecnicell.Server",
   "BasePath": "_content/Tecnicell.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\Vergil\\Documents\\GitHub\\Tecnicell\\tecnicell.client\\tecnicell.client.esproj",
+      "Identity": "/Users/dante/Documents/GitHub/Tecnicell/tecnicell.client/tecnicell.client.esproj",
       "Version": 2,
       "Source": "tecnicell.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
-      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishProperties": "",
       "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
       "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
-      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildProperties": "",
       "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
     }
   ],

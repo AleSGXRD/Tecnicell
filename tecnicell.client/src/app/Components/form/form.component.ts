@@ -73,7 +73,6 @@ export class FormComponent {
       return ;
     this.dialogService.SetMethod(()=>{
       this.formService.ProcessData(this.form.value);
-      console.log(this.form.value)
       this.DesappearForm();
     });
   }

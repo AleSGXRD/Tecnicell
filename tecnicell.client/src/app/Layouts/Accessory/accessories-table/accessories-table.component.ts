@@ -42,10 +42,6 @@ export class AccessoriesTableComponent {
     values : [],
     headerFields : [
       {
-        name:'Codigo',
-        space: SpacesField.normal
-      },
-      {
         name:'Tipo de Accesorio',
         space: SpacesField.small
       },
@@ -65,17 +61,12 @@ export class AccessoriesTableComponent {
         name:'Estado',
         space: SpacesField.small
       },
+      {
+        name:'Codigo',
+        space: SpacesField.normal
+      },
     ],
     tableFields :[
-      {
-        type : TableFieldType.Link,
-        propertyName : "code",
-        show:true,
-        link : {
-          url:'accessory/',
-          idPropertyName:'code'
-        }
-      },
       {
         type : TableFieldType.Property,
         show:true,
@@ -101,7 +92,16 @@ export class AccessoriesTableComponent {
         propertyName : "available",
         show:true,
         styles:StateStyleCustom
-      }
+      },
+      {
+        type : TableFieldType.Link,
+        propertyName : "code",
+        show:true,
+        link : {
+          url:'accessory/',
+          idPropertyName:'code'
+        }
+      },
     ], 
   };
 
@@ -118,9 +118,40 @@ export class AccessoriesTableComponent {
     supplierCode: [undefined,[]],
     cost: [0,[]],
     warranty:  [null,[]],
-    branchCode:[null,[]]
+    branchCode:[null,[]],
+    setTime: [false,[]],
+    day: [undefined,[]],
+    hours : [undefined,[]],
+    minutes:[undefined,[]],
+    seconds:[undefined, []],
+    time : [undefined, []]
   })
   inputsFormFields :FormField[]= [
+    {
+      type : "collapse",
+      formControlName:"setTime",
+      name: "Fecha",
+      placeholder : "",
+      fieldRequired : false,
+      fields: [
+        {
+          type : "date",
+          formControlName:"day",
+          name: "Dia",
+          placeholder : "Dia...",
+          fieldRequired : false,
+          errors : []
+        },
+        {
+          type : "time", // deberia ser fecha
+          formControlName:"time",
+          name: "Hora",
+          placeholder : "Garantía...",
+          fieldRequired : false,
+          errors : []
+        },
+      ]
+    },
     {
       type : "select",
       formControlName:"accessoryType",
@@ -243,7 +274,7 @@ export class AccessoriesTableComponent {
   supplierValues! : FormFieldOption[];
   accessoryTypesValues! : FormFieldOption[];
 
-  actionsTable: ActionsTable = ActionsTable.DELETE;  
+  actionsTable: ActionsTable = ActionsTable.DELETE_ADMIN;  
 
   constructor (public formService: FormService,
     public dialogService:DialogService,

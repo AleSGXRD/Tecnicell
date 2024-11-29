@@ -2,21 +2,49 @@
     <table class="flex flex-col ">
         <thead>
             <tr>
+
+                @if(actions == 'deleteAdmin'|| actions == 'bothAdmin'){
+                    @if(access == 2){
+                        <th [className]="'w-smallest'"></th>
+                    }
+                }
+                @else if(actions == 'delete'|| actions == 'both'){
+                    <th [className]="'w-smallest'"></th>
+                }
+                
                 @for (header of table.headerFields; track $index) 
                 {
                     <th [className]="'w-'+header.space">
                         {{header.name}}
                     </th>
                 }
-                @if(actions != 'none'){
+                @if(actions != 'none' && actions != 'deleteAdmin' && actions != 'bothAdmin'){
                     <th class="w-big">
                         Actions
                     </th>
+                }@else if(actions == 'deleteAdmin' || actions == 'bothAdmin'){
+                    @if(access == 2){
+                        <th class="w-big">
+                            Actions
+                        </th>
+                    }
                 }
             </tr>
         </thead>
         <tbody *reloadComponent="currentSheet">
-                <tr *ngFor="let value of table.values; let idx = index" [className]="idx < ((currentSheet + 1 )* maxElements) && idx >= (currentSheet * maxElements)? '': 'hidden'">
+
+                <tr *ngFor="let value of table.values; let idx = index" [className]="(idx < ((currentSheet + 1 )* maxElements) && idx >= (currentSheet * maxElements)? ' ': 'hidden ')
+                    +(value.check != undefined && value.check == true ? 'bg-blue-50' : '') ">
+                    
+                    @if(actions == 'deleteAdmin'|| actions == 'bothAdmin'){
+                        @if(access == 2){
+                            <td class="w-smallest"> <input type="checkbox" name="check" id="check" [ngModel]="this.table.values[idx].check" (ngModelChange)="onCheckChange($event, idx)"> </td>
+                        }
+                    }
+                    @else if(actions == 'delete'|| actions == 'both'){
+                        <td class="w-smallest"> <input type="checkbox" name="check" id="check" [ngModel]="this.table.values[idx].check" (ngModelChange)="onCheckChange($event, idx)"> </td>
+                    }
+
                     @for (property of table.tableFields; track $index ) {
                         @if(property.show == true){
                             @if(property.type == 'Property'){
@@ -34,7 +62,7 @@
                             @if(property.type == 'Revenue' ){
                                 <td [className]="'w-'+table.headerFields[$index].space + ' ' + resolveStyles(property, idx)">
                                     @if(property.subPropertyName != undefined ){
-                                        @if (property.subPropertyName != undefined && value[property.propertyName]!=undefined && value[property.propertyName][property.subPropertyName] != undefined){
+                                        @if (property.subPropertyName != undefined && value[property.propertyName]!=undefined && value[property.propertyName][property.subPropertyName] != undefined && value[property.propertyName][property.subPropertyName] > 0){
                                             <i class="flex flex-row mx-auto gap-2">{{value[property.propertyName][property.subPropertyName]}}
                                                 @if(value['actionHistory'] == 'Salida'){
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16px" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m6-8l-6-6m-6 6l6-6"/></svg>
@@ -104,7 +132,7 @@
                             }
                         }
                     }
-                    @if(actions != 'none'){
+                    @if(actions != 'none' && actions != 'deleteAdmin' && actions != 'bothAdmin'){
                         <td class="actions">
                             @if(actions == 'edit' || actions == 'both'){
                                 <app-button [color]="'blue'" (click)="editData(idx)">
@@ -129,6 +157,53 @@
                                 </app-button>
                             }
                         </td>
+                    }
+
+                    @if(actions == 'bothAdmin'){
+
+                        @if(access == 2){
+
+                            <td class="actions">
+                                <app-button [color]="'blue'" (click)="editData(idx)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                        <path d="M16 5l3 3" />
+                                    </svg>
+                                </app-button>
+                                <app-button [color]="'red'" (click)="deleteData(idx)" >
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg>
+                                </app-button>
+                            </td>
+                        }
+
+                    }
+                    @if(actions == 'deleteAdmin'){
+
+                        @if(access == 2){
+
+                            <td class="actions">
+                                <app-button [color]="'red'" (click)="deleteData(idx)" >
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg>
+                                </app-button>
+                            </td>
+                        }
+
                     }
                 </tr>
             
