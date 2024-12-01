@@ -20,7 +20,7 @@ export class FilterTableService {
     this.filters.next(values);
 
     values.filter((value:FilterField) => {
-      if(value.save == true){
+      if(value.save == true&& value.value != undefined && value.value != ''){
         this.searchsApi.add({value: value.value})
       }
     })

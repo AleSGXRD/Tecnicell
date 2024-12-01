@@ -37,14 +37,6 @@ export class PhoneRepairsTableComponent {
         space: SpacesField.small
       },
       {
-        name:'Marca',
-        space: SpacesField.small
-      },
-      {
-        name:'Precio de reparación',
-        space: SpacesField.small
-      },
-      {
         name:'Estado',
         space: SpacesField.small
       },
@@ -56,34 +48,17 @@ export class PhoneRepairsTableComponent {
         name:'CI del cliente',
         space: SpacesField.small
       },
-      {
-        name:'Numero del cliente',
-        space: SpacesField.small
-      },
-      {
-        name:'Descripción sobre la ultima acción',
-        space: SpacesField.normal
-      },
-      {
-        name:'IMEI',
-        space: SpacesField.normal
-      },
     ],
     tableFields :[
+
       {
-        type : TableFieldType.Property,
-        show:true,
+        type : TableFieldType.Link,
         propertyName : "name",
-      },
-      {
-        type : TableFieldType.Property,
         show:true,
-        propertyName : "type",
-      },
-      {
-        type : TableFieldType.Property,
-        propertyName : "price",
-        show:true,
+        link : {
+          url:'phonerepair/',
+          idPropertyName:'code'
+        }
       },
       {
         type : TableFieldType.Property,
@@ -101,26 +76,11 @@ export class PhoneRepairsTableComponent {
         propertyName : "customerId",
         show:true,
       },
-      {
-        type : TableFieldType.Property,
-        propertyName : "customerNumber",
-        show:true,
-      },
-      {
-        type : TableFieldType.Property,
-        propertyName : "actionDescription",
-        show:true,
-      },
-      {
-        type : TableFieldType.Link,
-        propertyName : "code",
-        show:true,
-        link : {
-          url:'phonerepair/',
-          idPropertyName:'code'
-        }
-      },
     ], 
+    linkFields : {
+      url:'phonerepair/',
+      idPropertyName:'code'
+    }
   };
 
   //Form

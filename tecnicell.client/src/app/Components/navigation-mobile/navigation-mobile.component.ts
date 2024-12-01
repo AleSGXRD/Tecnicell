@@ -4,6 +4,8 @@ import { FormType } from '../../Interfaces/tools/Form/FormType';
 import { ApiService } from '../../Services/api/ApiService.service';
 import { FormService } from '../../Services/form/form.service';
 import { Router } from '@angular/router';
+import { MultipleDeleteService } from '../../Services/multiple-delete.service';
+import { Rounded } from '../buttons/button/button.component';
 
 @Component({
   selector: 'app-navigation-mobile',
@@ -27,8 +29,25 @@ export class NavigationMobileComponent {
   @Input()
   histories! : string ;
 
-  constructor(private router: Router){
+  public openedNavigation : boolean  = false;
+  get cantOptions(){
+    const cant = (this.form? 1 : 0)+ (this.histories? 1 : 0) + (this.canUseMultipleDelete?1:0)
+    return cant;
+  }
 
+
+  canUseMultipleDelete :boolean = false;
+  canDelete :boolean = false;
+
+  constructor(private router: Router,
+    private multipleDelete : MultipleDeleteService
+  ){
+    this.multipleDelete.canDelete.subscribe(res =>{
+      this.canDelete = res;
+    })
+    this.multipleDelete.canUseMultipleDelete.subscribe(res => {
+      this.canUseMultipleDelete = res;
+    })
   }
   ActiveForm(){
     if(!this.apiService) return;
@@ -42,5 +61,14 @@ export class NavigationMobileComponent {
   
   openSideBar(value:boolean){
     this.openedSideBar = value;
+  }
+
+  deleteAll(){
+    if(this.canDelete == false) return;
+    this.multipleDelete.deleteMultiples.emit();
+  }
+
+  openNavigation(){
+    this.openedNavigation = ! this.openedNavigation;
   }
 }

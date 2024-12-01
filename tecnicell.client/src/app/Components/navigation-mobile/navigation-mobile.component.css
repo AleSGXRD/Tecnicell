@@ -1,5 +1,6 @@
-
-
+:root{
+    --max-expand : 300px
+}
 .disappeared{
     @apply hidden;
     animation: disappear 0.2s 1 ease-out;
@@ -23,5 +24,22 @@
     100%{
         opacity: 0;
         display: hidden;
+    }
+}
+.navigation {
+    @apply flex flex-col-reverse justify-start items-center gap-4 bg-gray-50 outline-2 outline-gray-50 rounded-full px-2 py-4
+    overflow-hidden h-20 transition-all;
+}
+.active{
+    @apply transition-all;
+    height: var(--max-expand);
+}
+
+@keyframes expand {
+    0%{
+        height: 80px;
+    }
+    100%{
+        height: var(--max-expand);
     }
 }

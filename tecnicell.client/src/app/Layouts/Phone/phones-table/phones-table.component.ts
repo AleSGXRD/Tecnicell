@@ -41,7 +41,7 @@ export class PhonesTableComponent  {
         space: SpacesField.small
       },
       {
-        name:'Precio de venta',
+        name:'Precio de compra',
         space: SpacesField.small
       },
       {
@@ -178,7 +178,7 @@ export class PhonesTableComponent  {
     {
       type : "price",
       formControlName:"salePrice",
-      name: "Precio de Venta",
+      name: "Precio de compra",
       placeholder : "0",
       fieldRequired : false,
     },

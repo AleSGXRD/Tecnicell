@@ -67,13 +67,18 @@ export class TableComponent {
     private authService : AuthService,
     private multipleDelete : MultipleDeleteService
   ){
-    this.authService.myUser.subscribe(res=>{
-      this.access = checkLevel(res.role);
-    })
   }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    this.authService.myUser.subscribe(res=>{
+      this.access = checkLevel(res.role);
+      
+      this.multipleDelete.canUseMultipleDelete.next(
+        (this.actions ==  ActionsTable.DELETE || this.actions ==  ActionsTable.BOTH )||
+        ((this.actions ==  ActionsTable.DELETE_ADMIN || this.actions ==  ActionsTable.BOTH_ADMIN) &&this.access == 2)
+      );
+    })
     
     this.valuesDefault = this.table.values;
     this.filterTableService?.filters.subscribe(
@@ -86,10 +91,6 @@ export class TableComponent {
       this.deleteAll();
     })
 
-    this.multipleDelete.canUseMultipleDelete.next(
-      (this.actions ==  ActionsTable.DELETE || this.actions ==  ActionsTable.BOTH )||
-      ((this.actions ==  ActionsTable.DELETE_ADMIN || this.actions ==  ActionsTable.BOTH_ADMIN) &&this.access == 2)
-    );
   }
 
   currentSheet : number =0;
@@ -100,6 +101,16 @@ export class TableComponent {
     const timeZoneOffset = -5; // Zona horaria de La Habana (UTC-5)
     const localDate = new Date(time.getTime() + (timeZoneOffset * 60 * 60 * 1000));
     return localDate;
+  }
+  onInputLimit(event:Event){
+    const input = event.target as HTMLInputElement;
+    if (parseInt(input.value) > (this.sheets() + 1)) {
+      input.value = "1"; // Limitar a 2 caracteres
+    }
+    if(parseInt(input.value) < 1){
+      input.value = (this.sheets()+1).toString();
+    }
+    this.currentSheet = parseInt(input.value)-1;
   }
 
   onCheckChange(checked:boolean, index:number){
@@ -195,7 +206,6 @@ export class TableComponent {
           tableValues = tableValues.filter(
             value => {
                 if(value[filter.propertyName] == undefined) return false;
-                console.log(value[filter.propertyName])
                 return value[filter.propertyName].toLowerCase().includes(filter.value.toLowerCase())
           })
         }

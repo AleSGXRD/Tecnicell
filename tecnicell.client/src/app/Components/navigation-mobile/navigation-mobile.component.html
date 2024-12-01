@@ -3,23 +3,51 @@
     </app-background>
     <app-toolbar class="z-20 relative w-full transition-all top-0 " (openFormAdd)="ActiveForm()" (openSideBar)="openSideBar(true)"></app-toolbar>
 
-    @if(form){
-        <button class="fixed z-30 xl:hidden bottom-12 right-12 border-green-500 text-green-500 border-2 py-4 px-4
-                    rounded-xl hover:text-gray-200 hover:bg-green-500 transition-all"
-                (click)="ActiveForm()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m-7-7h14"/></svg>
-        </button>
+
+    @if(cantOptions > 0){
+    <div class="fixed z-30 xl:hidden bottom-12 right-12 flex flex-col-reverse">
+    
+        <ul [class]="'navigation'+(openedNavigation == true ? ' active' : '')" [style]="'--max-expand : ' + (80+((70*cantOptions)+10)) +'px' ">
+            
+            <button [class]="( openedNavigation == false? 'border-slate-500 text-slate-500 hover:bg-slate-500 hover:text-gray-50 '  :
+            'border-slate-500 hover:text-slate-500 hover:bg-transparent bg-slate-500 text-gray-50 ' )     
+            +' border-2 uppercase tracking-tighter p-2 rounded-full'" (click)="openNavigation()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4h4v4m-6 2l6-6M8 20H4v-4m0 4l6-6m6 6h4v-4m-6-2l6 6M8 4H4v4m0-4l6 6"/></svg>
+            </button>
+                @if(form){
+                    <li class="navigation-item">
+                        <button class=" border-green-500 text-green-500 border-2 p-2 
+                                    rounded-full hover:text-gray-200 hover:bg-green-500 transition-all"
+                                (click)="ActiveForm()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m-7-7h14"/></svg>
+                        </button>
+                    </li>
+                }
+                @if(histories){
+                    <li class="navigation-item">
+                        <button class=" border-blue-500 text-blue-500 border-2 
+                         hover:text-gray-200 hover:bg-blue-500 transition-all p-2 rounded-full"
+                    (click)="Navigate()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                            <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+                            <path d="M10 12l4 0" />
+                            </svg>
+                        </button>
+                    </li>
+                }
         
-    }
-    @if(histories){
-        <button class="fixed z-30 xl:hidden bottom-32 right-12 border-blue-500 text-blue-500 border-2 py-2 px-2
-                    rounded-xl hover:text-gray-200 hover:bg-blue-500 transition-all"
-                (click)="Navigate()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-                <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-                <path d="M10 12l4 0" />
-                </svg>
-        </button>
-    }
+                @if(canUseMultipleDelete){
+                    <li class="navigation-item ">
+                        <button [class]="(canDelete == false?'border-gray-500 text-gray-500 border-2 hover:text-gray-200 hover:bg-gray-500'
+                                            :'border-red-500 text-red-500 border-2 hover:text-gray-200 hover:bg-red-500') +' transition-all p-2 rounded-full'" (click)="deleteAll()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16m-10 4v6m4-6v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg>
+                        </button>
+                    </li>
+                }
+            
+            
+        </ul>
+    </div>
+}
